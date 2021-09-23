@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+	<link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
+	<link href="css/index.css" type="text/css" rel="stylesheet" media="screen,projection" />
+	<meta property="og:image" content="./img/pokerBanner.png" />
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="theme-color" content="#ffffff">
+	<title>Texas Hold 'Em - Distributed</title>
+</head>
+<body>
+	<a id="joinButton" class="btn-large waves-effect waves-light indigo darken-3 white-text modal-trigger"
+							href="#joinModal">Join
+							Game</a>
+							
+	<div id="joinModal" class="modal">
+		<div class="modal-content">
+			<h4>Join Game</h4>
+			<div id="joinModalContent">
+				<p>Enter the your name and the code provided by the host to join their room:</p>
+				<div class="input-field col s12">
+					<label for="name">Name</label>
+					<input type="text" name="name" id="joinName-field" required="required" />
+				</div>
+				<div class="input-field col s12">
+					<label for="code">Code</label>
+					<input type="text" name="code" id="code-field" required="required" />
+				</div>
+				<div class="input-field col s12">
+					<label for="email">Email</label>
+					<input type="email" name="email" id="email-field" required="required" />
+				</div>
+				<button onclick=joinRoom() type="submit"
+					class="waves-effect waves-light indigo darken-3 white-text btn-flat">Join
+					Game</button>
+			</div>
+			<div id="playersNamesJoined"></div>
+			<div id="startGameAreaDisconnectSituation"></div>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-close waves-effect waves-light btn-flat">CLOSE</a>
+		</div>
+	</div>
+
+	<!-- <footer class="page-footer white">
+		<div class="container footer-c">
+			<b>© 2021 - Aviabird Technologies Pvt. Ltd.. <a href="https://github.com/aviabird/">GitHub Repository</a></b><br><br>
+	</footer> -->
+
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.5.0/socket.io.min.js"></script>
+	<script src="./main.js"> </script>
+	<script src="./js/materialize.min.js"></script>
+</body>
+</html>

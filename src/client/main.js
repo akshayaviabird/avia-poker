@@ -7,6 +7,18 @@ $(document).ready(function () {
 var socket = io();
 var gameInfo = null;
 
+
+
+var url_string =location.href
+var url = new URL(url_string);
+var codeValue = url.searchParams.get("token");
+
+if(codeValue !==null){
+  console.log('asdfgh',codeValue)
+ document.getElementById('joinModal').modal("show")
+// checkmodel.showModal()
+}
+
 socket.on('playerDisconnected', function (data) {
   Materialize.toast(data.player + ' disconnected.', 4000);
 });
@@ -27,7 +39,7 @@ socket.on('hostRoom', function (data) {
     } else if (data.players.length > 1) {
       $('#hostModalContent').html(
         '<h5>Code:</h5><code>' +
-          data.code +
+        'http://localhost:3000/playgame?token='+data.code +
           '</code><br /><h5>Players Currently in My Room</h5>'
       );
       $('#playersNames').html(
@@ -43,7 +55,7 @@ socket.on('hostRoom', function (data) {
     } else {
       $('#hostModalContent').html(
         '<h5>Code:</h5><code>' +
-          data.code +
+        'http://localhost:3000/playgame?token='+data.code +
           '</code><br /><h5>Players Currently in My Room</h5>'
       );
       $('#playersNames').html(
@@ -272,8 +284,12 @@ var beginHost = function () {
     $('#joinButton').off('click');
   }
 };
-
+var url_string = window.location.href;
+var url = new URL(url_string);
+var codeValue = url.searchParams.get("token");
+  
 var joinRoom = function () {
+  console.log('aksjay',codeValue)
   // yes, i know this is client-side.
   if (
     $('#joinName-field').val() == '' ||
@@ -291,12 +307,17 @@ var joinRoom = function () {
   } else {
     socket.emit('join', {
       code: $('#code-field').val(),
+      // code:codeValue,
       username: $('#joinName-field').val(),
     });
     $('#hostButton').addClass('disabled');
     $('#hostButton').off('click');
   }
 };
+
+// var startGame = function (gameCode) {
+//   socket.emit('startGame', { code: gameCode });
+// };
 
 var startGame = function (gameCode) {
   socket.emit('startGame', { code: gameCode });

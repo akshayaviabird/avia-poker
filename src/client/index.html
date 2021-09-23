@@ -2,6 +2,7 @@
 <html>
 
 <head>
+	<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
 	<link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
 	<link href="css/index.css" type="text/css" rel="stylesheet" media="screen,projection" />
 	<meta property="og:image" content="./img/pokerBanner.png" />
@@ -99,9 +100,13 @@
 					<label for="name">Name</label>
 					<input type="text" name="name" id="hostName-field" required />
 				</div>
+				<div class="input-field col s12">
+					<label for="email">Email</label>
+					<input type="email" name="email" id="hostEmail-field" required />
+				</div>
+	
 				<button onclick=beginHost() type="submit"
-					class="waves-effect waves-light indigo darken-3 white-text btn-flat">Get
-					Code</button>
+					class="waves-effect waves-light indigo darken-3 white-text btn-flat">Get Unique URL</button>
 			</div>
 			<div id="playersNames"></div>
 			<div id="startGameArea"></div>
@@ -124,6 +129,10 @@
 				<div class="input-field col s12">
 					<label for="code">Code</label>
 					<input type="text" name="code" id="code-field" required="required" />
+				</div>
+				<div class="input-field col s12">
+					<label for="email">Email</label>
+					<input type="email" name="email" id="email-field" required="required" />
 				</div>
 				<button onclick=joinRoom() type="submit"
 					class="waves-effect waves-light indigo darken-3 white-text btn-flat">Join

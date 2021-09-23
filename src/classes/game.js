@@ -101,7 +101,7 @@ const Game = function (name, host) {
     if (this.autoBuyIns) {
       for (player of this.players) {
         if (player.getMoney() == 0) {
-          player.money = 100;
+          player.money = 1000;
           player.buyIns = player.buyIns + 1;
         }
       }
