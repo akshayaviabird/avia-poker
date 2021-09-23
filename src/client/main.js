@@ -2,6 +2,7 @@ $(document).ready(function () {
   $('#gameDiv').hide();
   $('.modal-trigger').leanModal();
   $('.tooltipped').tooltip({ delay: 50 });
+  
 });
 
 var socket = io();
@@ -13,11 +14,14 @@ var url_string =location.href
 var url = new URL(url_string);
 var codeValue = url.searchParams.get("token");
 
+
 if(codeValue !==null){
-  console.log('asdfgh',codeValue)
- document.getElementById('joinModal').modal("show")
-// checkmodel.showModal()
+  console.log('code:',codeValue)
+  document.getElementById("hostButton").style.display="none";
+  document.getElementById("joinButton").style.display="inherit";
 }
+
+
 
 socket.on('playerDisconnected', function (data) {
   Materialize.toast(data.player + ' disconnected.', 4000);
@@ -293,7 +297,7 @@ var joinRoom = function () {
   // yes, i know this is client-side.
   if (
     $('#joinName-field').val() == '' ||
-    $('#code-field').val() == '' ||
+    // $('#code-field').val() == '' ||
     $('#joinName-field').val().length > 12
   ) {
     $('.toast').hide();
@@ -306,7 +310,7 @@ var joinRoom = function () {
     $('#hostButton').on('click');
   } else {
     socket.emit('join', {
-      code: $('#code-field').val(),
+      code: codeValue,
       // code:codeValue,
       username: $('#joinName-field').val(),
     });
