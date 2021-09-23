@@ -150,3 +150,14 @@ code {
   position: relative;
   z-index: -1 !important;
 }
+
+.board{
+  border: 15px solid rgb(24, 23, 23);
+  width: 800px;
+  margin-left: 20%;
+  border-radius: 500px;
+  height: 400px;
+  padding-left:5%;
+  padding-top: 70px;
+}
+
