@@ -109,8 +109,36 @@ socket.on('joinRoomUpdate', function (data) {
 });
 
 socket.on('getresult', function(data){
+  let dia = document.getElementById("myDialogother")
+  dia.showModal();
+  // points.sort(function(a, b){return b - a});
+  var listItems = data.sort((a,b)=>(a.money>b.money ?-1:(b.money>a.money)?1:0)).map(function(item,index){
+    return    '<ol>' +item.username +"has" + item.money + '</ol>';
+  })
+  // ${item.username}` -  `${item.money}`
+  var html = "";
+  // html += "Scoreboard" + "<br/>";
+  // html += "winner 1" + listItems.username+ "<br/>" + "coins" +listItems.money;
+  // html += "winner 2=" + "maity" + "<br/>";
+  // html += "winner 3=" + "sita" + "<br/>";
+  // html += "winner 4=" + "sdf" + "<br/>";
+
+  dia.innerHTML = listItems;
+
+  var btn = document.createElement('button');
+  btn.textContent = 'Close';
+  btn.style.marginLeft = "338px"
+  btn.style.marginTop = "246px"
+  btn.addEventListener("click", function () {
+    if (codeValue === null) {
+      location.reload()
+    }
+    if (codeValue !== null) {
+      dia.close()
+    }
+  });
+  dia.appendChild(btn);
   console.log(data);
-  
 })
 
 socket.on('joinRoom', function (data) {
@@ -235,7 +263,7 @@ function playNext() {
 if (codeValue === null) {
   $('#stopGame').html(
     // '<a href="#hostModal"> Stop Game</button></a>'
-    ' <button onClick=stopGame() class="btn white black-text menuButtons">Stop Game</button>'
+    ' <button onClick=result() class="btn white black-text menuButtons">Stop Game</button>'
   )
 }
 socket.on('reveal', function (data) {
@@ -265,7 +293,7 @@ socket.on('reveal', function (data) {
   if (codeValue !== null) {
 
     $('#showscore').html(
-      '<button onClick=stopGame()  class="btn white black-text menuButtons">Show score</button></a>'
+      '<button onClick=result()  class="btn white black-text menuButtons">Show score</button></a>'
     )
   }
   $('#blindStatus').text(data.hand);
@@ -360,7 +388,7 @@ socket.on('endHand', function (data) {
   }
   if (codeValue !== null) {
     $('#showscore').html(
-      '<button onClick=stopGame()  class="btn white black-text menuButtons">Show score</button></a>'
+      '<button onClick=result()()  class="btn white black-text menuButtons">Show score</button></a>'
     )
   }
   $('#blindStatus').text('');
