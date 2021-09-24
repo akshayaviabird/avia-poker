@@ -3,7 +3,7 @@ $(document).ready(function () {
   $('#gameDiv').hide();
   $('.modal-trigger').leanModal();
   $('.tooltipped').tooltip({ delay: 50 });
-  
+
 });
 
 var socket = io();
@@ -11,15 +11,15 @@ var gameInfo = null;
 
 
 
-var url_string =location.href
+var url_string = location.href
 var url = new URL(url_string);
 var codeValue = url.searchParams.get("token");
 
 
-if(codeValue !==null){
-  console.log('code:',codeValue)
-  document.getElementById("hostButton").style.display="none";
-  document.getElementById("joinButton").style.display="inherit";
+if (codeValue !== null) {
+  console.log('code:', codeValue)
+  document.getElementById("hostButton").style.display = "none";
+  document.getElementById("joinButton").style.display = "inherit";
 }
 
 
@@ -44,8 +44,8 @@ socket.on('hostRoom', function (data) {
     } else if (data.players.length > 1) {
       $('#hostModalContent').html(
         '<h5>Code:</h5><code>' +
-        'http://localhost:3000/playgame?token='+data.code +
-          '</code><br /><h5>Players Currently in My Room</h5>'
+        'http://localhost:3000/playgame?token=' + data.code +
+        '</code><br /><h5>Players Currently in My Room</h5>'
       );
       $('#playersNames').html(
         data.players.map(function (p) {
@@ -60,8 +60,8 @@ socket.on('hostRoom', function (data) {
     } else {
       $('#hostModalContent').html(
         '<h5>Code:</h5><code>' +
-        'http://localhost:3000/playgame?token='+data.code +
-          '</code><br /><h5>Players Currently in My Room</h5>'
+        'http://localhost:3000/playgame?token=' + data.code +
+        '</code><br /><h5>Players Currently in My Room</h5>'
       );
       $('#playersNames').html(
         data.players.map(function (p) {
@@ -227,7 +227,7 @@ socket.on('gameBegin', function (data) {
 function playNext() {
   socket.emit('startNextRound', {});
 }
-if(codeValue===null){ 
+if (codeValue === null) {
   $('#stopGame').html(
     // '<a href="#hostModal"> Stop Game</button></a>'
     ' <button onClick=stopGame() class="btn white black-text menuButtons">Stop Game</button>'
@@ -248,7 +248,7 @@ socket.on('reveal', function (data) {
   }
   $('#table-title').text('Hand Winner(s): ' + data.winners);
 
-  if(codeValue===null){
+  if (codeValue === null) {
     $('#playNext').html(
       '<button onClick=playNext() id="playNextButton" class="btn white black-text menuButtons">Start Next Game</button>'
     );
@@ -257,10 +257,10 @@ socket.on('reveal', function (data) {
     //   ' <button onClick=stopGame() class="btn white black-text menuButtons">Stop Game</button>'
     // )
   }
-  if(codeValue !== null){
+  if (codeValue !== null) {
 
     $('#showscore').html(
-    '<button onClick=stopGame()  class="btn white black-text menuButtons">Show score</button></a>'
+      '<button onClick=stopGame()  class="btn white black-text menuButtons">Show score</button></a>'
     )
   }
   $('#blindStatus').text(data.hand);
@@ -289,52 +289,52 @@ socket.on('reveal', function (data) {
   );
 });
 
-function stopGame(){ 
-  let dia=document.getElementById("myDialogother")
-  dia.showModal(); 
-  
+function stopGame() {
+  let dia = document.getElementById("myDialogother")
+  dia.showModal();
+
   var html = "";
-  html += "Scoreboard"  +"<br/>";
+  html += "Scoreboard" + "<br/>";
   html += "winner 1=" + "akshay" + "<br/>";
   html += "winner 2=" + "maity" + "<br/>";
   html += "winner 3=" + "sita" + "<br/>";
   html += "winner 4=" + "sdf" + "<br/>";
 
-  dia.innerHTML =html;
-  
+  dia.innerHTML = html;
+
   var btn = document.createElement('button');
   btn.textContent = 'Close';
-  btn.style.marginLeft="338px"
-  btn.style.marginTop="246px" 
-  btn.addEventListener("click", function(){ 
-    if(codeValue ===null){
+  btn.style.marginLeft = "338px"
+  btn.style.marginTop = "246px"
+  btn.addEventListener("click", function () {
+    if (codeValue === null) {
       location.reload()
     }
-    if(codeValue !== null){
-    dia.close()
+    if (codeValue !== null) {
+      dia.close()
     }
   });
   dia.appendChild(btn);
-//  var ii= document.getElementById("gameover").showModal(); 
-//   $("#gameover").modal('show')
-//   console.log('sedrfg')
+  //  var ii= document.getElementById("gameover").showModal(); 
+  //   $("#gameover").modal('show')
+  //   console.log('sedrfg')
   // socket.emit('disconnect', {});
   // $('#gameOverModalContent').html(
   //   '<h5>Code:</h5><code>' +
-   
+
   //   '</code><br /><h5>Warning: you have too many players in your room. Max is 11.</h5><h5>Players Currently in My Room</h5>'
   // );
   // location.reload()
   // if(codeValue !== undefined){
   //   location.reload()
-    // $('#gameover').closeModal();
+  // $('#gameover').closeModal();
   // }
 
   // console.log('clicked')
   // $('#DashboardAream').html(
   //   '<br /><button type="submit" class= "waves-effect waves-light green darken-3 white-text btn-flat">"sssssssssssssssssssssssssssssssssssssss"</button >'
   // );
-}  
+}
 socket.on('endHand', function (data) {
   $('#usernameFold').hide();
   $('#usernameCheck').hide();
@@ -342,8 +342,8 @@ socket.on('endHand', function (data) {
   $('#usernameCall').hide();
   $('#usernameRaise').hide();
   $('#table-title').text(data.winner + ' takes the pot of $' + data.pot);
- 
-  if(codeValue===null){
+
+  if (codeValue === null) {
     $('#playNext').html(
       '<button onClick=playNext() id="playNextButton" class="btn white black-text menuButtons">Start Next Game</button>'
     );
@@ -353,9 +353,9 @@ socket.on('endHand', function (data) {
 
     // )
   }
-  if(codeValue !== null){
+  if (codeValue !== null) {
     $('#showscore').html(
-    '<button onClick=stopGame()  class="btn white black-text menuButtons">Show score</button></a>'
+      '<button onClick=stopGame()  class="btn white black-text menuButtons">Show score</button></a>'
     )
   }
   $('#blindStatus').text('');
@@ -395,7 +395,7 @@ socket.on('endHand', function (data) {
 });
 
 
-var beginHost = function () { 
+var beginHost = function () {
   if ($('#hostName-field').val() == '') {
     $('.toast').hide();
     $('#hostModal').closeModal();
@@ -404,7 +404,7 @@ var beginHost = function () {
       4000
     );
     $('#joinButton').removeClass('disabled');
-  } else if( $('#hostEmail-field').val() == '' || $('#hostEmail-field').val().includes('@') == false){
+  } else if ($('#hostEmail-field').val() == '' || $('#hostEmail-field').val().includes('@') == false) {
     $('.toast').hide();
     $('#hostModal').closeModal();
     Materialize.toast(
@@ -421,7 +421,7 @@ var beginHost = function () {
 var url_string = window.location.href;
 var url = new URL(url_string);
 var codeValue = url.searchParams.get("token");
-  
+
 var joinRoom = function () {
 
   // yes, i know this is client-side.
@@ -436,7 +436,7 @@ var joinRoom = function () {
     $('#joinModal').closeModal();
     $('#hostButton').removeClass('disabled');
     $('#hostButton').on('click');
-  } else if( $('#email-field').val() == '' && $('#email-field').val().includes('@') == false){
+  } else if ($('#email-field').val() == '' && $('#email-field').val().includes('@') == false) {
     $('.toast').hide();
     Materialize.toast(
       'Enter a your valid Email! ',
@@ -794,7 +794,7 @@ function renderOpponentScore(name, data) {
     if (data.text == 'Fold') {
       return (
         '<div class="col s12 m2 opponentCard"><div class="card grey"><div class=" white-text"><span class="card-title">' +
-        name + ':' + '&nbsp;' + '$' + data.money + data.buyIns + buyInsText +
+        name + ':' + '&nbsp;' + '$' + data.money + "-" + data.buyIns + buyInsText +
         // '</p></div><div class="card-action green darken-3 white-text center-align" style="font-size: 20px;">$' +
         // data.money +
         // ' (' +
@@ -809,7 +809,7 @@ function renderOpponentScore(name, data) {
         if (data.isChecked)
           return (
             '<div class="col s12 m2 opponentCard"><div class="card yellow darken-3"><div class=" black-text"><span class="card-title">' +
-            name + ':' + '&nbsp;' + '$' + data.money + data.buyIns + buyInsText +
+            name + ':' + '&nbsp;' + '$' + data.money + "-" + data.buyIns + buyInsText +
             // '</p></div><div class="card-action yellow lighten-1 black-text center-align" style="font-size: 20px;">$' +
             // data.money +
             // ' (' +
@@ -822,7 +822,7 @@ function renderOpponentScore(name, data) {
         else if (bet == 0) {
           return (
             '<div class="col s12 m2 opponentCard"><div class="card yellow darken-3"><div class=" black-text"><span class="card-title">' +
-            name + ':' + '&nbsp;' + '$' + data.money + data.buyIns + buyInsText +
+            name + ':' + '&nbsp;' + '$' + data.money + "-" + data.buyIns + buyInsText +
             // '</p></div><div class="card-action yellow lighten-1 black-text center-align" style="font-size: 20px;">$' +
             // data.money +
             // ' (' +
@@ -835,7 +835,7 @@ function renderOpponentScore(name, data) {
         } else {
           return (
             '<div class="col s12 m2 opponentCard"><div class="card yellow darken-3"><div class=" black-text"><span class="card-title">' +
-            name + ':' + '&nbsp;' + '$' + data.money + data.buyIns + buyInsText +
+            name + ':' + '&nbsp;' + '$' + data.money + "-" + data.buyIns + buyInsText +
             // '</p></div><div class="card-action yellow lighten-1 black-text center-align" style="font-size: 20px;">$' +
             // data.money +
             // ' (' +
@@ -850,7 +850,7 @@ function renderOpponentScore(name, data) {
         if (data.isChecked)
           return (
             '<div class="col s12 m2 opponentCard"><div class="card green darken-2" ><div class=" white-text"><span class="card-title">' +
-            name + ':' + '&nbsp;' + '$' + data.money + data.buyIns + buyInsText +
+            name + ':' + '&nbsp;' + '$' + data.money + "-" + data.buyIns + buyInsText +
             // '</p></div><div class="card-action green darken-3 white-text center-align" style="font-size: 20px;">$' +
             // data.money +
             // ' (' +
@@ -863,7 +863,7 @@ function renderOpponentScore(name, data) {
         else if (bet == 0) {
           return (
             '<div class="col s12 m2 opponentCard"><div class="card green darken-2" ><div class=" white-text"><span class="card-title">' +
-            name + ':' + '&nbsp;' + '$' + data.money + data.buyIns + buyInsText +
+            name + ':' + '&nbsp;' + '$' + data.money + "-" + data.buyIns + buyInsText +
             // '</p></div><div class="card-action green darken-3 white-text center-align" style="font-size: 20px;">$' +
             // data.money +
             // ' (' +
@@ -876,7 +876,7 @@ function renderOpponentScore(name, data) {
         } else {
           return (
             '<div class="col s12 m2 opponentCard"><div class="card green darken-2" ><div class=" white-text"><span class="card-title">' +
-            name + ':' + '&nbsp;' + '$' + data.money + data.buyIns + buyInsText +
+            name + ':' + '&nbsp;' + '$' + data.money + "-" + data.buyIns + buyInsText +
             // '</p></div><div class="card-action green darken-3 white-text center-align" style="font-size: 20px;">$' +
             // data.money +
             // ' (' +
