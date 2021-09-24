@@ -44,7 +44,7 @@ socket.on('hostRoom', function (data) {
     } else if (data.players.length > 1) {
       $('#hostModalContent').html(
         '<h5>Code:</h5><code>' +
-        'http://localhost:3000/playgame?token=' + data.code +
+        window.location.href + 'playgame?token=' + data.code +
         '</code><br /><h5>Players Currently in My Room</h5>'
       );
       $('#playersNames').html(
@@ -60,7 +60,7 @@ socket.on('hostRoom', function (data) {
     } else {
       $('#hostModalContent').html(
         '<h5>Code:</h5><code>' +
-        'http://localhost:3000/playgame?token=' + data.code +
+        window.location.href+'playgame?token=' + data.code +
         '</code><br /><h5>Players Currently in My Room</h5>'
       );
       $('#playersNames').html(
