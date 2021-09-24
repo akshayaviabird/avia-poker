@@ -684,8 +684,8 @@ const Game = function (name, host) {
     return this.gameName;
   };
 
-  this.addPlayer = (playerName, socket) => {
-    const player = new Player(playerName, socket, this.debug);
+  this.addPlayer = (playerName, playerEmail, socket) => {
+    const player = new Player(playerName, socket, playerEmail, this.debug);
     this.players.push(player);
     return player;
   };

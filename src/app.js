@@ -17,7 +17,7 @@ app.get(`/playgame` , (req , res)=>{
 const server = http.createServer(app);
 const io = socketio(server);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 app.use('/', express.static(__dirname + '/client'));
 
@@ -40,7 +40,7 @@ io.on('connection', (socket) => {
       } while (rooms.length != 0 && rooms.some((r) => r.getCode() === code));
       const game = new Game(code, data.username);
       rooms.push(game);
-      game.addPlayer(data.username, socket);
+      game.addPlayer(data.username,data.email, socket);
       game.emitPlayers('hostRoom', {
         code: code,
         players: game.getPlayersArray(),
@@ -58,7 +58,7 @@ io.on('connection', (socket) => {
     ) {
       socket.emit('joinRoom', undefined);
     } else {
-      game.addPlayer(data.username, socket);
+      game.addPlayer(data.username,data.email, socket);
       rooms = rooms.map((r) => (r.getCode() === data.code ? game : r));
       game.emitPlayers('joinRoom', {
         host: game.getHostName(),
@@ -139,6 +139,25 @@ io.on('connection', (socket) => {
       console.log("ERROR: can't find game!!!");
     }
   });
+
+  socket.on('result', () => {
+    let playersData = [];
+    const game = rooms.find(
+      (r) => r.findPlayer(socket.id).socket.id === socket.id
+    );
+    for (let pn = 0; pn < game.getNumPlayers(); pn++) {
+      playersData.push({
+        username: game.players[pn].getUsername(),
+        money: game.players[pn].getMoney(),
+        buyIns: game.players[pn].buyIns,
+        email: game.players[pn].getEmail()
+      });
+    }
+    //console.log(playersData);
+    socket.emit('getresult', playersData);
+
+  });
+
 
   socket.on('disconnect', () => {
     const game = rooms.find(

@@ -108,6 +108,11 @@ socket.on('joinRoomUpdate', function (data) {
   );
 });
 
+socket.on('getresult', function(data){
+  console.log(data);
+  
+})
+
 socket.on('joinRoom', function (data) {
   if (data == undefined) {
     $('#joinModal').closeModal();
@@ -413,7 +418,7 @@ var beginHost = function () {
     );
     $('#joinButton').removeClass('disabled');
   } else {
-    socket.emit('host', { username: $('#hostName-field').val() });
+    socket.emit('host', { username: $('#hostName-field').val(), email: $('#hostEmail-field').val() });
     $('#joinButton').addClass('disabled');
     $('#joinButton').off('click');
   }
@@ -426,11 +431,13 @@ var joinRoom = function () {
 
   // yes, i know this is client-side.
   if (
-    $('#joinName-field').val() == ''
+    $('#joinName-field').val() == '' ||
+    $('#email-field').val() == '' ||
+    $('#joinName-field').val().length > 12
   ) {
     $('.toast').hide();
     Materialize.toast(
-      'Enter a your name! (max length of name is 12 characters.)',
+      'Enter a your name/Email (max length of name is 12 characters.)',
       4000
     );
     $('#joinModal').closeModal();
@@ -448,8 +455,8 @@ var joinRoom = function () {
   } else {
     socket.emit('join', {
       code: codeValue,
-      // code:codeValue,
       username: $('#joinName-field').val(),
+      email: $('#email-field').val(),
     });
     $('#hostButton').addClass('disabled');
     $('#hostButton').off('click');
@@ -463,6 +470,10 @@ var joinRoom = function () {
 var startGame = function (gameCode) {
   socket.emit('startGame', { code: gameCode });
 };
+
+var result = function() {
+  socket.emit('result',{});
+}
 
 var fold = function () {
   socket.emit('moveMade', { move: 'fold', bet: 'Fold' });
