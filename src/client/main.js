@@ -505,6 +505,8 @@ var result = function () {
 }
 
 var fold = function () {
+  var x = document.getElementById("fold"); 
+  x.play();
   socket.emit('moveMade', { move: 'fold', bet: 'Fold' });
 };
 
