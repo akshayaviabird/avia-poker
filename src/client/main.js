@@ -288,33 +288,36 @@ socket.on('reveal', function (data) {
     })
   );
 });
-
+function exitGame(){
+  location.href='/'
+}
 function stopGame() {
-  let dia = document.getElementById("myDialogother")
-  dia.showModal();
+  location.reload()
+  // let dia = document.getElementById("myDialogother")
+  // dia.showModal();
 
-  var html = "";
-  html += "Scoreboard" + "<br/>";
-  html += "winner 1=" + "akshay" + "<br/>";
-  html += "winner 2=" + "maity" + "<br/>";
-  html += "winner 3=" + "sita" + "<br/>";
-  html += "winner 4=" + "sdf" + "<br/>";
+  // var html = "";
+  // html += "Scoreboard" + "<br/>";
+  // html += "winner 1=" + "akshay" + "<br/>";
+  // html += "winner 2=" + "maity" + "<br/>";
+  // html += "winner 3=" + "sita" + "<br/>";
+  // html += "winner 4=" + "sdf" + "<br/>";
 
-  dia.innerHTML = html;
+  // dia.innerHTML = html;
 
-  var btn = document.createElement('button');
-  btn.textContent = 'Close';
-  btn.style.marginLeft = "338px"
-  btn.style.marginTop = "246px"
-  btn.addEventListener("click", function () {
-    if (codeValue === null) {
-      location.reload()
-    }
-    if (codeValue !== null) {
-      dia.close()
-    }
-  });
-  dia.appendChild(btn);
+  // var btn = document.createElement('button');
+  // btn.textContent = 'Close';
+  // btn.style.marginLeft = "338px"
+  // btn.style.marginTop = "246px"
+  // btn.addEventListener("click", function () {
+  //   if (codeValue === null) {
+  //     location.reload()
+  //   }
+  //   if (codeValue !== null) {
+  //     dia.close()
+  //   }
+  // });
+  // dia.appendChild(btn);
   //  var ii= document.getElementById("gameover").showModal(); 
   //   $("#gameover").modal('show')
   //   console.log('sedrfg')
@@ -355,7 +358,7 @@ socket.on('endHand', function (data) {
   }
   if (codeValue !== null) {
     $('#showscore').html(
-      '<button onClick=stopGame()  class="btn white black-text menuButtons">Show score</button></a>'
+      '<button onClick=exitGame()  class="btn white black-text menuButtons">Exit Game</button></a>'
     )
   }
   $('#blindStatus').text('');
