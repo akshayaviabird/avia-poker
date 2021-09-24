@@ -16,6 +16,27 @@
 </head>
 
 <body>
+	<audio id="fold">
+		<source src="fold.mp3" type="audio/mpeg">
+		Your browser does not support the audio element.
+	  </audio>
+	<audio id="call">
+	<source src="call.mp3" type="audio/mpeg">
+	Your browser does not support the audio element.
+	</audio>
+	<audio id="allin">
+		<source src="allin.mp3" type="audio/mpeg">
+		Your browser does not support the audio element.
+		</audio>
+	<audio id="raise">
+		<source src="rasie2.mp3" type="audio/mpeg">
+		Your browser does not support the audio element.
+		</audio>	
+		<audio id="check">
+			<source src="check.mp3" type="audio/mpeg">
+			Your browser does not support the audio element.
+			</audio>
+
 	<header>
 		<div class="navbar-fixed" id="navbar-ptwu">
 			<nav class="grey darken-4" role="navigation" id="navbar">
@@ -235,6 +256,19 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.5.0/socket.io.min.js"></script>
 	<script src="./main.js"> </script>
 	<script src="./js/materialize.min.js"></script>
+
+	<script>
+		var x = document.getElementById("myAudio"); 
+		
+		function playAudio() { 
+		  x.play(); 
+		} 
+		
+		function pauseAudio() { 
+		  x.pause(); 
+		} 
+	</script>
+	
 </body>
 
 </html>

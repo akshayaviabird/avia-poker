@@ -482,10 +482,14 @@ var bet = function () {
 };
 
 function call() {
+  var x = document.getElementById("call"); 
+  x.play();
   socket.emit('moveMade', { move: 'call', bet: 'Call' });
 }
 
 var check = function () {
+  var x = document.getElementById("check"); 
+  x.play();
   socket.emit('moveMade', { move: 'check', bet: 'Check' });
 };
 
@@ -498,6 +502,8 @@ var raise = function () {
       4000
     );
   } else {
+    var x = document.getElementById("raise"); 
+    x.play();
     socket.emit('moveMade', {
       move: 'raise',
       bet: parseInt($('#raiseRangeSlider').val()),
@@ -1126,6 +1132,8 @@ function renderOpponentCard(card) {
 }
 
 function updateBetDisplay() {
+  var x = document.getElementById("raise"); 
+  x.play();
   if ($('#betRangeSlider').val() == $('#usernamesMoney').text()) {
     $('#betDisplay').html(
       '<h3 class="center-align">All-In $' +
