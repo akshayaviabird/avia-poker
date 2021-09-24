@@ -26,8 +26,11 @@
 	</header>
 	<div id="gameDiv">
 		<h4 class="white-text">Avia Poker Game</h4>
-		<div class="row">
-			<div class="col">
+		<div style="display: flex; justify-content: space-between;">
+			<div style="display: flex; justify-content: space-around; flex-direction: column;">
+
+
+			<div>
 				<div id="playerInformationCard" class="card green darken-2">
 					<div class="card-content white-text">
 						<span class="card-title" id="usernamesCards"></span>
@@ -35,7 +38,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col">
+			<div>
 				<div class="card green darken-2">
 					<div class="card-content white-text center-align">
 						<span class="card-title center-align" id="usernamesMoney"></span>
@@ -59,19 +62,21 @@
 					</div>
 				</div>
 			</div>
-				<div class="card blue darken-2">
-					<div id="scoreboard" style="display: flex;flex-direction: column;"></div>
-				</div>
+		</div>
+			<div class="blue darken-2" style="padding: 10px;">
+				<b><u style="padding-bottom: 5px; font-size: 1.8em; color: white;">Scoreboard</u></b>
+				<div id="scoreboard" style="display: flex;flex-direction: column;"></div>
+			</div>
 		</div>
 		<div>
-			<div class="card board green darken-2">
+			<div class="main card board">
 				<div class="card-content white-text ">
 					<span id="table-title" class="card-title"></span>
 					<div id="communityCards"></div>
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<div>
 			<div id="opponentCards"></div>
 		</div>
 	</div>
@@ -226,7 +231,6 @@
 		</div>
 	</div>
 
-	<footer class="page-footer white">
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.5.0/socket.io.min.js"></script>
 	<script src="./main.js"> </script>
