@@ -60,7 +60,7 @@ socket.on('hostRoom', function (data) {
     } else {
       $('#hostModalContent').html(
         '<h5>Code:</h5><code>' +
-        window.location.href+'playgame?token=' + data.code +
+        window.location.href + 'playgame?token=' + data.code +
         '</code><br /><h5>Players Currently in My Room</h5>'
       );
       $('#playersNames').html(
@@ -108,9 +108,38 @@ socket.on('joinRoomUpdate', function (data) {
   );
 });
 
-socket.on('getresult', function(data){
+socket.on('getresult', function (data) {
+  let dia = document.getElementById("myDialogother")
+  dia.showModal();
+  // points.sort(function(a, b){return b - a});
+  var listItems = data.sort((a, b) => (a.money > b.money ? -1 : (b.money > a.money) ? 1 : 0)).map(function (item, index) {
+    return '<div style ="font-size:2em">' + (parseInt(index) + 1) + "&nbsp" + item.username + "&nbsp" + "=>" + "&nbsp" + item.money + "." + '</div>'
+  })
+  // ${item.username}` -  `${item.money}`
+  // html += "Scoreboard" + "<br/>";
+  // html += "winner 1" + listItems.username+ "<br/>" + "coins" +listItems.money;
+  // html += "winner 2=" + "maity" + "<br/>";
+  // html += "winner 3=" + "sita" + "<br/>";
+  // html += "winner 4=" + "sdf" + "<br/>";
+
+  dia.innerHTML = listItems;
+
+  var btn = document.createElement('button');
+  btn.textContent = 'Close';
+  btn.style.marginLeft = "338px"
+  btn.style.marginTop = "246px"
+  btn.style.backgroundColor = 'black'
+  btn.addEventListener("click", function () {
+    if (codeValue === null) {
+      location.reload()
+    }
+    if (codeValue !== null) {
+      dia.close()
+      location.reload()
+    }
+  });
+  dia.appendChild(btn);
   console.log(data);
-  
 })
 
 socket.on('joinRoom', function (data) {
@@ -235,7 +264,7 @@ function playNext() {
 if (codeValue === null) {
   $('#stopGame').html(
     // '<a href="#hostModal"> Stop Game</button></a>'
-    ' <button onClick=stopGame() class="btn white black-text menuButtons">Stop Game</button>'
+    ' <button onClick=result() class="btn white black-text menuButtons">Stop Game</button>'
   )
 }
 socket.on('reveal', function (data) {
@@ -265,7 +294,7 @@ socket.on('reveal', function (data) {
   if (codeValue !== null) {
 
     $('#showscore').html(
-      '<button onClick=stopGame()  class="btn white black-text menuButtons">Show score</button></a>'
+      '<button onClick=result()  class="btn white black-text menuButtons">Show score</button></a>'
     )
   }
   $('#blindStatus').text(data.hand);
@@ -360,7 +389,7 @@ socket.on('endHand', function (data) {
   }
   if (codeValue !== null) {
     $('#showscore').html(
-      '<button onClick=stopGame()  class="btn white black-text menuButtons">Show score</button></a>'
+      '<button onClick=result()()  class="btn white black-text menuButtons">Show score</button></a>'
     )
   }
   $('#blindStatus').text('');
@@ -471,8 +500,8 @@ var startGame = function (gameCode) {
   socket.emit('startGame', { code: gameCode });
 };
 
-var result = function() {
-  socket.emit('result',{});
+var result = function () {
+  socket.emit('result', {});
 }
 
 var fold = function () {
@@ -493,13 +522,13 @@ var bet = function () {
 };
 
 function call() {
-  var x = document.getElementById("call"); 
+  var x = document.getElementById("call");
   x.play();
   socket.emit('moveMade', { move: 'call', bet: 'Call' });
 }
 
 var check = function () {
-  var x = document.getElementById("check"); 
+  var x = document.getElementById("check");
   x.play();
   socket.emit('moveMade', { move: 'check', bet: 'Check' });
 };
@@ -513,7 +542,7 @@ var raise = function () {
       4000
     );
   } else {
-    var x = document.getElementById("raise"); 
+    var x = document.getElementById("raise");
     x.play();
     socket.emit('moveMade', {
       move: 'raise',
@@ -1143,7 +1172,7 @@ function renderOpponentCard(card) {
 }
 
 function updateBetDisplay() {
-  var x = document.getElementById("raise"); 
+  var x = document.getElementById("raise");
   x.play();
   if ($('#betRangeSlider').val() == $('#usernamesMoney').text()) {
     $('#betDisplay').html(
