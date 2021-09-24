@@ -157,7 +157,7 @@ code {
   margin-left: 20%;
   border-radius: 500px;
   height: 400px;
-  padding-left:4%;
+  padding-left:3%;
   padding-top: 200px;
   box-shadow: 20px black;
 }
@@ -166,12 +166,12 @@ code {
   position: absolute;
   top: 42%;
   left: 28%;
-  border: 15px solid #f3eeee;
+  border: 15px solid #070707;
   border-radius: 50%;
   width: 700px;
   height: 700px;
   z-index: 2;
-  background-color: rgb(2, 9, 43);
+  background: url(wood.jpg)
 }
 
 .circle {
