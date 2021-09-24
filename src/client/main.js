@@ -227,8 +227,7 @@ socket.on('gameBegin', function (data) {
 function playNext() {
   socket.emit('startNextRound', {});
 }
-if(codeValue===null){
- 
+if(codeValue===null){ 
   $('#stopGame').html(
     // '<a href="#hostModal"> Stop Game</button></a>'
     ' <button onClick=stopGame() class="btn white black-text menuButtons">Stop Game</button>'
@@ -251,7 +250,7 @@ socket.on('reveal', function (data) {
 
   if(codeValue===null){
     $('#playNext').html(
-      '<button onClick=playNext() id="playNextButton" class="btn white black-text menuButtons">Start Next Game</button>'
+      '<button onClick=playNext(data) id="playNextButton" class="btn white black-text menuButtons">Start Next Game</button>'
     );
     // $('#stopGame').html(
     //   // '<a href="#hostModal"> Stop Game</button></a>'
@@ -259,6 +258,7 @@ socket.on('reveal', function (data) {
     // )
   }
   if(codeValue !== null){
+
     $('#showscore').html(
     '<button onClick=stopGame()  class="btn white black-text menuButtons">Show score</button></a>'
     )
@@ -289,23 +289,23 @@ socket.on('reveal', function (data) {
   );
 });
 
-function stopGame(){
+function stopGame(){ 
   let dia=document.getElementById("myDialog")
   dia.showModal(); 
-  var html = "";
-  html += "Scoreboard"  +"<br/>";
-  html += "winner 1=" + "akshay" + "<br/>";
-  html += "winner 2=" + "maity" + "<br/>";
-  html += "winner 3=" + "sita" + "<br/>";
-  html += "winner 4=" + "sdf" + "<br/>";
-  dia.innerHTML = html; 
+  // var html = "";
+  // html += "Scoreboard"  +"<br/>";
+  // html += "winner 1=" + "akshay" + "<br/>";
+  // html += "winner 2=" + "maity" + "<br/>";
+  // html += "winner 3=" + "sita" + "<br/>";
+  // html += "winner 4=" + "sdf" + "<br/>";
+
+  // dia.innerHTML = html; 
+  
   var btn = document.createElement('button');
   btn.textContent = 'Close';
-  btn.style.marginLeft="395px"
-  btn.style.marginTop="249px"
-  // Buttons don't have an href. You need to set up a click event handler
-  btn.addEventListener("click", function(){
-    // location = "/"; // Navigate to new page
+  btn.style.marginLeft="338px"
+  btn.style.marginTop="246px" 
+  btn.addEventListener("click", function(){ 
     if(codeValue ===null){
       location.reload()
     }
@@ -313,8 +313,6 @@ function stopGame(){
     dia.close()
     }
   });
-  
-  // Add button to page
   dia.appendChild(btn);
 //  var ii= document.getElementById("gameover").showModal(); 
 //   $("#gameover").modal('show')
