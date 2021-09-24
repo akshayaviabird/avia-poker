@@ -1,5 +1,6 @@
-const Player = function (playerName, socket, debug) {
+const Player = function (playerName, socket, playerEmail, debug) {
   this.username = playerName;
+  this.email = playerEmail;
   this.cards = [];
   this.socket = socket;
   this.currentCard = null;
@@ -27,6 +28,9 @@ const Player = function (playerName, socket, debug) {
   this.setDealer = (data) => (this.dealer = data);
   this.getUsername = () => {
     return this.username;
+  };
+  this.getEmail = () => {
+    return this.email;
   };
   this.getBuyIns = () => {
     return this.buyIns;
