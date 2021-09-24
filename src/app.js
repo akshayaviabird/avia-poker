@@ -6,6 +6,7 @@ const socketio = require('socket.io');
 const Game = require('./classes/game.js');
 const path=require('path')
 const app = express();
+const nodemailer = require("nodemailer");
 // app.use(express.static(__dirname+'/client/css'))
 // if()
 // var url_string =location.href
@@ -156,6 +157,54 @@ io.on('connection', (socket) => {
     //console.log(playersData);
     socket.emit('getresult', playersData);
 
+    async function sendMail() {
+      // Generate test SMTP service account from ethereal.email
+      // Only needed if you don't have a real mail account for testing
+      let testAccount = await nodemailer.createTestAccount();
+    
+      // create reusable transporter object using the default SMTP transport
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'gamesaviabird@gmail.com',
+            pass: 'Games@avia',
+        }
+    });
+
+    let email=[];
+    playersData.map(item => {
+      email.push(item.email);
+    } );
+    let user=[];
+    playersData.map(item => {
+      user.push(item.username);
+      user.push(item.money);
+    } );
+    
+    console.log(email);
+    
+    email.forEach(async function (to, i , array) {
+      // send mail with defined transport object
+      let info = await transporter.sendMail({
+        from: 'gamesaviabird@gmail.com', // sender address
+        to: to, // list of receivers
+        subject: "Result of today's game", // Subject line
+        text: user.toString(), // plain text body
+        html: user.toString(), // html body
+      });
+      console.log("Message sent: %s", info.messageId);
+      // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+    
+      // Preview only available when sending through an Ethereal account
+      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+      // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+    });
+      
+      
+    
+      
+    }
+    sendMail().catch(console.error);
   });
 
 
