@@ -2,6 +2,7 @@
 <html>
 
 <head>
+	<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
 	<link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
 	<link href="css/index.css" type="text/css" rel="stylesheet" media="screen,projection" />
 	<meta property="og:image" content="./img/pokerBanner.png" />
@@ -44,7 +45,9 @@
 						<div id="blindStatus"></div>
 						<div id="status"></div>
 						<br />
+						<div id="stopGame"></div>
 						<div id="playNext"></div>
+						<div id="showscore"></div>
 						<button onClick=fold() id="usernameFold" class="btn white black-text menuButtons">Fold</button>
 						<br />
 						<button onClick=check() id="usernameCheck" class="btn white black-text menuButtons">Check</button>
@@ -90,7 +93,7 @@
 						<a id="hostButton" class="btn-large waves-effect waves-light indigo darken-3 white-text modal-trigger"
 							href="#hostModal">Host
 							Game</a>
-						<a id="joinButton" class="btn-large waves-effect waves-light indigo darken-3 white-text modal-trigger"
+						<a id="joinButton" style="display: none;" class="btn-large waves-effect waves-light indigo darken-3 white-text modal-trigger"
 							href="#joinModal">Join
 							Game</a>
 					</div>
@@ -107,9 +110,13 @@
 					<label for="name">Name</label>
 					<input type="text" name="name" id="hostName-field" required />
 				</div>
-				<button onclick=beginHost() type="submit"
-					class="waves-effect waves-light indigo darken-3 white-text btn-flat">Get
-					Code</button>
+				<div class="input-field col s12">
+					<label for="email">Email</label>
+					<input type="email" name="email" id="hostEmail-field" required />
+				</div>
+	
+				<button onclick=beginHost() type="submit" id="btnSubmit"
+					class="waves-effect waves-light indigo darken-3 white-text btn-flat">Get Unique URL</button>
 			</div>
 			<div id="playersNames"></div>
 			<div id="startGameArea"></div>
@@ -129,9 +136,13 @@
 					<label for="name">Name</label>
 					<input type="text" name="name" id="joinName-field" required="required" />
 				</div>
-				<div class="input-field col s12">
+				<!-- <div class="input-field col s12">
 					<label for="code">Code</label>
 					<input type="text" name="code" id="code-field" required="required" />
+				</div> -->
+				<div class="input-field col s12">
+					<label for="email">Email</label>
+					<input type="email" name="email" id="email-field" required="required" />
 				</div>
 				<button onclick=joinRoom() type="submit"
 					class="waves-effect waves-light indigo darken-3 white-text btn-flat">Join
@@ -187,6 +198,39 @@
 			<a href="#!" class="modal-close waves-effect waves-light btn-flat">CLOSE</a>
 		</div>
 	</div>
+
+	</div>
+
+	<dialog id="myDialogother" style="height: 416px; width: 500px;">
+		<div id="displayfinal" style="height: 416px; width: 500px;text-transform: capitalize;font-size: 28px;"></div>
+	</dialog>
+
+	<div id="gameover" class="modal">
+		<div class="modal-content">
+			<h4>Score board</h4>
+			<!-- <div id="gameOverModalContent"> -->
+				<!-- <p>Enter your name, and then we'll give you a code which you can give to your friends as the host.</p>
+				<div class="input-field col s12">
+					<label for="name">Name</label>
+					<input type="text" name="name" id="hostName-field" required />
+				</div>
+				<div class="input-field col s12">
+					<label for="email">Email</label>
+					<input type="email" name="email" id="hostEmail-field" required />
+				</div> -->
+<!-- 	
+				<button onclick=beginHost() type="submit" id="btnSubmit"
+					class="waves-effect waves-light indigo darken-3 white-text btn-flat">Get Unique URL</button>
+			</div> -->
+			<!-- <div id="playersNames"></div>
+			<div id="startGameArea"></div> -->
+			<div id="DashboardAream"></div>
+		</div>
+		<div class="modal-footer">
+			<a class="modal-close waves-effect waves-light btn-flat">CLOSE</a>
+		</div>
+	</div>
+
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.5.0/socket.io.min.js"></script>
 	<script src="./main.js"> </script>

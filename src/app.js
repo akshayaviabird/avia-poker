@@ -2,9 +2,18 @@
 const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
+// const url=require('url')
 const Game = require('./classes/game.js');
-
+const path=require('path')
 const app = express();
+// app.use(express.static(__dirname+'/client/css'))
+// if()
+// var url_string =location.href
+// var url = new URL(url_string);
+// var codeValue = url.searchParams.get("token");
+app.get(`/playgame` , (req , res)=>{
+   res.sendFile(path.join(__dirname+'/client/index.html'))
+})
 const server = http.createServer(app);
 const io = socketio(server);
 
@@ -147,4 +156,4 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(PORT, () => console.log(`hosting on port ${PORT}`));
+server.listen(PORT, () => console.log(`hosting on port ${PORT}`)); 
