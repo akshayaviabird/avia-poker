@@ -173,7 +173,8 @@ socket.on('dealt', function (data) {
 });
 
 socket.on('rerender', function (data) {
-  console.log(data);
+  socket.emit('timer_turn', data.players);
+  console.log(data.players);
   if (data.myBet == 0) {
     $('#usernamesCards').text(data.username + ' - My Cards');
   } else {

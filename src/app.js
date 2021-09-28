@@ -117,6 +117,9 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on('timer_turn', (data) => {
+    console.log("timer"+data);
+  })
   // precondition: user must be able to make the move in the first place.
   socket.on('moveMade', (data) => {
     // worst case complexity O(num_rooms * num_players_in_room)
