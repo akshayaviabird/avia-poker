@@ -22,8 +22,6 @@ if (codeValue !== null) {
   document.getElementById("joinButton").style.display = "inherit";
 }
 
-
-
 socket.on('playerDisconnected', function (data) {
   Materialize.toast(data.player + ' disconnected.', 4000);
 });
@@ -175,6 +173,7 @@ socket.on('dealt', function (data) {
 });
 
 socket.on('rerender', function (data) {
+  console.log(data);
   if (data.myBet == 0) {
     $('#usernamesCards').text(data.username + ' - My Cards');
   } else {
@@ -258,6 +257,25 @@ socket.on('gameBegin', function (data) {
   }
 });
 
+socket.on('ring', function(data) {
+  console.log(data);
+  if (data == 'fold') {
+    var x = document.getElementById("fold"); 
+    x.play();
+  } else if (data == 'check') {
+    var x = document.getElementById("check");
+    x.play();
+  } else if (data == 'bet') {
+    var x = document.getElementById("raise");
+    x.play();
+  } else if (data == 'call') {
+    var x = document.getElementById("call");
+    x.play();
+  } else if (data == 'raise') {
+    var x = document.getElementById("raise");
+    x.play();
+  }
+})
 function playNext() {
   socket.emit('startNextRound', {});
 }

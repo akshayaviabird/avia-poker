@@ -125,6 +125,9 @@ io.on('connection', (socket) => {
     );
 
     if (game != undefined) {
+
+      socket.broadcast.emit('ring', data.move)
+
       if (data.move == 'fold') {
         game.fold(socket);
       } else if (data.move == 'check') {
@@ -136,6 +139,7 @@ io.on('connection', (socket) => {
       } else if (data.move == 'raise') {
         game.raise(socket, data.bet);
       }
+      
     } else {
       console.log("ERROR: can't find game!!!");
     }
@@ -164,10 +168,15 @@ io.on('connection', (socket) => {
     
       // create reusable transporter object using the default SMTP transport
       const transporter = nodemailer.createTransport({
-        service: 'gmail',
+        host: "smtp-mail.outlook.com", // hostname
+        secureConnection: false, // TLS requires secureConnection to be false
+        port: 587, // port for secure SMTP
+        tls: {
+          ciphers:'SSLv3'
+        },
         auth: {
-            user: 'gamesaviabird@gmail.com',
-            pass: 'Games@avia',
+            user: 'games@aviabird.com',
+            pass: 'Woodland123',
         }
     });
 
