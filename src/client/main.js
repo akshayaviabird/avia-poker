@@ -17,7 +17,6 @@ var codeValue = url.searchParams.get("token");
 
 
 if (codeValue !== null) {
-  console.log('code:', codeValue)
   document.getElementById("hostButton").style.display = "none";
   document.getElementById("joinButton").style.display = "inherit";
 }
@@ -26,7 +25,7 @@ socket.on('playerDisconnected', function (data) {
   Materialize.toast(data.player + ' disconnected.', 4000);
 });
 
-socket.on('hostRoom', function (data) {
+socket.on('hostRoom', function (data) { 
   if (data != undefined) {
     if (data.players.length >= 11) {
       $('#hostModalContent').html(
@@ -174,7 +173,7 @@ socket.on('dealt', function (data) {
 
 socket.on('rerender', function (data) {
   socket.emit('timer_turn', data.players);
-  console.log(data.players);
+
   if (data.myBet == 0) {
     $('#usernamesCards').text(data.username + ' - My Cards');
   } else {
@@ -246,7 +245,7 @@ socket.on('rerender', function (data) {
     $('#usernameRaise').hide();
   }
 });
-
+ 
 socket.on('gameBegin', function (data) {
   $('#navbar-ptwu').hide();
   $('#joinModal').closeModal();
@@ -1344,4 +1343,82 @@ function renderSelfScoreboard(data) {
   }
   $('#blindStatus').text(data.blind);
 }
+
+// socket.on('timer_turn', (data) => {
+//   console.log("timerdfg"+data);
+//   data.players.map((item)=>{
+//     console.log("timerdfg",item);
+//        if(item.status == "Their Turn"){
+//          var timeleft = 20;
+//           var downloadTimer = setInterval(function()
+//           {
+//             if(timeleft <= 0){ 
+//             clearInterval(downloadTimer); 
+//                  document.getElementById("countdown").innerHTML = "Finished";
+//            } else { 
+//                 document.getElementById("countdown").innerHTML = timeleft + " seconds remaining"; 
+//            } 
+//             timeleft -= 1; 
+//             }, 1000);
+//        } 
+//      })
+// })
+socket.on('timer_turn',(data)=>{
+  console.log('my timmer tern ',data)
+})
+var timeleft = 30;
+var downloadTimer = setInterval(function()
+{
+  if(timeleft <= 0){ 
+  clearInterval(downloadTimer); 
+       document.getElementById("countdown").innerHTML = "Finished";
+ } else { 
+      document.getElementById("countdown").innerHTML = timeleft + " seconds remaining"; 
+ } 
+  timeleft -= 1; 
+  }, 1000);
+
+  // socket.on('')
+
+  // socket.on('timer_turn', (data) => {
+  //   console.log("timer"+data);
+  //   data.map((item)=>{
+  //     if(item.status == "Their Turn"){
+  //       var timeleft = 20;
+  //                 var downloadTimer = setInterval(function()
+  //                 {
+  //                   if(timeleft <= 0){ 
+  //                   clearInterval(downloadTimer); 
+  //                        document.getElementById("countdown").innerHTML = "Finished";
+  //                  } else { 
+  //                       document.getElementById("countdown").innerHTML = timeleft + " seconds remaining"; 
+  //                  } 
+  //                   timeleft -= 1; 
+  //                   }, 1000);
+  //              }
+      
+  //   })
+  // })
+  socket.on('akshay', (data) => {
+    console.log("timer in main",data);
+    data.map((item)=>{
+      // console.log('item.status',item.status)
+      if(item.status == "Their Turn"){
+        var timeleft = 35;
+        var downloadTimer = setInterval(function()
+                  {
+                    if(timeleft <= 0){ 
+                    clearInterval(downloadTimer); 
+                         document.getElementById("countdown").innerHTML = "Finished";
+                   } else { 
+                        document.getElementById("countdown").innerHTML = timeleft + " seconds remaining"; 
+                   } 
+                    timeleft -= 1; 
+                    }, 1000);
+                  }
+              //  }else{
+              //   document.getElementById("countdown").style.display = "none";
+              //  }
+})
+})
 

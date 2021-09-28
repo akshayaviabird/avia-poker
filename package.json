@@ -22,8 +22,8 @@
     "pokersolver": "^2.1.3",
     "socket.io": "^2.3.0"
   },
-  "engines": {
-    "node": "^14.17.0",
+  "engines": { 
+    "node": "^14.17.2",
     "yarn": "^1.19"
   },
   "devDependencies": {

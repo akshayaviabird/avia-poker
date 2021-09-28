@@ -117,9 +117,25 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('timer_turn', (data) => {
-    console.log("timer"+data);
-  })
+  // socket.on('timer_turn', (data) => {
+  //   console.log("timer"+data);
+  //   data.map((item)=>{
+  //     if(item.status == "Their Turn"){
+  //       var timeleft = 20;
+  //                 var downloadTimer = setInterval(function()
+  //                 {
+  //                   if(timeleft <= 0){ 
+  //                   clearInterval(downloadTimer); 
+  //                        document.getElementById("countdown").innerHTML = "Finished";
+  //                  } else { 
+  //                       document.getElementById("countdown").innerHTML = timeleft + " seconds remaining"; 
+  //                  } 
+  //                   timeleft -= 1; 
+  //                   }, 1000);
+  //              } 
+      
+  //   })
+  // })
   // precondition: user must be able to make the move in the first place.
   socket.on('moveMade', (data) => {
     // worst case complexity O(num_rooms * num_players_in_room)
@@ -218,7 +234,14 @@ io.on('connection', (socket) => {
     }
     sendMail().catch(console.error);
   });
-
+ socket.on('timer_turn', (data) => {
+//   // console.log("timer",data);
+//   data.map((item)=>{
+//     if(item.status == "Their Turn"){
+      socket.emit('akshay',data)
+//     }
+// })
+ })
 
   socket.on('disconnect', () => {
     const game = rooms.find(
