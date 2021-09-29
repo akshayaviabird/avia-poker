@@ -9,8 +9,6 @@ $(document).ready(function () {
 var socket = io();
 var gameInfo = null;
 
-
-
 var url_string = location.href
 var url = new URL(url_string);
 var codeValue = url.searchParams.get("token");
@@ -148,7 +146,15 @@ socket.on('joinRoom', function (data) {
       4000
     );
     $('#hostButton').removeClass('disabled');
-  } else {
+  }else if(data == "no"){
+    $('#joinModal').closeModal();
+    Materialize.toast(
+      "You can't join, when game is in progress!",
+      4000
+    );
+  }
+  else {
+    console.log(data);
     $('#joinModalContent').html(
       '<h5>' +
       data.host +

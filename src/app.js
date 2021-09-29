@@ -2,16 +2,10 @@
 const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
-// const url=require('url')
 const Game = require('./classes/game.js');
 const path=require('path')
 const app = express();
 const nodemailer = require("nodemailer");
-// app.use(express.static(__dirname+'/client/css'))
-// if()
-// var url_string =location.href
-// var url = new URL(url_string);
-// var codeValue = url.searchParams.get("token");
 app.get(`/playgame` , (req , res)=>{
    res.sendFile(path.join(__dirname+'/client/index.html'))
 })
@@ -58,12 +52,16 @@ io.on('connection', (socket) => {
       data.username.length > 12
     ) {
       socket.emit('joinRoom', undefined);
+    } else if(game.roundNum>0) {
+      var data = "no"
+      socket.emit('joinRoom', data);
     } else {
       game.addPlayer(data.username,data.email, socket);
       rooms = rooms.map((r) => (r.getCode() === data.code ? game : r));
       game.emitPlayers('joinRoom', {
         host: game.getHostName(),
         players: game.getPlayersArray(),
+        progress: game.roundInProgress
       });
       game.emitPlayers('hostRoom', {
         code: data.code,
