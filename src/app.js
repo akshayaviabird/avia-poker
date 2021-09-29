@@ -3,12 +3,13 @@ const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
 const Game = require('./classes/game.js');
-const path=require('path')
+const path = require('path');
 const app = express();
-const nodemailer = require("nodemailer");
-app.get(`/playgame` , (req , res)=>{
-   res.sendFile(path.join(__dirname+'/client/index.html'))
-})
+var XMLHttpRequest = require('xhr2');
+const nodemailer = require('nodemailer');
+app.get(`/playgame`, (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/index.html'));
+});
 const server = http.createServer(app);
 const io = socketio(server);
 
@@ -35,7 +36,7 @@ io.on('connection', (socket) => {
       } while (rooms.length != 0 && rooms.some((r) => r.getCode() === code));
       const game = new Game(code, data.username);
       rooms.push(game);
-      game.addPlayer(data.username,data.email, socket);
+      game.addPlayer(data.username, data.email, socket);
       game.emitPlayers('hostRoom', {
         code: code,
         players: game.getPlayersArray(),
@@ -52,16 +53,16 @@ io.on('connection', (socket) => {
       data.username.length > 12
     ) {
       socket.emit('joinRoom', undefined);
-    } else if(game.roundNum>0) {
-      var data = "no"
+    } else if (game.roundNum > 0) {
+      var data = 'no';
       socket.emit('joinRoom', data);
     } else {
-      game.addPlayer(data.username,data.email, socket);
+      game.addPlayer(data.username, data.email, socket);
       rooms = rooms.map((r) => (r.getCode() === data.code ? game : r));
       game.emitPlayers('joinRoom', {
         host: game.getHostName(),
         players: game.getPlayersArray(),
-        progress: game.roundInProgress
+        progress: game.roundInProgress,
       });
       game.emitPlayers('hostRoom', {
         code: data.code,
@@ -116,8 +117,8 @@ io.on('connection', (socket) => {
   });
 
   socket.on('timer_turn', (data) => {
-    console.log("timer"+data);
-  })
+    console.log('timer' + data);
+  });
   // precondition: user must be able to make the move in the first place.
   socket.on('moveMade', (data) => {
     // worst case complexity O(num_rooms * num_players_in_room)
@@ -126,8 +127,7 @@ io.on('connection', (socket) => {
     );
 
     if (game != undefined) {
-
-      socket.broadcast.emit('ring', data.move)
+      socket.broadcast.emit('ring', data.move);
 
       if (data.move == 'fold') {
         game.fold(socket);
@@ -140,7 +140,6 @@ io.on('connection', (socket) => {
       } else if (data.move == 'raise') {
         game.raise(socket, data.bet);
       }
-      
     } else {
       console.log("ERROR: can't find game!!!");
     }
@@ -156,67 +155,89 @@ io.on('connection', (socket) => {
         username: game.players[pn].getUsername(),
         money: game.players[pn].getMoney(),
         buyIns: game.players[pn].buyIns,
-        email: game.players[pn].getEmail()
+        email: game.players[pn].getEmail(),
       });
     }
     //console.log(playersData);
     socket.emit('getresult', playersData);
 
+    var url = 'https://immense-dusk-54293.herokuapp.com/api/v1/leaderbaord';
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', url);
+
+    xhr.setRequestHeader('Accept', 'application/json');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        console.log(xhr.status);
+        console.log(xhr.responseText);
+      }
+    };
+
+    let score = [];
+    playersData.map((item) => {
+      score.push({"username":item.username.toString(), "email": item.email.toString(), "points": item.money.toString()});
+    });
+    
+    var data = {
+      "score": score
+    };
+
+    console.log(JSON.stringify(data))
+    xhr.send(JSON.stringify(data));
+
     async function sendMail() {
       // Generate test SMTP service account from ethereal.email
       // Only needed if you don't have a real mail account for testing
       let testAccount = await nodemailer.createTestAccount();
-    
+
       // create reusable transporter object using the default SMTP transport
       const transporter = nodemailer.createTransport({
-        host: "smtp-mail.outlook.com", // hostname
+        host: 'smtp-mail.outlook.com', // hostname
         secureConnection: false, // TLS requires secureConnection to be false
         port: 587, // port for secure SMTP
         tls: {
-          ciphers:'SSLv3'
+          ciphers: 'SSLv3',
         },
         auth: {
-            user: 'games@aviabird.com',
-            pass: 'Woodland123',
-        }
-    });
-
-    let email=[];
-    playersData.map(item => {
-      email.push(item.email);
-    } );
-    let user=[];
-    playersData.map(item => {
-      user.push(item.username);
-      user.push(item.money);
-    } );
-    
-    console.log(email);
-    
-    email.forEach(async function (to, i , array) {
-      // send mail with defined transport object
-      let info = await transporter.sendMail({
-        from: 'gamesaviabird@gmail.com', // sender address
-        to: to, // list of receivers
-        subject: "Result of today's game", // Subject line
-        text: user.toString(), // plain text body
-        html: user.toString(), // html body
+          user: 'games@aviabird.com',
+          pass: 'Woodland123',
+        },
       });
-      console.log("Message sent: %s", info.messageId);
-      // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-    
-      // Preview only available when sending through an Ethereal account
-      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-      // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
-    });
-      
-      
-    
-      
-    }
-    sendMail().catch(console.error);
-  });
 
+      let email = [];
+      playersData.map((item) => {
+        email.push(item.email);
+      });
+      let user = [];
+      playersData.map((item) => {
+        user.push(item.username);
+        user.push(item.money);
+      });
+
+      console.log(email);
+
+      email.forEach(async function (to, i, array) {
+        // send mail with defined transport object
+        let info = await transporter.sendMail({
+          from: 'gamesaviabird@gmail.com', // sender address
+          to: to, // list of receivers
+          subject: "Result of today's game", // Subject line
+          text: user.toString(), // plain text body
+          html: user.toString(), // html body
+        });
+        console.log('Message sent: %s', info.messageId);
+        // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+        // Preview only available when sending through an Ethereal account
+        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+        // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+      });
+    }
+    // sendMail().catch(console.error);
+  });
 
   socket.on('disconnect', () => {
     const game = rooms.find(
@@ -234,4 +255,4 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(PORT, () => console.log(`hosting on port ${PORT}`)); 
+server.listen(PORT, () => console.log(`hosting on port ${PORT}`));
