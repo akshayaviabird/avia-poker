@@ -7,6 +7,7 @@ const Game = require('./classes/game.js');
 const path=require('path')
 const app = express();
 const nodemailer = require("nodemailer");
+const localStorages=require('localStorage')
 // app.use(express.static(__dirname+'/client/css'))
 // if()
 // var url_string =location.href
@@ -23,7 +24,7 @@ const PORT = process.env.PORT || 3000;
 app.use('/', express.static(__dirname + '/client'));
 
 let rooms = [];
-
+// localStorage.setItem('sdfg','werg')
 io.on('connection', (socket) => {
   console.log('new connection ', socket.id);
   socket.on('host', (data) => {
@@ -42,6 +43,16 @@ io.on('connection', (socket) => {
       const game = new Game(code, data.username);
       rooms.push(game);
       game.addPlayer(data.username,data.email, socket);
+      socket.emit('localcode',code)
+      // localStorages.setItem('sd',JSON.stringify(code))
+    //  localStorage.setItem('gamecode',code)
+    // if (typeof localStorage === "undefined" || localStorage === null) {
+    //   var LocalStorage = require('node-localstorage').LocalStorage;
+    //   localStorage = new LocalStorage('./scratch');
+    // }
+    
+    // localStorage.setItem('myFirstKey', code);
+  
       game.emitPlayers('hostRoom', {
         code: code,
         players: game.getPlayersArray(),
@@ -224,8 +235,10 @@ io.on('connection', (socket) => {
     const game = rooms.find(
       (r) => r.findPlayer(socket.id).socket.id === socket.id
     );
+   
     if (game != undefined) {
-      const player = game.findPlayer(socket.id);
+      const player = game.findPlayer(socket.id); 
+      console.log('aaaaaaaaaaaaaaaa',game.players)
       game.disconnectPlayer(player);
       if (game.players.length == 0) {
         if (this.rooms != undefined && this.rooms.length !== 0) {

@@ -9,11 +9,17 @@ $(document).ready(function () {
 var socket = io();
 var gameInfo = null;
 
-
+socket.on('localcode',(data)=>{
+  localStorage.setItem('asdf',JSON.stringify(data))
+})
 
 var url_string = location.href
 var url = new URL(url_string);
-var codeValue = url.searchParams.get("token");
+// var codeValue = url.searchParams.get("token");
+var codeValue=JSON.parse(localStorage.getItem('asdf'))
+// console.log('asdfasdfv',JSON.parse(localStorage.getItem('asdf')))
+// console.log('url',codeValue)
+
 
 
 if (codeValue !== null) {
@@ -473,8 +479,12 @@ var beginHost = function () {
 };
 var url_string = window.location.href;
 var url = new URL(url_string);
-var codeValue = url.searchParams.get("token");
-
+// var codeValue = url.searchParams.get("token");
+// var ff=function(){
+  // if(localStorage.getItem('asdf')){
+  //   localStorage.removeItem('asdf')
+  // }
+// }
 var joinRoom = function () {
 
   // yes, i know this is client-side.
@@ -517,6 +527,7 @@ var joinRoom = function () {
 
 var startGame = function (gameCode) {
   socket.emit('startGame', { code: gameCode });
+  localStorage.removeItem('asdf')
 };
 
 var result = function () {
