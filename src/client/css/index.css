@@ -37,6 +37,10 @@ body,
   margin-left: auto !important;
 }
 
+.card-act {
+  margin-right: auto !important;
+}
+
 body {
   font-family: Metropolis-Medium;
 }
@@ -51,11 +55,11 @@ code {
   border: 5px solid black;
   background-color: white;
   border-radius: 5px;
-  height: 135px;
-  width: 90px;
+  height: 100px;
+  width: 70px;
   color: black;
   padding: 5px;
-  margin: 8px;
+  margin: 3px;
   font-size: 28px;
 }
 
@@ -69,11 +73,11 @@ code {
   /* border: 5px solid black; */
   background-color: white;
   border-radius: 5px;
-  height: 135px;
-  width: 90px;
+  height: 100px;
+  width: 70px;
   color: red;
   padding: 5px;
-  margin: 8px;
+  margin: 3px;
   font-size: 28px;
 }
 
@@ -83,7 +87,7 @@ code {
 }
 
 .card-content {
-  font-size: 16px;
+  font-size: 11px;
 }
 
 .theirTurn {
@@ -127,8 +131,8 @@ code {
   );
   /* border: 5px solid black; */
   border-radius: 5px;
-  height: 84px;
-  width: 60px;
+  height: 59px;
+  width: 46px;
   padding: 10px;
   margin: 4px;
 }
@@ -162,71 +166,124 @@ code {
   box-shadow: 20px black;
 }
 
-.main {
-  position: absolute;
-  top: 42%;
-  left: 28%;
+ .main {
+  display: flex;
+  justify-content: center;
+  /* position: relative;
+  top: -60vh; */
   border: 15px solid #070707;
   border-radius: 50%;
+  width: 500px;
+  height: 350px;
+  z-index: 2;
+  background: url(wood.jpg);
+  margin-top: 150px;
+}
+
+.card-view{
+display: flex;
+flex-direction: column;
+justify-content: center;
+flex-wrap: wrap;
+width: 400px;
+}
+
+.table-heading{
+  font-size: 17px;
+}
+
+/* .mains {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: -60vh;
   width: 700px;
   height: 700px;
-  z-index: 2;
-  background: url(wood.jpg)
-}
+  border-radius: 50%;
+  border: 4px solid #dd1515;
+} */
 
 .circle {
   position: absolute;
-  left: calc(48% - 25px);
-  top: calc(64% - 25px);
+  /* left: calc(48% - 25px);
+  top: calc(64% - 25px); */
 }
 
 .circle:nth-child(1) {
-  transform: translateX(406px);
+  transform: translateX(480px);
 }
 
 .circle:nth-child(2) {
-  transform: rotate(49deg) translateX(500px);
+  transform: rotate(30deg) translateX(309px);
 }
 
 .circle:nth-child(2) > div {
-  transform: rotate(-49deg);
+  transform: rotate(-30deg);
 }
 
 .circle:nth-child(3) {
-  transform: rotate(92deg) translateX(550px);
+  transform: rotate(75deg) translateX(166px);
 }
 .circle:nth-child(3) > div {
-  transform: rotate(-92deg);
+  transform: rotate(-75deg);
 }
 
 .circle:nth-child(4) {
-  transform: rotate(135deg) translateX(550px);
+  transform: rotate(162deg) translateX(184px);
 }
 .circle:nth-child(4) > div {
-  transform: rotate(-135deg);
+  transform: rotate(-162deg);
 }
 
 .circle:nth-child(5) {
-  transform: rotate(180deg) translateX(467px);
+  transform: rotate(226deg) translateX(278px);
 }
 .circle:nth-child(5) > div {
-  transform: rotate(-180deg);
+  transform: rotate(-226deg);
 }
 .circle:nth-child(6) {
-  transform: rotate(225deg) translateX(480px);
+  transform: rotate(266deg) translateX(413px);
 }
 .circle:nth-child(6) > div {
-  transform: rotate(-225deg);
+  transform: rotate(-266deg);
 }
 .circle:nth-child(7) {
-  transform: rotate(267deg) translateX(439px);
+  transform: rotate(299deg) translateX(472px);
 }
 .circle:nth-child(7) > div {
-  transform: rotate(-267deg);
+  transform: rotate(-299deg);
 }
 .circle:nth-child(8) {
-  transform: rotate(311deg) translateX(439px);
+  transform: rotate(331deg) translateX(540px);
 }
 .circle:nth-child(8) > div {
-  transform: rotate(-311deg);
+  transform: rotate(-331deg);
+}
+
+.highlight {
+  filter: grayscale(1)
+}
+
+.highborder{
+  box-shadow: 5px 0 0 5px black;
+}
+/* .endgamecards{
+  display: flex;
+  flex-direction: column;
+} */
+
+.resultpopup{
+  box-shadow:
+    inset 0 0 50px black,      /* inner white */
+    inset 20px 0 80px #f0f,   /* inner left magenta short */
+    inset -20px 0 80px #0ff,  /* inner right cyan short */
+    inset 20px 0 300px #f0f,  /* inner left magenta broad */
+    inset -20px 0 300px #0ff, /* inner right cyan broad */
+    0 0 50px #fff,            /* outer white */
+    -10px 0 80px #f0f,        /* outer left magenta */
+    10px 0 80px #0ff;         /* outer right cyan */
+}
+
+.scoreColors{
+  background: linear-gradient(110deg, #0059b3 50%, #0080ff 50%);
 }
