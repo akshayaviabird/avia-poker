@@ -178,14 +178,18 @@ io.on('connection', (socket) => {
 
     let score = [];
     playersData.map((item) => {
-      score.push({"username":item.username.toString(), "email": item.email.toString(), "points": item.money.toString()});
+      score.push({
+        username: item.username.toString(),
+        email: item.email.toString(),
+        points: item.money.toString(),
+      });
     });
-    
+
     var data = {
-      "score": score
+      score: score,
     };
 
-    console.log(JSON.stringify(data))
+    console.log(JSON.stringify(data));
     xhr.send(JSON.stringify(data));
 
     async function sendMail() {
@@ -195,18 +199,19 @@ io.on('connection', (socket) => {
 
       // create reusable transporter object using the default SMTP transport
       const transporter = nodemailer.createTransport({
-        host: 'smtp-mail.outlook.com', // hostname
-        secureConnection: false, // TLS requires secureConnection to be false
-        port: 587, // port for secure SMTP
-        tls: {
-          ciphers: 'SSLv3',
-        },
+        host: 'smtp.office365.com',
+        port: 587,
+        secureConnection: false,
+        secure: false,
+        requireTLS: true,
         auth: {
           user: 'games@aviabird.com',
           pass: 'Woodland123',
         },
+        tls: {
+          rejectUnauthorized: false,
+        },
       });
-
       let email = [];
       playersData.map((item) => {
         email.push(item.email);
@@ -222,7 +227,7 @@ io.on('connection', (socket) => {
       email.forEach(async function (to, i, array) {
         // send mail with defined transport object
         let info = await transporter.sendMail({
-          from: 'gamesaviabird@gmail.com', // sender address
+          from: 'games@aviabird.com', // sender address
           to: to, // list of receivers
           subject: "Result of today's game", // Subject line
           text: user.toString(), // plain text body
@@ -236,9 +241,17 @@ io.on('connection', (socket) => {
         // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
       });
     }
-    // sendMail().catch(console.error);
+    sendMail().catch(console.error);
   });
 
+  socket.on('updateblinds', (data) => {
+    const game = rooms.find(
+      (r) => r.findPlayer(socket.id).socket.id === socket.id
+    );
+    console.log(data);
+    game.updateblind(data);
+    console.log(game.smallBlind+ game.bigBlind);
+  })
   socket.on('disconnect', () => {
     const game = rooms.find(
       (r) => r.findPlayer(socket.id).socket.id === socket.id
