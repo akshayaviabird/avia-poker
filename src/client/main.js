@@ -20,6 +20,13 @@ if (codeValue !== null) {
   document.getElementById("joinButton").style.display = "inherit";
 }
 
+function updateblinds() {
+  const data = {
+    "smallBlind": 20,
+    "bigBlind" : 40
+  }
+  socket.emit('updateblinds', data)
+}
 socket.on('playerDisconnected', function (data) {
   Materialize.toast(data.player + ' disconnected.', 4000);
 });
@@ -261,6 +268,8 @@ socket.on('gameBegin', function (data) {
     alert('Error - invalid game.');
   } else {
     $('#gameDiv').show();
+    var x = document.getElementById("bgmusic"); 
+    x.play();
   }
 });
 
