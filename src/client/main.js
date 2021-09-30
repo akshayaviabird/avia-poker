@@ -173,7 +173,7 @@ socket.on('dealt', function (data) {
 
 socket.on('rerender', function (data) {
   socket.emit('timer_turn', data.players);
-
+  // add(data)
   if (data.myBet == 0) {
     $('#usernamesCards').text(data.username + ' - My Cards');
   } else {
@@ -242,7 +242,8 @@ socket.on('rerender', function (data) {
     $('#usernameCheck').hide();
     $('#usernameBet').hide();
     $('#usernameCall').hide();
-    $('#usernameRaise').hide();
+    $('#usernameRaise').hide(); 
+    // $('#countdown').hide()
   }
 });
  
@@ -291,7 +292,8 @@ socket.on('reveal', function (data) {
   $('#usernameBet').hide();
   $('#usernameCall').hide();
   $('#usernameRaise').hide();
-
+  // $('#countdown').hide()
+  // $('#countdown').hide()
   for (var i = 0; i < data.winners.length; i++) {
     if (data.winners[i] == data.username) {
       Materialize.toast('You won the hand!', 4000);
@@ -393,6 +395,8 @@ socket.on('endHand', function (data) {
   $('#usernameBet').hide();
   $('#usernameCall').hide();
   $('#usernameRaise').hide();
+  $('#countdown').hide()
+  // $('#countdown').hide()
   $('#table-title').text(data.winner + ' takes the pot of $' + data.pot);
 
   if (codeValue === null) {
@@ -1249,7 +1253,10 @@ socket.on('displayPossibleMoves', function (data) {
     $('#usernameCall').show();
     if (data.call == 'all-in') $('#usernameCall').text('Call All-In');
     else $('#usernameCall').text('Call $' + data.call);
-  } else $('#usernameCall').hide();
+  } else {
+    $('#usernameCall').hide()
+    $('#countdown').hide()
+  };
   if (data.raise == 'yes') $('#usernameRaise').show();
   else $('#usernameRaise').hide();
 });
@@ -1281,6 +1288,7 @@ function renderSelf(data) {
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide();
+    // $('#countdown').hide()
   } else {
     $('#status').text('');
     $('#usernamesCards').removeClass('black-text');
@@ -1295,6 +1303,7 @@ function renderSelf(data) {
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide();
+    // $('#countdown').hide()
   }
   $('#blindStatus').text(data.blind);
 }
@@ -1326,6 +1335,7 @@ function renderSelfScoreboard(data) {
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide();
+    // $('#countdown').hide()
   } else {
     $('#status').text('');
     $('#usernamesCards').removeClass('black-text');
@@ -1340,85 +1350,98 @@ function renderSelfScoreboard(data) {
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide();
+    // $('#countdown').hide()
   }
   $('#blindStatus').text(data.blind);
 }
 
-// socket.on('timer_turn', (data) => {
-//   console.log("timerdfg"+data);
-//   data.players.map((item)=>{
-//     console.log("timerdfg",item);
-//        if(item.status == "Their Turn"){
-//          var timeleft = 20;
-//           var downloadTimer = setInterval(function()
-//           {
-//             if(timeleft <= 0){ 
-//             clearInterval(downloadTimer); 
-//                  document.getElementById("countdown").innerHTML = "Finished";
-//            } else { 
-//                 document.getElementById("countdown").innerHTML = timeleft + " seconds remaining"; 
-//            } 
-//             timeleft -= 1; 
-//             }, 1000);
-//        } 
-//      })
-// })
-socket.on('timer_turn',(data)=>{
-  console.log('my timmer tern ',data)
-})
-var timeleft = 30;
-var downloadTimer = setInterval(function()
-{
-  if(timeleft <= 0){ 
-  clearInterval(downloadTimer); 
-       document.getElementById("countdown").innerHTML = "Finished";
- } else { 
-      document.getElementById("countdown").innerHTML = timeleft + " seconds remaining"; 
- } 
-  timeleft -= 1; 
-  }, 1000);
+// function add(me){
+// //   console.log('me data',me)
+// //  if(!me.roundInProgress){
+// //   $('#countdown').hide()
+// //   return
+// //  }else{
+//   var timeleft = 35;
+//   // debugger;
+//   var downloadTimer = setInterval(function()
+//             {
+//               if(timeleft <= 0){ 
+//               clearInterval(downloadTimer); 
+//                    document.getElementById("countdown").innerHTML = "Finished";
+//                   //  socket.emit('moveMade', { move: 'check', bet: 'Check' });
+//              } else { 
+//                   document.getElementById("countdown").innerHTML = timeleft + " seconds remaining"; 
+//              } 
+//               timeleft -= 1; 
+//               }, 1000);
 
-  // socket.on('')
+// //  }
+// }
+  socket.on('turn_data', (data) => {  
+    // if (!data.Inprogress) { return }
+    data.map((item)=>{  
+      if(item.status !== "Their Turn" ){ 
+        document.getElementById('countdown').style.display="none"
+        return
+      }else{
 
-  // socket.on('timer_turn', (data) => {
-  //   console.log("timer"+data);
-  //   data.map((item)=>{
-  //     if(item.status == "Their Turn"){
-  //       var timeleft = 20;
-  //                 var downloadTimer = setInterval(function()
-  //                 {
-  //                   if(timeleft <= 0){ 
-  //                   clearInterval(downloadTimer); 
-  //                        document.getElementById("countdown").innerHTML = "Finished";
-  //                  } else { 
-  //                       document.getElementById("countdown").innerHTML = timeleft + " seconds remaining"; 
-  //                  } 
-  //                   timeleft -= 1; 
-  //                   }, 1000);
-  //              }
-      
-  //   })
-  // })
-  socket.on('akshay', (data) => {
-    console.log("timer in main",data);
-    data.map((item)=>{
-      // console.log('item.status',item.status)
-      if(item.status == "Their Turn"){
-        var timeleft = 35;
-        var downloadTimer = setInterval(function()
-                  {
-                    if(timeleft <= 0){ 
-                    clearInterval(downloadTimer); 
-                         document.getElementById("countdown").innerHTML = "Finished";
-                   } else { 
-                        document.getElementById("countdown").innerHTML = timeleft + " seconds remaining"; 
-                   } 
-                    timeleft -= 1; 
-                    }, 1000);
-                  }
-              //  }else{
-              //   document.getElementById("countdown").style.display = "none";
-              //  }
-})
+const startingMinutes = 0.5;
+let time = startingMinutes * 60;
+const countdownEl = document.getElementById('countdown');
+function updateCountdown(){
+    const minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+    
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+    
+    countdownEl.innerHTML = ` ${item.username} has ${minutes}:${seconds} sec remaning`;
+    time--;
+    time = time < 0 ? 0 : time;
+    if (time == 0) { 
+        time = startingMinutes * 60; // reset counter
+        // socket.emit('moveMade', { move: 'fold', bet: 'Fold' });
+    }
+}
+setInterval(updateCountdown, 1000);
+      } 
+  })
 })
 
+const adminAmountSubmit=function(){
+	let dia = document.getElementById("money")
+	let sbamount=$('#amountsb').val();
+	let bbamount=$('#amountbb').val()
+  const data={
+    "smallBlind":$('#amountsb').val(),
+    "bigBlind":$('#amountbb').val()
+  }
+  socket.emit('updateblinds',data)
+	console.log('clicked',$('#amountsb').val()) 
+	dia.close()
+}
+var url_string = location.href
+var url = new URL(url_string);
+var codeValue = url.searchParams.get("token"); 
+if(codeValue == null){
+	let dialog = document.getElementById("money")
+	document.getElementById('custom').innerHTML="Blind Levels"
+	document.getElementById('custom').addEventListener('click',()=>{
+    let dia = document.getElementById("money")
+  dia.showModal();
+  var data="SB Amount:<br><input type='text' id='amountsb' name='amountsb'><br>BB amount<input id='amountbb' type='text' name='amountbb'><br><button  id='btnsubmit' onclick='adminAmountSubmit()'>submit</button>"
+  dia.innerHTML=data
+  document.getElementById('btnsubmit').style.position='absolute';
+
+
+  var btn = document.createElement('button');
+  btn.textContent = 'Close';
+  btn.style.marginLeft = "338px"
+  btn.style.marginTop = "7px"
+  btn.addEventListener("click", function () {
+      dia.close()
+  });
+  dialog.appendChild(btn);
+	})
+}else{
+	document.getElementById('custom').style.display="none"
+}

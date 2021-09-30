@@ -7,6 +7,7 @@ const Game = require('./classes/game.js');
 const path=require('path')
 const app = express();
 const nodemailer = require("nodemailer");
+const localStorages=require('localStorage')
 // app.use(express.static(__dirname+'/client/css'))
 // if()
 // var url_string =location.href
@@ -39,6 +40,7 @@ io.on('connection', (socket) => {
           Math.floor(Math.random() * 10) +
           Math.floor(Math.random() * 10);
       } while (rooms.length != 0 && rooms.some((r) => r.getCode() === code));
+      localStorage.setItem('myFirstKey', code);
       const game = new Game(code, data.username);
       rooms.push(game);
       game.addPlayer(data.username,data.email, socket);
@@ -238,7 +240,7 @@ io.on('connection', (socket) => {
 //   // console.log("timer",data);
 //   data.map((item)=>{
 //     if(item.status == "Their Turn"){
-      socket.emit('akshay',data)
+      socket.emit('turn_data',data)
 //     }
 // })
  })

@@ -47,10 +47,10 @@
 	</header>
 	<div id="gameDiv">
 		<h4 class="white-text">Avia Poker Game</h4>
+		<button  id="custom"></button>
+		<dialog style="height: 30%; width: 50% " id="money"></dialog>
 		<div style="display: flex; justify-content: space-between;">
 			<div style="display: flex; justify-content: space-around; flex-direction: column;">
-
-
 			<div>
 				<div id="playerInformationCard" class="card green darken-2">
 					<div class="card-content white-text">
@@ -148,6 +148,30 @@
 		</div>
 	</div>
 	</div>
+	<div id="amoutset" class="modal">
+		<div class="modal-content">
+			<h4>Enter Amout</h4>
+			<div id="hostModalContent">
+				<p>Enter your SB, and BB amount.</p>
+				<div class="input-field col s12">
+					<label for="sbamount">small blind amount</label>
+					<input type="number" name="sbamount" id="sbamount" required />
+				</div>
+				<div class="input-field col s12">
+					<label for="bbamount">big blind</label>
+					<input type="number" name="bbamount" id="bbamount" required />
+				</div>				 
+	
+				<button onclick=beginHost() type="submit" id="btnSubmit"
+					class="waves-effect waves-light indigo darken-3 white-text btn-flat">Submit</button>
+			</div>
+			<!-- <div id="playersNames"></div>
+			<div id="startGameArea"></div> -->
+		</div>
+		<div class="modal-footer">
+			<a class="modal-close waves-effect waves-light btn-flat">CLOSE</a>
+		</div>
+	</div>
 
 	<div id="joinModal" class="modal">
 		<div class="modal-content">
@@ -230,22 +254,6 @@
 	<div id="gameover" class="modal">
 		<div class="modal-content">
 			<h4>Score board</h4>
-			<!-- <div id="gameOverModalContent"> -->
-				<!-- <p>Enter your name, and then we'll give you a code which you can give to your friends as the host.</p>
-				<div class="input-field col s12">
-					<label for="name">Name</label>
-					<input type="text" name="name" id="hostName-field" required />
-				</div>
-				<div class="input-field col s12">
-					<label for="email">Email</label>
-					<input type="email" name="email" id="hostEmail-field" required />
-				</div> -->
-<!-- 	
-				<button onclick=beginHost() type="submit" id="btnSubmit"
-					class="waves-effect waves-light indigo darken-3 white-text btn-flat">Get Unique URL</button>
-			</div> -->
-			<!-- <div id="playersNames"></div>
-			<div id="startGameArea"></div> -->
 			<div id="DashboardAream"></div>
 		</div>
 		<div class="modal-footer">
@@ -269,7 +277,6 @@
 		  x.pause(); 
 		} 
 	</script>
-	
 </body>
 
 </html>
