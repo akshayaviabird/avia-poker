@@ -287,3 +287,7 @@ width: 400px;
 .scoreColors{
   background: linear-gradient(110deg, #0059b3 50%, #0080ff 50%);
 }
+
+.card-final{
+  width: 150px;
+}

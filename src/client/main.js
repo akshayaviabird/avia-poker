@@ -113,23 +113,20 @@ socket.on('getresult', function (data) {
   dia.showModal();
   // points.sort(function(a, b){return b - a});
   var listItems = data.sort((a, b) => (a.money > b.money ? -1 : (b.money > a.money) ? 1 : 0)).map(function (item, index) {
+    console.log(item)
     return '<div style ="font-size:1.5em">' + (parseInt(index) + 1) + "&nbsp" + item.username + "&nbsp" + "=>" + "&nbsp" + item.money + "." + '</div>'
   })
-  // ${item.username}` -  `${item.money}`
-  // html += "Scoreboard" + "<br/>";
-  // html += "winner 1" + listItems.username+ "<br/>" + "coins" +listItems.money;
-  // html += "winner 2=" + "maity" + "<br/>";
-  // html += "winner 3=" + "sita" + "<br/>";
-  // html += "winner 4=" + "sdf" + "<br/>";
 
-  dia.innerHTML = listItems;
+  dia.innerHTML = listItems
 
   var btn = document.createElement('button');
   btn.textContent = 'Close';
-  btn.style.marginLeft = "338px"
-  btn.style.marginTop = "246px"
+  btn.style.marginTop = '20px'
   btn.style.backgroundColor = 'black'
   btn.style.color = 'white'
+  btn.style.height = '40px'
+  btn.style.borderRadius = '10px'
+  btn.style.width = '100%'
   btn.addEventListener("click", function () {
     if (codeValue === null) {
       location.reload()
@@ -1024,7 +1021,7 @@ function renderOpponentCards(name, data) {
   if (data.buyIns > 0) {
     if (data.folded)
       return (
-        '<div class="circle opponentCard"><div class="card grey" ><div class="card-content"><span class="card-title">' +
+        '<div class="circle opponentCard"><div class="card grey card-final" ><div class="card-content"><span class="card-title">' +
         name +
         ' | Bet: $' +
         bet +
@@ -1039,7 +1036,7 @@ function renderOpponentCards(name, data) {
       );
     else
       return (
-        '<div class="circle opponentCard"><div class="card" ><div class="card-content"><span class="card-title">' +
+        '<div class="circle opponentCard"><div class="card card-final" ><div class="card-content"><span class="card-title">' +
         name +
         ' | Bet: $' +
         bet +
@@ -1060,17 +1057,17 @@ function renderOpponentCards(name, data) {
   } else {
     if (data.folded)
       return (
-        '<div class="circle opponentCard"><div class="card grey" ><div class="card-content"><span class="card-title">' +
+        '<div class="circle opponentCard"><div class="card grey card-final" ><div class="card-content"><span class="card-title">' +
         name +
         ' | Bet: $' +
         bet +
-        '</span><p><div class="center-align"><div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" /></div><br /></p></div><div class="card-action green darken-3 white-text center-align" style="font-size: 20px;">$' +
+        '</span><p><div class="center-align"><div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" /></div><br /></p></div><div class="card-action green darken-3 white-text center-align" style="font-size: 20px; margin-top: 67px;">$' +
         data.money +
         '</div></div></div>'
       );
     else
       return (
-        '<div class="circle opponentCard"><div class="card" ><div class="card-content"><span class="card-title">' +
+        '<div class="circle opponentCard"><div class="card card-final" ><div class="card-content"><span class="card-title">' +
         name +
         ' | Bet: $' +
         bet +
@@ -1328,4 +1325,8 @@ function renderSelfScoreboard(data) {
   }
   $('#blindStatus').text(data.blind);
 }
+
+
+
+
 
