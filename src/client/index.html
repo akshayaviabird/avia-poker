@@ -52,58 +52,62 @@
 	<div id="gameDiv">
 		<h4 class="white-text">Avia Poker Game</h4>
 		<div style="display: flex; justify-content: space-between;">
-			<div style="display: flex; justify-content: space-around; flex-direction: column;">
+			<div style="display: flex; justify-content: start; flex-direction: column;">
+				<div>
+					<div id="playerInformationCard" class="card" style = "border-radius: 10px; box-shadow: 5px 0 0 5px black; background: #0059b3;">
+						<div class="card-content white-text">
+							<span class="card-title" id="usernamesCards"></span>
+							<div id="mycards"></div>
+						</div>
+					</div>
+				</div>
+				<div>
+					<div class="card-act" style="border-radius: 10px; box-shadow: 5px 0 0 5px black; padding: 5px; background: #001a33">
+						<div class="card-content white-text center-align">
+							<span class="card-title center-align" id="usernamesMoney"></span>
+							<div id="blindStatus"></div>
+							<div id="status"></div>
+							<br />
+							<div id="stopGame"></div>
+							<div id="playNext"></div>
+							<div id="showscore"></div>
+							<button onClick=fold() id="usernameFold" class="btn white black-text menuButtons">Fold</button>
+							<br />
+							<button onClick=check() id="usernameCheck" class="btn white black-text menuButtons">Check</button>
+							<br />
+							<button href="#betModal" onClick=updateBetModal() id="usernameBet"
+								class="btn white black-text modal-trigger menuButtons">Bet</button>
+							<br />
+							<button onClick=call() id="usernameCall" class="btn white black-text menuButtons">Call</button>
+							<br />
+							<button href="#raiseModal" onClick=updateRaiseModal() id="usernameRaise"
+								class="btn white black-text modal-trigger menuButtons">Raise</button>
+						</div>
+					</div>
+				</div>
+ 			</div>
 
-
-			<div>
-				<div id="playerInformationCard" class="card green darken-2">
-					<div class="card-content white-text">
-						<span class="card-title" id="usernamesCards"></span>
-						<div id="mycards"></div>
+			 <div>
+				<div class="main">
+					<div class="card-content white-text card-view ">
+						<span id="table-title" class="card-title table-heading"></span>
+						<div id="communityCards"></div>
+						<div  id="opponentCards"></div>
 					</div>
 				</div>
 			</div>
-			<div>
-				<div class="card green darken-2" style="width: 180px;">
-					<div class="card-content white-text center-align">
-						<span class="card-title center-align" id="usernamesMoney"></span>
-						<div id="blindStatus"></div>
-						<div id="status"></div>
-						<br />
-						<div id="stopGame"></div>
-						<div id="playNext"></div>
-						<div id="showscore"></div>
-						<button onClick=fold() id="usernameFold" class="btn white black-text menuButtons">Fold</button>
-						<br />
-						<button onClick=check() id="usernameCheck" class="btn white black-text menuButtons">Check</button>
-						<br />
-						<button href="#betModal" onClick=updateBetModal() id="usernameBet"
-							class="btn white black-text modal-trigger menuButtons">Bet</button>
-						<br />
-						<button onClick=call() id="usernameCall" class="btn white black-text menuButtons">Call</button>
-						<br />
-						<button href="#raiseModal" onClick=updateRaiseModal() id="usernameRaise"
-							class="btn white black-text modal-trigger menuButtons">Raise</button>
-					</div>
-				</div>
-			</div>
+
+					<div class="scoreColors" style="padding: 10px; border-radius: 10px; box-shadow: 0 0 10px 10px black;">
+							<b><u style="padding-bottom: 5px; font-size: 1.8em; color: white;">Scoreboard</u></b>
+							<div id="scoreboard" style="display: flex;flex-direction: column;"></div>
+						</div>
+					
 		</div>
-			<div class="blue darken-2" style="padding: 10px;">
-				<b><u style="padding-bottom: 5px; font-size: 1.8em; color: white;">Scoreboard</u></b>
-				<div id="scoreboard" style="display: flex;flex-direction: column;"></div>
-			</div>
-		</div>
-		<div>
-			<div class="main card board">
-				<div class="card-content white-text ">
-					<span id="table-title" class="card-title"></span>
-					<div id="communityCards"></div>
-				</div>
-			</div>
-		</div>
-		<div>
-			<div id="opponentCards"></div>
-		</div>
+			
+			
+				<!-- <div class="mains">
+					<div  id="opponentCards"></div>
+				</div> -->
 	</div>
 	<div id="mainContent">
 		<div class=" valign-wrapper row login-box">
@@ -226,8 +230,8 @@
 
 	</div>
 
-	<dialog id="myDialogother" style="height: 416px; width: 500px; background-color: maroon; color: white">
-		<div id="displayfinal" style="height: 416px; width: 500px;text-transform: capitalize;font-size: 28px"></div>
+	<dialog id="myDialogother" class="resultpopup" style="width: 400px; color: ghostwhite; background: royalblue; border-radius: 20px;">
+		<div id="displayfinal" style="width: 500px;text-transform: capitalize;font-size: 28px"></div>
 	</dialog>
 
 	<div id="gameover" class="modal">
@@ -252,7 +256,7 @@
 			<div id="DashboardAream"></div>
 		</div>
 		<div class="modal-footer">
-			<a class="modal-close waves-effect waves-light btn-flat" style="background-color: teal; color: white;">CLOSE</a>
+			<a class="modal-close waves-effect waves-light btn-flat" style="background-color: teal	; color: white;">CLOSE</a>
 		</div>
 	</div>
 
@@ -271,6 +275,7 @@
 		function pauseAudio() { 
 		  x.pause(); 
 		} 
+
 	</script>
 	
 </body>
