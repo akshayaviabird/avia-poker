@@ -266,6 +266,17 @@ io.on('connection', (socket) => {
       }
     }
   });
+
+
+  // socket.on('updateblinds',(ff)=>{
+  //   aa(ff)
+  // })
 });
+// const  aa=(data)=>{ 
+//   return data
+// }
+
 
 server.listen(PORT, () => console.log(`hosting on port ${PORT}`));
+
+// module.exports= aa
