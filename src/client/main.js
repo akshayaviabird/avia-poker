@@ -238,12 +238,12 @@ socket.on('rerender', function (data) {
   });
 
   if (!data.roundInProgress) {
-    $('#usernameFold').hide();
+    // $('#usernameFold').hide();
     $('#usernameCheck').hide();
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide(); 
-    // $('#countdown').hide()
+    $('#countdown').hide()
   }
 });
  
@@ -293,7 +293,7 @@ socket.on('reveal', function (data) {
   $('#usernameCall').hide();
   $('#usernameRaise').hide();
   // $('#countdown').hide()
-  // $('#countdown').hide()
+  $('#countdown').hide()
   for (var i = 0; i < data.winners.length; i++) {
     if (data.winners[i] == data.username) {
       Materialize.toast('You won the hand!', 4000);
@@ -395,8 +395,8 @@ socket.on('endHand', function (data) {
   $('#usernameBet').hide();
   $('#usernameCall').hide();
   $('#usernameRaise').hide();
-  $('#countdown').hide()
   // $('#countdown').hide()
+  $('#countdown').hide()
   $('#table-title').text(data.winner + ' takes the pot of $' + data.pot);
 
   if (codeValue === null) {
@@ -425,6 +425,7 @@ socket.on('endHand', function (data) {
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide();
+    $('#countdown').hide()
   }
   $('#usernamesMoney').text('$' + data.money);
   $('#opponentCards').html(
@@ -1243,6 +1244,7 @@ function updateRaiseModal() {
 }
 
 socket.on('displayPossibleMoves', function (data) {
+  console.log('fhyk',data)
   if (data.fold == 'yes') $('#usernameFold').show();
   else $('#usernameHide').hide();
   if (data.check == 'yes') $('#usernameCheck').show();
@@ -1255,10 +1257,12 @@ socket.on('displayPossibleMoves', function (data) {
     else $('#usernameCall').text('Call $' + data.call);
   } else {
     $('#usernameCall').hide()
-    $('#countdown').hide()
+    // $('#countdown').hide()
   };
   if (data.raise == 'yes') $('#usernameRaise').show();
   else $('#usernameRaise').hide();
+  if(data.timmer === 'yes')   $('#countdown').show()
+  else   $('#countdown').hide()
 });
 
 function renderSelf(data) {
@@ -1288,7 +1292,7 @@ function renderSelf(data) {
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide();
-    // $('#countdown').hide()
+    $('#countdown').hide()
   } else {
     $('#status').text('');
     $('#usernamesCards').removeClass('black-text');
@@ -1303,12 +1307,12 @@ function renderSelf(data) {
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide();
-    // $('#countdown').hide()
+    $('#countdown').hide()
   }
   $('#blindStatus').text(data.blind);
 }
 
-function renderSelfScoreboard(data) {
+function renderSelfScoreboard(data) { 
   $('#playNext').empty();
   $('#usernamesMoney').text('$' + data.money);
   if (data.text == 'Their Turn') {
@@ -1317,7 +1321,7 @@ function renderSelfScoreboard(data) {
     $('#playerInformationCard').addClass('yellow');
     $('#playerInformationCard').addClass('darken-2');
     $('#usernamesCards').removeClass('white-text');
-    $('#usernamesCards').addClass('black-text');
+    $('#usernamesCards').addClass('black-text'); 
     $('#status').text('My Turn');
     Materialize.toast('My Turn', 4000);
     socket.emit('evaluatePossibleMoves', {});
@@ -1335,7 +1339,7 @@ function renderSelfScoreboard(data) {
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide();
-    // $('#countdown').hide()
+    $('#countdown').hide()
   } else {
     $('#status').text('');
     $('#usernamesCards').removeClass('black-text');
@@ -1350,7 +1354,7 @@ function renderSelfScoreboard(data) {
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide();
-    // $('#countdown').hide()
+    $('#countdown').hide()
   }
   $('#blindStatus').text(data.blind);
 }
@@ -1379,33 +1383,33 @@ function renderSelfScoreboard(data) {
 // }
   socket.on('turn_data', (data) => {  
     // if (!data.Inprogress) { return }
-    data.map((item)=>{  
-      if(item.status !== "Their Turn" ){ 
-        document.getElementById('countdown').style.display="none"
-        return
-      }else{
-
-const startingMinutes = 0.5;
-let time = startingMinutes * 60;
-const countdownEl = document.getElementById('countdown');
+    // data.map((item)=>{  
+    //   if(item.status === "Their Turn"){
+        const startingMinutes = 0.5;
+        let time = startingMinutes * 60;
+        const countdownEl = document.getElementById('countdown');
 function updateCountdown(){
-    const minutes = Math.floor(time / 60);
-    let seconds = time % 60;
-    
-    seconds = seconds < 10 ? '0' + seconds : seconds;
-    
-    countdownEl.innerHTML = ` ${item.username} has ${minutes}:${seconds} sec remaning`;
-    time--;
-    time = time < 0 ? 0 : time;
+        const minutes = Math.floor(time / 60);
+        let seconds = time % 60;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        countdownEl.innerHTML = `  has ${minutes}:${seconds} sec remaning`;
+        time--;
+        time = time < 0 ? 0 : time;
     if (time == 0) { 
         time = startingMinutes * 60; // reset counter
         // socket.emit('moveMade', { move: 'fold', bet: 'Fold' });
+        // socket.emit('moveMade', { move: 'check', bet: 'Check' });
     }
 }
 setInterval(updateCountdown, 1000);
-      } 
-  })
-})
+updateCountdown();
+      // }
+      // else{
+      //   return  
+      // }
+      // })
+    })
+ 
 
 const adminAmountSubmit=function(){
 	let dia = document.getElementById("money")

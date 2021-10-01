@@ -7,7 +7,10 @@ const Game = require('./classes/game.js');
 const path=require('path')
 const app = express();
 const nodemailer = require("nodemailer");
-const localStorages=require('localStorage')
+// const ls = require('local-storage');
+// var localStorages = require('localStorage')
+// localStorages.setItem('myKey', 'sdfvb');
+// const localStorages=require('localStorage')
 // app.use(express.static(__dirname+'/client/css'))
 // if()
 // var url_string =location.href
@@ -40,8 +43,17 @@ io.on('connection', (socket) => {
           Math.floor(Math.random() * 10) +
           Math.floor(Math.random() * 10);
       } while (rooms.length != 0 && rooms.some((r) => r.getCode() === code));
-      localStorage.setItem('myFirstKey', code);
+      // localStorage.setItem('myFirstKey', code);
+      // ls.set('foo','data.username')
       const game = new Game(code, data.username);
+
+      // if (typeof localStorage === "undefined" || localStorage === null) {
+      //   var LocalStorage = require('node-localstorage').LocalStorage;
+      //   localStorage = new LocalStorage('./scratch');
+      // }
+      // localStorage.setItem('myFirstKey', data.username);
+      // ls.set('foo','data.username')
+      // global.localStorage.setItem('asd','sdfg')
       rooms.push(game);
       game.addPlayer(data.username,data.email, socket);
       game.emitPlayers('hostRoom', {
