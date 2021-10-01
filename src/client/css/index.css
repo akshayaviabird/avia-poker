@@ -27,8 +27,8 @@ html,
 body,
 .login-box {
   /* background: #2e64bc; */
-  height: 95%;
-  background-image: url("	https://poker-friends.herokuapp.com/images/backgrounds/random_grey_variations.png");
+  height: 100%;
+  background-image: url("card-game.jpg");
   background-repeat: repeat;
 }
 
@@ -290,4 +290,52 @@ width: 400px;
 
 .card-final{
   width: 150px;
+}
+
+.chatdesign{
+  width: 300px;
+  /* background: aliceblue; */
+  border-radius: 10px;
+  padding: 10px;
+  /* overflow: auto; */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+.messageList{
+  text-align: left;
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    /* overflow: auto; */
+    overflow: auto;
+    max-height: 224px;
+    min-height: 224px;
+    border-radius: 10px;
+    padding-left: 30px;
+    font-size: 1.2em;
+    border: 2px solid white;
+    overflow-wrap: break-word;
+    background: black;
+    opacity: 0.6;
+}
+
+.formSpace{
+  background: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    height: 40px;
+    padding-left: 15px;
+}
+
+.chatdata{
+  background: white;
+  border-radius: 5px;
+  padding-left: 5px;
+}
+
+.messagename{
+  font-size: 13px;
 }

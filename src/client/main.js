@@ -10,6 +10,8 @@ var socket = io();
 var gameInfo = null;
 let codeValue
 
+let user;
+
 var url_string = location.href
 var url = new URL(url_string);
 codeValue = url.searchParams.get("token");
@@ -24,7 +26,7 @@ if (codeValue !== null) {
 function updateblinds() {
   const data = {
     "smallBlind": 20,
-    "bigBlind" : 40
+    "bigBlind": 40
   }
   socket.emit('updateblinds', data)
 }
@@ -153,7 +155,7 @@ socket.on('joinRoom', function (data) {
       4000
     );
     $('#hostButton').removeClass('disabled');
-  }else if(data == "no"){
+  } else if (data == "no") {
     $('#joinModal').closeModal();
     Materialize.toast(
       "You can't join, when game is in progress!",
@@ -270,15 +272,15 @@ socket.on('gameBegin', function (data) {
     alert('Error - invalid game.');
   } else {
     $('#gameDiv').show();
-    var x = document.getElementById("bgmusic"); 
+    var x = document.getElementById("bgmusic");
     x.play();
   }
 });
 
-socket.on('ring', function(data) {
+socket.on('ring', function (data) {
   console.log(data);
   if (data == 'fold') {
-    var x = document.getElementById("fold"); 
+    var x = document.getElementById("fold");
     x.play();
   } else if (data == 'check') {
     var x = document.getElementById("check");
@@ -483,6 +485,7 @@ var beginHost = function () {
     );
     $('#joinButton').removeClass('disabled');
   } else {
+    user = $('#hostName-field').val()
     socket.emit('host', { username: $('#hostName-field').val(), email: $('#hostEmail-field').val() });
     $('#joinButton').addClass('disabled');
     $('#joinButton').off('click');
@@ -518,6 +521,7 @@ var joinRoom = function () {
     $('#hostButton').removeClass('disabled');
     $('#hostButton').on('click');
   } else {
+    user = $('#joinName-field').val();
     socket.emit('join', {
       code: codeValue,
       username: $('#joinName-field').val(),
@@ -1353,7 +1357,8 @@ function renderSelfScoreboard(data) {
     $('#playerInformationCard').removeClass('grey');
     $('#playerInformationCard').removeClass('yellow');
     $('#playerInformationCard').removeClass('darken-2');
-    $('#playerInformationCard').addClass('green');
+    $('#playerInformationCard').removeClass('green');
+    $('#playerInformationCard').addClass('blue');
     $('#playerInformationCard').removeClass('theirTurn');
     $('#usernameFold').hide();
     $('#usernameCheck').hide();
@@ -1365,6 +1370,37 @@ function renderSelfScoreboard(data) {
 }
 
 
+// CHAT SYSTEM
+
+var messages = document.getElementById('messages');
+var form = document.getElementById('form');
+var input = document.getElementById('input');
+
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  if (input.value) {
+    var data = {
+      "message": input.value,
+      "username": user
+    }
+    socket.emit('chat message', data);
+    input.value = '';
+  }
+})
+
+socket.on('chat message', function (data) {
+  const username = data.username;
+  console.log(username)
+  var item = document.createElement('li');
+  // item.innerHTML += `<b>${username}</>`
+  item.style.backgroundColor = 'white';
+  item.style.borderRadius = '5px';
+  item.style.paddingLeft = '5px';
+  item.style.margin = '7px';
+  item.innerHTML = "<p class='messagename'>" + username + "</p>" + "&nbsp;" + data.message;
+  messages.appendChild(item);
+  messages.scrollTop = messages.scrollHeight;
+})
 
 function adminAmountSubmit() {
   let dia = document.getElementById("money")

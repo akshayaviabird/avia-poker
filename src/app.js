@@ -252,7 +252,7 @@ io.on('connection', (socket) => {
     );
     console.log(data);
     game.updateblind(data);
-    console.log(game.smallBlind+ game.bigBlind);
+    console.log(game.smallBlind + game.bigBlind);
   })
   socket.on('disconnect', () => {
     const game = rooms.find(
@@ -279,6 +279,12 @@ io.on('connection', (socket) => {
 // }
 
 
+io.on('connection', (socket) => {
+  socket.on('chat message', (data) => {
+    console.log(data);
+    io.emit('chat message', data);
+  })
+})
 server.listen(PORT, () => console.log(`hosting on port ${PORT}`));
 
 // module.exports= aa
