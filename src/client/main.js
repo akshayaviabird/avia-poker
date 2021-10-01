@@ -1361,26 +1361,17 @@ function renderSelfScoreboard(data) {
 }
 
 
-const adminAmountSubmit=function(){
-	let dia = document.getElementById("money")
-	// let sbamount=$('#amountsb').val();
-	// let bbamount=$('#amountbb').val()
-  const data={
-    "smallBlind":$('#amountsb').val(),
-    "bigBlind":$('#amountbb').val()
+
+function adminAmountSubmit() {
+  let dia = document.getElementById("money")
+  const data = {
+    "smallBlind": parseInt( $('#amountsb').val()),
+    "bigBlind" : parseInt($('#amountbb').val())
   }
-
-  socket.emit('updateblinds',data)
-  updateblindfuncation(data)
-	console.log('clicked',data) 
-	dia.close()
+  console.log('dta',data)
+  socket.emit('updateblinds', data)
+  dia.close()
 }
-
-
-  function updateblindfuncation(data){
-return data
-}
-
 var url_string = location.href
 var url = new URL(url_string);
 var codeValue = url.searchParams.get("token"); 

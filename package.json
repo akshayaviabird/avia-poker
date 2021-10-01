@@ -5,13 +5,12 @@
   "main": "index.js",
   "repository": "https://github.com/ptwu/distributed-texasholdem.git",
   "author": "Akshay Maity",
-  "license": "MIT", 
+  "license": "MIT",
   "scripts": {
     "start": "node ./src/app.js",
     "dev": "nodemon ./src/app.js",
     "test": "jest --config=test/config.json"
   },
-  
   "dependencies": {
     "cluster": "^0.7.7",
     "express": "^4.17.1",
