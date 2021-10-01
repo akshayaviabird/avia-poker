@@ -9,8 +9,6 @@ $(document).ready(function () {
 var socket = io();
 var gameInfo = null;
 
-
-
 var url_string = location.href
 var url = new URL(url_string);
 var codeValue = url.searchParams.get("token");
@@ -22,8 +20,13 @@ if (codeValue !== null) {
   document.getElementById("joinButton").style.display = "inherit";
 }
 
-
-
+function updateblinds() {
+  const data = {
+    "smallBlind": 20,
+    "bigBlind" : 40
+  }
+  socket.emit('updateblinds', data)
+}
 socket.on('playerDisconnected', function (data) {
   Materialize.toast(data.player + ' disconnected.', 4000);
 });
@@ -148,7 +151,15 @@ socket.on('joinRoom', function (data) {
       4000
     );
     $('#hostButton').removeClass('disabled');
-  } else {
+  }else if(data == "no"){
+    $('#joinModal').closeModal();
+    Materialize.toast(
+      "You can't join, when game is in progress!",
+      4000
+    );
+  }
+  else {
+    console.log(data);
     $('#joinModalContent').html(
       '<h5>' +
       data.host +
@@ -173,6 +184,8 @@ socket.on('dealt', function (data) {
 });
 
 socket.on('rerender', function (data) {
+  socket.emit('timer_turn', data.players);
+  console.log(data.players);
   if (data.myBet == 0) {
     $('#usernamesCards').text('My Cards');
   } else {
@@ -255,9 +268,30 @@ socket.on('gameBegin', function (data) {
     alert('Error - invalid game.');
   } else {
     $('#gameDiv').show();
+    var x = document.getElementById("bgmusic"); 
+    x.play();
   }
 });
 
+socket.on('ring', function(data) {
+  console.log(data);
+  if (data == 'fold') {
+    var x = document.getElementById("fold"); 
+    x.play();
+  } else if (data == 'check') {
+    var x = document.getElementById("check");
+    x.play();
+  } else if (data == 'bet') {
+    var x = document.getElementById("raise");
+    x.play();
+  } else if (data == 'call') {
+    var x = document.getElementById("call");
+    x.play();
+  } else if (data == 'raise') {
+    var x = document.getElementById("raise");
+    x.play();
+  }
+})
 function playNext() {
   socket.emit('startNextRound', {});
 }

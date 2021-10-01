@@ -33,6 +33,11 @@ const Game = function (name, host) {
 
   const constructor = (function () {})(this);
 
+  this.updateblind = (data) => {
+    this.smallBlind = data.smallBlind;
+    this.bigBlind = data.bigBlind;
+  }
+
   this.log = () => {
     if (this.debug) {
       console.log(...arguments);
