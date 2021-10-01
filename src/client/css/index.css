@@ -339,3 +339,8 @@ width: 400px;
 .messagename{
   font-size: 13px;
 }
+
+.predictguess{
+  text-align: center;
+    font-size: 17px;
+}

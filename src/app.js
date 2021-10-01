@@ -208,7 +208,7 @@ io.on('connection', (socket) => {
         requireTLS: true,
         auth: {
           user: 'games@aviabird.com',
-          pass: 'password',
+          pass: 'Woodland123',
         },
         tls: {
           rejectUnauthorized: false,
