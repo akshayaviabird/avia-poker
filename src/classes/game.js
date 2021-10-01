@@ -2,7 +2,11 @@
 const Deck = require('./deck.js');
 const Player = require('./player.js');
 const Hand = require('pokersolver').Hand;
+// const {updateblindfuncation} =require('../client/main')
+// const aa=require('../app')
 
+// console.log('my bnada',aa)
+// import ss from '../client/main'
 const Game = function (name, host) {
   this.deck = new Deck();
   this.host = host;
@@ -31,9 +35,9 @@ const Game = function (name, host) {
   this.smallBlind = 1;
   this.bigBlind = 2;
 
-  const constructor = (function () {})(this);
-
+  const constructor = (function () {})(this); 
   this.updateblind = (data) => {
+    
     this.smallBlind = data.smallBlind;
     this.bigBlind = data.bigBlind;
   }

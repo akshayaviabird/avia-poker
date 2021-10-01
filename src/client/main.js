@@ -1362,5 +1362,41 @@ function renderSelfScoreboard(data) {
 
 
 
+function adminAmountSubmit() {
+  let dia = document.getElementById("money")
+  const data = {
+    "smallBlind": parseInt( $('#amountsb').val()),
+    "bigBlind" : parseInt($('#amountbb').val())
+  }
+  console.log('dta',data)
+  socket.emit('updateblinds', data)
+  dia.close()
+}
+var url_string = location.href
+var url = new URL(url_string);
+var codeValue = url.searchParams.get("token"); 
+if(codeValue == null){
+	let dialog = document.getElementById("money")
+	document.getElementById('custom').innerHTML="Blind Levels"
+	document.getElementById('custom').addEventListener('click',()=>{
+    let dia = document.getElementById("money")
+  dia.showModal();
+  var data="SB Amount:<br><input type='text' id='amountsb' name='amountsb'><br>BB amount<input id='amountbb' type='text' name='amountbb'><br><button  id='btnsubmit' onclick='adminAmountSubmit()'>submit</button>"
+  dia.innerHTML=data
+  document.getElementById('btnsubmit').style.position='absolute';
+
+
+  var btn = document.createElement('button');
+  btn.textContent = 'Close';
+  btn.style.marginLeft = "338px"
+  btn.style.marginTop = "7px"
+  btn.addEventListener("click", function () {
+      dia.close()
+  });
+  dialog.appendChild(btn);
+	})
+}else{
+	document.getElementById('custom').style.display="none"
+}
 
 
