@@ -1393,7 +1393,7 @@ socket.on('chat message', function (data) {
   item.style.borderRadius = '5px';
   item.style.paddingLeft = '5px';
   item.style.margin = '7px';
-  item.innerHTML = '<b>' + username + '</b>' + '<br/>' + '&nbsp;' + '<span class="messagetexts">' + data.message + '</span>';
+  item.innerHTML = "<p class='messagename'>" + username + "</p>" + "&nbsp;" + data.message;
   messages.appendChild(item);
   messages.scrollTop = messages.scrollHeight;
 })
