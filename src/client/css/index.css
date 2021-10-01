@@ -291,3 +291,37 @@ width: 400px;
 .card-final{
   width: 150px;
 }
+
+.chatdesign{
+  width: 300px;
+  /* background: aliceblue; */
+  border-radius: 10px;
+  padding: 10px;
+  height: 400px;
+  /* overflow: auto; */
+  position: fixed;
+  bottom: -26px;
+  left: 0;
+}
+
+.messageList{
+  text-align: left;
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    /* overflow: auto; */
+    overflow: auto;
+    max-height: 256px;
+    min-height: 256px;
+    border-radius: 10px;
+    padding-left: 30px;
+    background: aliceblue;
+    font-size: 1.2em;
+}
+
+.formSpace{
+  background: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}

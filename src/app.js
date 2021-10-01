@@ -4,7 +4,7 @@ const http = require('http');
 const socketio = require('socket.io');
 // const url=require('url')
 const Game = require('./classes/game.js');
-const path=require('path')
+const path = require('path')
 const app = express();
 const nodemailer = require("nodemailer");
 // app.use(express.static(__dirname+'/client/css'))
@@ -12,8 +12,8 @@ const nodemailer = require("nodemailer");
 // var url_string =location.href
 // var url = new URL(url_string);
 // var codeValue = url.searchParams.get("token");
-app.get(`/playgame` , (req , res)=>{
-   res.sendFile(path.join(__dirname+'/client/index.html'))
+app.get(`/playgame`, (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/index.html'))
 })
 const server = http.createServer(app);
 const io = socketio(server);
@@ -41,7 +41,7 @@ io.on('connection', (socket) => {
       } while (rooms.length != 0 && rooms.some((r) => r.getCode() === code));
       const game = new Game(code, data.username);
       rooms.push(game);
-      game.addPlayer(data.username,data.email, socket);
+      game.addPlayer(data.username, data.email, socket);
       game.emitPlayers('hostRoom', {
         code: code,
         players: game.getPlayersArray(),
@@ -59,7 +59,7 @@ io.on('connection', (socket) => {
     ) {
       socket.emit('joinRoom', undefined);
     } else {
-      game.addPlayer(data.username,data.email, socket);
+      game.addPlayer(data.username, data.email, socket);
       rooms = rooms.map((r) => (r.getCode() === data.code ? game : r));
       game.emitPlayers('joinRoom', {
         host: game.getHostName(),
@@ -161,48 +161,48 @@ io.on('connection', (socket) => {
       // Generate test SMTP service account from ethereal.email
       // Only needed if you don't have a real mail account for testing
       let testAccount = await nodemailer.createTestAccount();
-    
+
       // create reusable transporter object using the default SMTP transport
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'gamesaviabird@gmail.com',
-            pass: 'Games@avia',
+          user: 'gamesaviabird@gmail.com',
+          pass: 'Games@avia',
         }
-    });
-
-    let email=[];
-    playersData.map(item => {
-      email.push(item.email);
-    } );
-    let user=[];
-    playersData.map(item => {
-      user.push(item.username);
-      user.push(item.money);
-    } );
-    
-    console.log(email);
-    
-    email.forEach(async function (to, i , array) {
-      // send mail with defined transport object
-      let info = await transporter.sendMail({
-        from: 'gamesaviabird@gmail.com', // sender address
-        to: to, // list of receivers
-        subject: "Result of today's game", // Subject line
-        text: user.toString(), // plain text body
-        html: user.toString(), // html body
       });
-      console.log("Message sent: %s", info.messageId);
-      // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-    
-      // Preview only available when sending through an Ethereal account
-      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-      // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
-    });
-      
-      
-    
-      
+
+      let email = [];
+      playersData.map(item => {
+        email.push(item.email);
+      });
+      let user = [];
+      playersData.map(item => {
+        user.push(item.username);
+        user.push(item.money);
+      });
+
+      console.log(email);
+
+      email.forEach(async function (to, i, array) {
+        // send mail with defined transport object
+        let info = await transporter.sendMail({
+          from: 'gamesaviabird@gmail.com', // sender address
+          to: to, // list of receivers
+          subject: "Result of today's game", // Subject line
+          text: user.toString(), // plain text body
+          html: user.toString(), // html body
+        });
+        console.log("Message sent: %s", info.messageId);
+        // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+        // Preview only available when sending through an Ethereal account
+        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+        // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+      });
+
+
+
+
     }
     sendMail().catch(console.error);
   });
@@ -224,4 +224,9 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(PORT, () => console.log(`hosting on port ${PORT}`)); 
+io.on('connection', (socket) => {
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
+  })
+})
+server.listen(PORT, () => console.log(`hosting on port ${PORT}`));
