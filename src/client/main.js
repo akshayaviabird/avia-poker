@@ -9,6 +9,8 @@ $(document).ready(function () {
 var socket = io();
 var gameInfo = null;
 
+let user;
+
 var url_string = location.href
 var url = new URL(url_string);
 var codeValue = url.searchParams.get("token");
@@ -481,6 +483,7 @@ var beginHost = function () {
     );
     $('#joinButton').removeClass('disabled');
   } else {
+    user = $('#hostName-field').val()
     socket.emit('host', { username: $('#hostName-field').val(), email: $('#hostEmail-field').val() });
     $('#joinButton').addClass('disabled');
     $('#joinButton').off('click');
@@ -516,6 +519,7 @@ var joinRoom = function () {
     $('#hostButton').removeClass('disabled');
     $('#hostButton').on('click');
   } else {
+    user = $('#joinName-field').val();
     socket.emit('join', {
       code: codeValue,
       username: $('#joinName-field').val(),
@@ -1370,14 +1374,20 @@ var input = document.getElementById('input');
 form.addEventListener('submit', function (e) {
   e.preventDefault();
   if (input.value) {
-    socket.emit('chat message', input.value);
+    var data = {
+      "message": input.value,
+      "username": user
+    }
+    socket.emit('chat message', data);
     input.value = '';
   }
 })
 
-socket.on('chat message', function (msg) {
+socket.on('chat message', function (data) {
+  const username = data.username;
+  console.log(username)
   var item = document.createElement('li');
-  item.textContent = msg;
+  item.textContent = username +data.message;
   messages.appendChild(item);
 })
 

@@ -269,8 +269,9 @@ io.on('connection', (socket) => {
 });
 
 io.on('connection', (socket) => {
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg);
+  socket.on('chat message', (data) => {
+    console.log(data);
+    io.emit('chat message', data);
   })
 })
 server.listen(PORT, () => console.log(`hosting on port ${PORT}`));
