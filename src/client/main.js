@@ -8,10 +8,11 @@ $(document).ready(function () {
 
 var socket = io();
 var gameInfo = null;
+let codeValue
 
 var url_string = location.href
 var url = new URL(url_string);
-var codeValue = url.searchParams.get("token");
+codeValue = url.searchParams.get("token");
 
 
 if (codeValue !== null) {
@@ -32,6 +33,7 @@ socket.on('playerDisconnected', function (data) {
 });
 
 socket.on('hostRoom', function (data) {
+  codeValue = data.code;
   if (data != undefined) {
     if (data.players.length >= 11) {
       $('#hostModalContent').html(
@@ -488,7 +490,7 @@ var beginHost = function () {
 };
 var url_string = window.location.href;
 var url = new URL(url_string);
-var codeValue = url.searchParams.get("token");
+// var codeValue = url.searchParams.get("token");
 
 var joinRoom = function () {
 
@@ -541,7 +543,7 @@ var result = function () {
 var fold = function () {
   var x = document.getElementById("fold");
   x.play();
-  socket.emit('moveMade', { move: 'fold', bet: 'Fold' });
+  socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
 };
 
 var bet = function () {
@@ -553,6 +555,7 @@ var bet = function () {
     socket.emit('moveMade', {
       move: 'bet',
       bet: parseInt($('#betRangeSlider').val()),
+      code: codeValue
     });
   }
 };
@@ -560,13 +563,13 @@ var bet = function () {
 function call() {
   var x = document.getElementById("call");
   x.play();
-  socket.emit('moveMade', { move: 'call', bet: 'Call' });
+  socket.emit('moveMade', { move: 'call', bet: 'Call', code: codeValue });
 }
 
 var check = function () {
   var x = document.getElementById("check");
   x.play();
-  socket.emit('moveMade', { move: 'check', bet: 'Check' });
+  socket.emit('moveMade', { move: 'check', bet: 'Check' , code: codeValue});
 };
 
 var raise = function () {
@@ -583,6 +586,7 @@ var raise = function () {
     socket.emit('moveMade', {
       move: 'raise',
       bet: parseInt($('#raiseRangeSlider').val()),
+      code: codeValue
     });
   }
 };
@@ -1374,7 +1378,7 @@ function adminAmountSubmit() {
 }
 var url_string = location.href
 var url = new URL(url_string);
-var codeValue = url.searchParams.get("token"); 
+// var codeValue = url.searchParams.get("token"); 
 if(codeValue == null){
 	let dialog = document.getElementById("money")
 	document.getElementById('custom').innerHTML="Blind Levels"

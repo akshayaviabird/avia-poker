@@ -41,10 +41,12 @@ io.on('connection', (socket) => {
         code: code,
         players: game.getPlayersArray(),
       });
+      socket.join(code.toString());
     }
   });
 
   socket.on('join', (data) => {
+    socket.join(data.code.toString())
     const game = rooms.find((r) => r.getCode() === data.code);
     if (
       game == undefined ||
@@ -117,7 +119,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('timer_turn', (data) => {
-    console.log('timer' + data);
+    //console.log('timer' + data);
   });
   // precondition: user must be able to make the move in the first place.
   socket.on('moveMade', (data) => {
@@ -127,7 +129,7 @@ io.on('connection', (socket) => {
     );
 
     if (game != undefined) {
-      socket.broadcast.emit('ring', data.move);
+      io.to(data.code.toString()).emit('ring', data.move);
 
       if (data.move == 'fold') {
         game.fold(socket);
