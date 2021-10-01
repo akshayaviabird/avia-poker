@@ -35,11 +35,11 @@ socket.on('playerDisconnected', function (data) {
 
 socket.on('hostRoom', function (data) {
   if (data != undefined) {
-    if (data.players.length >= 11) {
+    if (data.players.length > 8) {
       $('#hostModalContent').html(
         '<h5>Code:</h5><code>' +
         data.code +
-        '</code><br /><h5>Warning: you have too many players in your room. Max is 11.</h5><h5>Players Currently in My Room</h5>'
+        '</code><br /><h5>Warning: you have too many players in your room. Max is 8.</h5><h5>Players Currently in My Room</h5>'
       );
       $('#playersNames').html(
         data.players.map(function (p) {
@@ -327,12 +327,12 @@ socket.on('reveal', function (data) {
     //   ' <button onClick=stopGame() class="btn white black-text menuButtons">Stop Game</button>'
     // )
   }
-  if (codeValue !== null) {
+  // if (codeValue !== null) {
 
-    $('#showscore').html(
-      '<button onClick=result()  class="btn white black-text menuButtons">Show score</button></a>'
-    )
-  }
+  //   $('#showscore').html(
+  //     '<button onClick=result()  class="btn white black-text menuButtons">Show score</button></a>'
+  //   )
+  // }
   $('#blindStatus').text(data.hand);
   $('#usernamesMoney').text('$' + data.money);
   $('#opponentCards').html(
@@ -423,11 +423,11 @@ socket.on('endHand', function (data) {
 
     // )
   }
-  if (codeValue !== null) {
-    $('#showscore').html(
-      '<button onClick=result()()  class="btn white black-text menuButtons">Show score</button></a>'
-    )
-  }
+  // if (codeValue !== null) {
+  //   $('#showscore').html(
+  //     '<button onClick=result()()  class="btn white black-text menuButtons">Show score</button></a>'
+  //   )
+  // }
   $('#blindStatus').text('');
   if (data.folded == 'Fold') {
     $('#status').text('You Folded');
@@ -1113,7 +1113,8 @@ function renderOpponentCards(name, data) {
         renderOpponentCard(data.cards[0]) +
         renderOpponentCard(data.cards[1]) +
         ' </div><br />' +
-        data.endHand +
+        '<p class="predictguess">' +
+        data.endHand + '</p>' +
         '</p></div><div class="card-action green darken-3 white-text center-align" style="font-size: 20px;">$' +
         data.money +
         '</div></div></div>'
