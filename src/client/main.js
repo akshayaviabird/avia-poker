@@ -25,7 +25,7 @@ if (codeValue !== null) {
 function updateblinds() {
   const data = {
     "smallBlind": 20,
-    "bigBlind" : 40
+    "bigBlind": 40
   }
   socket.emit('updateblinds', data)
 }
@@ -153,7 +153,7 @@ socket.on('joinRoom', function (data) {
       4000
     );
     $('#hostButton').removeClass('disabled');
-  }else if(data == "no"){
+  } else if (data == "no") {
     $('#joinModal').closeModal();
     Materialize.toast(
       "You can't join, when game is in progress!",
@@ -270,15 +270,15 @@ socket.on('gameBegin', function (data) {
     alert('Error - invalid game.');
   } else {
     $('#gameDiv').show();
-    var x = document.getElementById("bgmusic"); 
+    var x = document.getElementById("bgmusic");
     x.play();
   }
 });
 
-socket.on('ring', function(data) {
+socket.on('ring', function (data) {
   console.log(data);
   if (data == 'fold') {
-    var x = document.getElementById("fold"); 
+    var x = document.getElementById("fold");
     x.play();
   } else if (data == 'check') {
     var x = document.getElementById("check");
@@ -1353,7 +1353,8 @@ function renderSelfScoreboard(data) {
     $('#playerInformationCard').removeClass('grey');
     $('#playerInformationCard').removeClass('yellow');
     $('#playerInformationCard').removeClass('darken-2');
-    $('#playerInformationCard').addClass('green');
+    $('#playerInformationCard').removeClass('green');
+    $('#playerInformationCard').addClass('blue');
     $('#playerInformationCard').removeClass('theirTurn');
     $('#usernameFold').hide();
     $('#usernameCheck').hide();
@@ -1387,8 +1388,14 @@ socket.on('chat message', function (data) {
   const username = data.username;
   console.log(username)
   var item = document.createElement('li');
-  item.textContent = username +data.message;
+  // item.innerHTML += `<b>${username}</>`
+  item.style.backgroundColor = 'white';
+  item.style.borderRadius = '5px';
+  item.style.paddingLeft = '5px';
+  item.style.margin = '7px';
+  item.innerHTML = '<b>' + username + '</b>' + '<br/>' + '&nbsp;' + '<span class="messagetexts">' + data.message + '</span>';
   messages.appendChild(item);
+  messages.scrollTop = messages.scrollHeight;
 })
 
 
