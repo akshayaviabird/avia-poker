@@ -52,9 +52,7 @@
 	</header>
 	<div id="gameDiv">
 		<h4 class="white-text">Avia Poker Game</h4>
-		<button  id="custom"></button>
-		<dialog style="height: 30%; width: 50% " id="money"></dialog>
-		<div style="display: flex; justify-content: space-between;">
+		<div style="display: flex;">
 			<div style="display: flex; justify-content: start; flex-direction: column;">
 				<div>
 					<div id="playerInformationCard" class="card" style = "border-radius: 10px; box-shadow: 5px 0 0 5px black; background: #0059b3;">
@@ -74,7 +72,7 @@
 							<div id="stopGame"></div>
 							<div id="playNext"></div>
 							<!-- <div id="showscore"></div> -->
-							<button onClick=fold() id="usernameFold" class="btn white black-text menuButtons">Fold</button>
+							<!-- <button onClick=fold() id="usernameFold" class="btn white black-text menuButtons">Fold</button>
 							<br />
 							<button onClick=check() id="usernameCheck" class="btn white black-text menuButtons">Check</button>
 							<br />
@@ -84,28 +82,28 @@
 							<button onClick=call() id="usernameCall" class="btn white black-text menuButtons">Call</button>
 							<br />
 							<button href="#raiseModal" onClick=updateRaiseModal() id="usernameRaise"
-								class="btn white black-text modal-trigger menuButtons">Raise</button>
+								class="btn white black-text modal-trigger menuButtons">Raise</button> -->
 						</div>
 					</div>
 				</div>
  			</div>
 
-			 <div>
-				<div class="main">
-					<div class="card-content white-text card-view ">
-						<span id="table-title" class="card-title table-heading"></span>
-						<div id="communityCards"></div>
-						<div  id="opponentCards"></div>
-					</div>
+			 <div class="main">
+				<div class="card-content white-text card-view ">
+					<div style="display: flex; flex-direction: column; height: 177px; width: 460px;">
+					<span id="table-title" class="card-title table-heading"></span>
+					<div class="watermark" >Aviabird-Game</div>
+					<div id="communityCards" style="margin-top: -100px;"></div>
+			    	</div>
+					<div  id="opponentCards"></div>
 				</div>
 			</div>
-
-					<div class="scoreColors" style="padding: 10px; border-radius: 10px; box-shadow: 0 0 10px 10px black;">
+					<!-- <div class="scoreColors" style="padding: 10px; border-radius: 10px; box-shadow: 0 0 10px 10px black;">
 							<b><u style="padding-bottom: 5px; font-size: 1.8em; color: white;">Scoreboard</u></b>
 							<div id="scoreboard" style="display: flex;flex-direction: column;"></div>
-						</div>
-					
+						</div> -->		
 		</div>
+			
 		<div  class="chatdesign"> 
 				<span id="person"></span>
 				<ul id="messages" class="messageList"></ul>
@@ -113,13 +111,16 @@
 				<input id="input" autocomplete="off" /><button style="border: none; background:white ;"><i style="font-size:30px; color:blue" class="fa fa-send-o"></i></button>
 				</form>
 		</div>
-			
-	
-			
-				<!-- <div class="mains">
-					<div  id="opponentCards"></div>
-				</div> -->
-	</div>
+		<div style="display: flex; position: fixed; bottom: 20px; right: 0; padding: 10px;">
+							<button onClick=fold() id="usernameFold" class="callBtns  menuButtons">Fold</button>
+							<button onClick=check() id="usernameCheck" class="callBtns menuButtons">Check</button>
+							<button href="#betModal" onClick=updateBetModal() id="usernameBet"
+								class="callBtns modal-trigger menuButtons">Bet</button>
+							<button onClick=call() id="usernameCall" class="callBtns menuButtons">Call</button>
+							<button href="#raiseModal" onClick=updateRaiseModal() id="usernameRaise"
+								class="callBtns modal-trigger menuButtons">Raise</button>
+		</div>
+		</div>
 	<div id="mainContent">
 		<div class=" valign-wrapper row login-box">
 			<div class="col card hoverable s12 m4">
@@ -248,22 +249,6 @@
 	<div id="gameover" class="modal">
 		<div class="modal-content">
 			<h4>Score board</h4>
-			<!-- <div id="gameOverModalContent"> -->
-				<!-- <p>Enter your name, and then we'll give you a code which you can give to your friends as the host.</p>
-				<div class="input-field col s12">
-					<label for="name">Name</label>
-					<input type="text" name="name" id="hostName-field" required />
-				</div>
-				<div class="input-field col s12">
-					<label for="email">Email</label>
-					<input type="email" name="email" id="hostEmail-field" required />
-				</div> -->
-<!-- 	
-				<button onclick=beginHost() type="submit" id="btnSubmit"
-					class="waves-effect waves-light indigo darken-3 white-text btn-flat">Get Unique URL</button>
-			</div> -->
-			<!-- <div id="playersNames"></div>
-			<div id="startGameArea"></div> -->
 			<div id="DashboardAream"></div>
 		</div>
 		<div class="modal-footer">
