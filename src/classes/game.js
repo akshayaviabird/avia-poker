@@ -103,11 +103,17 @@ const Game = function (name, host) {
         if (player.getMoney() == 0) {
           player.money = 1000;
           player.buyIns = player.buyIns + 1;
+          // console.log('auto this.playes',this.players);    
+          // this.disconnectPlayer(player)
         }
       }
-    }
+    } 
 
-    // handle big and small blind initial forced bets
+
+    // console.log('this.players[this.roundData.bigBlind].money',this.players[this.roundData.bigBlind].money);
+    // console.log('his.players[this.roundData.smallBlind].money == this.smallBlind',this.players[this.roundData.smallBlind].money);
+    
+    // handle big and small blind initial forced bets 
 
     if (this.players[this.roundData.bigBlind].money < this.bigBlind) {
       this.players[this.roundData.bigBlind].money = 0;
@@ -992,6 +998,7 @@ const Game = function (name, host) {
 
   this.getPossibleMoves = (socket) => {
     const player = this.findPlayer(socket.id);
+  
     const playerBet = this.getPlayerBetInStage(player);
     const topBet = this.getCurrentTopBet();
     let possibleMoves = {
@@ -1002,6 +1009,12 @@ const Game = function (name, host) {
       raise: 'yes',
       timmer:'yes'
     };
+    // console.log('playler print',player.username )
+    // if(player.getStatus() != 'Their Turn'){
+    //   possibleMoves.timmer='no'
+    // }else{
+    //   possibleMoves.timmer='yes'
+    // }
     if (player.getStatus() == 'Fold') {
       this.log('Error: Folded players should not be able to move.');
     }

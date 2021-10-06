@@ -93,6 +93,8 @@ io.on('connection', (socket) => {
     } else {
       game.emitPlayers('gameBegin', { code: data.code });
       game.startGame();
+      var timmer=30
+      socket.emit('timmer',timmer)
     }
   });
 
@@ -250,9 +252,11 @@ io.on('connection', (socket) => {
   });
  socket.on('timer_turn', (data) => {
 //   // console.log("timer",data);
+const yy=30
 //   data.map((item)=>{
 //     if(item.status == "Their Turn"){
       socket.emit('turn_data',data)
+      // socket.emit('timmer',yy)
 //     }
 // })
  })

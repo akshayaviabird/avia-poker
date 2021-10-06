@@ -238,7 +238,7 @@ socket.on('rerender', function (data) {
   });
 
   if (!data.roundInProgress) {
-    // $('#usernameFold').hide();
+    $('#usernameFold').hide();
     $('#usernameCheck').hide();
     $('#usernameBet').hide();
     $('#usernameCall').hide();
@@ -547,15 +547,19 @@ var bet = function () {
 };
 
 function call() {
+  let bb=30
   var x = document.getElementById("call");
   x.play();
   socket.emit('moveMade', { move: 'call', bet: 'Call' });
+  // socket.emit('timmer',bb)
 }
 
 var check = function () {
+  let bb=30
   var x = document.getElementById("check");
   x.play();
   socket.emit('moveMade', { move: 'check', bet: 'Check' });
+  // socket.emit('timmer',bb)
 };
 
 var raise = function () {
@@ -612,7 +616,7 @@ function renderCard(card) {
 function renderOpponent(name, data) {
   var bet = 0;
   if (data.bets != undefined) {
-    var arr = data.bets[data.bets.length - 1];
+    var arr = data.bets[data.bets.length - 1]; 
     for (var pn = 0; pn < arr.length; pn++) {
       if (arr[pn].player == name) bet = arr[pn].bet;
     }
@@ -1243,8 +1247,8 @@ function updateRaiseModal() {
   socket.emit('raiseModalData', {});
 }
 
-socket.on('displayPossibleMoves', function (data) {
-  console.log('fhyk',data)
+socket.on('displayPossibleMoves', function (data) { 
+  console.log('possiblemovies',data)
   if (data.fold == 'yes') $('#usernameFold').show();
   else $('#usernameHide').hide();
   if (data.check == 'yes') $('#usernameCheck').show();
@@ -1261,8 +1265,29 @@ socket.on('displayPossibleMoves', function (data) {
   };
   if (data.raise == 'yes') $('#usernameRaise').show();
   else $('#usernameRaise').hide();
-  if(data.timmer === 'yes')   $('#countdown').show()
-  else   $('#countdown').hide()
+
+  if(data.timmer === 'yes'){
+    // socket.on('timmer',(data)=>{
+      let data=15
+      var downloadTimer = setInterval(function()
+      {
+        if(data <= 0){ 
+        clearInterval(downloadTimer); 
+             document.getElementById("countdown").innerHTML = "Finished";
+             socket.emit('moveMade', { move: 'fold', bet: 'Fold' }) 
+       } else { 
+            document.getElementById("countdown").innerHTML = data + " seconds remaining"; 
+       } 
+        data -= 1; 
+        }, 1000); 
+// })
+    $('#countdown').show()
+  }  else {
+    console.log('else is exicuted!!')
+    // timmerdta=0
+    clearInterval(downloadTimer)
+     $('#countdown').hide()
+  }
 });
 
 function renderSelf(data) {
@@ -1381,34 +1406,65 @@ function renderSelfScoreboard(data) {
 
 // //  }
 // }
-  socket.on('turn_data', (data) => {  
-    // if (!data.Inprogress) { return }
-    // data.map((item)=>{  
-    //   if(item.status === "Their Turn"){
-        const startingMinutes = 0.5;
-        let time = startingMinutes * 60;
-        const countdownEl = document.getElementById('countdown');
-function updateCountdown(){
-        const minutes = Math.floor(time / 60);
-        let seconds = time % 60;
-        seconds = seconds < 10 ? '0' + seconds : seconds;
-        countdownEl.innerHTML = `  has ${minutes}:${seconds} sec remaning`;
-        time--;
-        time = time < 0 ? 0 : time;
-    if (time == 0) { 
-        time = startingMinutes * 60; // reset counter
-        // socket.emit('moveMade', { move: 'fold', bet: 'Fold' });
-        // socket.emit('moveMade', { move: 'check', bet: 'Check' });
-    }
-}
-setInterval(updateCountdown, 1000);
-updateCountdown();
-      // }
-      // else{
-      //   return  
-      // }
-      // })
-    })
+
+
+  // socket.on('turn_data', (data) => {   
+//      // if (!data.Inprogress) { return }
+  
+//         const startingMinutes = 0.5;
+//         let time = startingMinutes * 60;
+//         const countdownEl = document.getElementById('countdown');
+// function updateCountdown(){
+//         const minutes = Math.floor(time / 60);
+//         let seconds = time % 60;
+//         seconds = seconds < 10 ? '0' + seconds : seconds;
+//         countdownEl.innerHTML = `you  have  ${minutes}:${seconds} sec remaning`;
+//         time--;
+//         time = time < 0 ? 0 : time;
+//     if (time == 0) { 
+//         time = startingMinutes * 60; // reset counter
+//         // socket.emit('moveMade', { move: 'fold', bet: 'Fold' });
+// //         // socket.emit('moveMade', { move: 'check', bet: 'Check' });
+//     }
+ 
+
+
+// socket.on('turn_data',(data)=>{
+//   console.log(data) 
+//   data.forEach((item)=>{
+//     if(item.status == "Their Turn"){
+//       socket.on('timmer',(timmerdta)=>{
+//         console.log('on function',item)
+//         // var timmerdta = 30; 
+//         var downloadTimer = setInterval(function()
+//                   {
+//                     if(timmerdta <= 0){ 
+//                     clearInterval(downloadTimer); 
+//                          document.getElementById("countdown").innerHTML = "Finished";
+//                         //  socket.emit('moveMade', { move: 'fold', bet: 'Fold' });
+//                         //  socket.emit('moveMade', { move: 'check', bet: 'Check' });
+//                    } else { 
+//                         document.getElementById("countdown").innerHTML = timmerdta + " seconds remaining"; 
+//                    } 
+//                     timmerdta -= 1; 
+//                     }, 1000);
+//       })
+     
+//     }else{
+//       console.log('ele block click')
+//       document.getElementById("countdown").style.display="none"
+//       let jj=0
+//       socket.emit('timmer',jj)
+//     }
+//   })
+
+// })
+
+
+ 
+// setInterval(updateCountdown, 1000);
+// updateCountdown();
+    // })
  
 
 const adminAmountSubmit=function(){
@@ -1449,3 +1505,8 @@ if(codeValue == null){
 }else{
 	document.getElementById('custom').style.display="none"
 }
+
+
+ socket.on('timmer',(data)=>{
+   console.log('hemllo',data)
+ })
