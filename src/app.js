@@ -27,8 +27,7 @@ const PORT = process.env.PORT || 3000;
 app.use('/', express.static(__dirname + '/client'));
 
 let rooms = [];
-
-io.on('connection', (socket) => {
+io.on('connection', (socket) => {  
   console.log('new connection ', socket.id);
   socket.on('host', (data) => {
     if (data.username == '' || data.username.length > 12) {
@@ -45,7 +44,11 @@ io.on('connection', (socket) => {
       } while (rooms.length != 0 && rooms.some((r) => r.getCode() === code));
       // localStorage.setItem('myFirstKey', code);
       // ls.set('foo','data.username')
+      
+      // console.log('akshay',rooms.length)
+
       const game = new Game(code, data.username);
+      // console.log('asdf',game.getPlayersArray().length)
 
       // if (typeof localStorage === "undefined" || localStorage === null) {
       //   var LocalStorage = require('node-localstorage').LocalStorage;
@@ -69,7 +72,8 @@ io.on('connection', (socket) => {
       game == undefined ||
       game.getPlayersArray().some((p) => p == data.username) ||
       data.username == undefined ||
-      data.username.length > 12
+      data.username.length > 12||
+      game.getPlayersArray().length>2
     ) {
       socket.emit('joinRoom', undefined);
     } else {
@@ -154,6 +158,8 @@ io.on('connection', (socket) => {
   // })
   // precondition: user must be able to make the move in the first place.
   socket.on('moveMade', (data) => {
+    console.log('moveMAde print');
+    
     // worst case complexity O(num_rooms * num_players_in_room)
     const game = rooms.find(
       (r) => r.findPlayer(socket.id).socket.id === socket.id

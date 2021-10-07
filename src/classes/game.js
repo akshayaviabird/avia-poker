@@ -54,7 +54,7 @@ const Game = function (name, host) {
 
     for (let i = 0; i < this.players.length; i++) {
       this.players[i].setDealer(i === this.roundData.dealer);
-      if (i === this.roundData.bigBlind) {
+      if (i === this.roundData.bigBlind ) {
         this.players[i].setBlind('Big Blind');
       } else if (i === this.roundData.smallBlind) {
         this.players[i].setBlind('Small Blind');

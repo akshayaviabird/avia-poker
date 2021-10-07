@@ -143,7 +143,7 @@ socket.on('joinRoom', function (data) {
   if (data == undefined) {
     $('#joinModal').closeModal();
     Materialize.toast(
-      "Enter a valid name/code! (max length of name is 12 characters & cannot be the same as someone else's)",
+      "Unable To Join The Game",
       4000
     );
     $('#hostButton').removeClass('disabled');
@@ -1268,17 +1268,17 @@ socket.on('displayPossibleMoves', function (data) {
 
   if(data.timmer === 'yes'){
     // socket.on('timmer',(data)=>{
-      let data=15
+      let time=15
       var downloadTimer = setInterval(function()
       {
-        if(data <= 0){ 
+        if(time <= 0){ 
         clearInterval(downloadTimer); 
              document.getElementById("countdown").innerHTML = "Finished";
              socket.emit('moveMade', { move: 'fold', bet: 'Fold' }) 
        } else { 
-            document.getElementById("countdown").innerHTML = data + " seconds remaining"; 
+            document.getElementById("countdown").innerHTML = time + " seconds remaining"; 
        } 
-        data -= 1; 
+        time -= 1; 
         }, 1000); 
 // })
     $('#countdown').show()
