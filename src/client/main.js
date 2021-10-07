@@ -1220,9 +1220,8 @@ function renderOpponentCards(name, data) {
         renderOpponentCard(data.cards[0]) +
         renderOpponentCard(data.cards[1]) +
         ' </div>' + '<div class="black-text final-text">' +
-        name
+        '<p class="finaltextName">' + name + '</p>'
         +
-        '<br/>' +
         data.endHand +
         '<div class="card-action center-align" style="font-size: 20px;">$' +
         data.money +
@@ -1260,8 +1259,7 @@ function renderOpponentCards(name, data) {
         renderOpponentCard(data.cards[0]) +
         renderOpponentCard(data.cards[1]) +
         ' </div>' + '<div class="black-text final-text">' +
-        name +
-        '<br />' +
+        '<p class="finaltextName">' + name + '</p>' +
         '<p class="predictguess">' +
         data.endHand + '</p>' +
         '<div class="card-action center-align" style="font-size: 20px;">$' +
