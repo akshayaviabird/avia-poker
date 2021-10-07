@@ -111,8 +111,19 @@ io.on('connection', (socket) => {
     const game = rooms.find(
       (r) => r.findPlayer(socket.id).socket.id === socket.id
     );
+    // console.log('sdfg',game)
+
+    let count=0;
+    game.players.map((item)=>{
+       if(item.money>0){
+         count++
+       }
+    })
+
+     console.log('count value',count)
+
     if (game != undefined) {
-      if (game.roundInProgress === false) {
+      if (game.roundInProgress === false  ) {
         game.startNewRound();
       }
     }

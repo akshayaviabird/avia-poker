@@ -63,7 +63,12 @@ const Game = function (name, host) {
 
     for (let i = 0; i < this.players.length; i++) {
       this.players[i].setDealer(i === this.roundData.dealer);
-      if (i === this.roundData.bigBlind) {
+      // console.log('xxxxx',i)
+      console.log('this.roundData.bigBlind',this.roundData.bigBlind);
+      console.log('this.roundData.smallBlind',this.roundData.smallBlind);
+      console.log('money',this.players[i].money);
+      
+      if (i === this.roundData.bigBlind ) {
         this.players[i].setBlind('Big Blind');
       } else if (i === this.roundData.smallBlind) {
         this.players[i].setBlind('Small Blind');
@@ -110,8 +115,10 @@ const Game = function (name, host) {
     if (this.autoBuyIns) {
       for (player of this.players) {
         if (player.getMoney() == 0) {
-          player.money = 1000;
-          player.buyIns = player.buyIns + 1;
+          // console.log('asdf',player) 
+          // player.money = 1000;
+          // player.buyIns = player.buyIns + 1;
+          player.status = 'Fold' 
         }
       }
     }
