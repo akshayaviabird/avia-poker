@@ -151,7 +151,7 @@ socket.on('joinRoom', function (data) {
   if (data == undefined) {
     $('#joinModal').closeModal();
     Materialize.toast(
-      "Enter a valid name/code! (max length of name is 12 characters & cannot be the same as someone else's)",
+      "Unable to Join",
       4000
     );
     $('#hostButton').removeClass('disabled');

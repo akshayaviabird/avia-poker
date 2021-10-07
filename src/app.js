@@ -52,7 +52,8 @@ io.on('connection', (socket) => {
       game == undefined ||
       game.getPlayersArray().some((p) => p == data.username) ||
       data.username == undefined ||
-      data.username.length > 12
+      data.username.length > 12  ||
+      game.getPlayersArray().length>7
     ) {
       socket.emit('joinRoom', undefined);
     } else if (game.roundNum > 0) {
