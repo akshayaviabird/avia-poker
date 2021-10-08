@@ -14,7 +14,7 @@ var gameInfo = null;
 var url_string = location.href
 var url = new URL(url_string);
 var codeValue = url.searchParams.get("token");
-
+let downloadTimer;
 
 if (codeValue !== null) {
   document.getElementById("hostButton").style.display = "none";
@@ -530,6 +530,7 @@ var result = function () {
 var fold = function () {
   var x = document.getElementById("fold"); 
   x.play();
+  clearTimeout(downloadTimer)
   socket.emit('moveMade', { move: 'fold', bet: 'Fold' });
 };
 
@@ -539,6 +540,7 @@ var bet = function () {
   } else if (parseInt($('#betRangeSlider').val()) < 2) {
     Materialize.toast('The minimum bet is $2.', 4000);
   } else {
+    clearTimeout(downloadTimer)
     socket.emit('moveMade', {
       move: 'bet',
       bet: parseInt($('#betRangeSlider').val()),
@@ -550,6 +552,7 @@ function call() {
   let bb=30
   var x = document.getElementById("call");
   x.play();
+  clearTimeout(downloadTimer)
   socket.emit('moveMade', { move: 'call', bet: 'Call' });
   // socket.emit('timmer',bb)
 }
@@ -558,8 +561,10 @@ var check = function () {
   let bb=30
   var x = document.getElementById("check");
   x.play();
+  clearTimeout(downloadTimer)
   socket.emit('moveMade', { move: 'check', bet: 'Check' });
   // socket.emit('timmer',bb)
+
 };
 
 var raise = function () {
@@ -573,6 +578,7 @@ var raise = function () {
   } else {
     var x = document.getElementById("raise");
     x.play();
+    clearTimeout(downloadTimer)
     socket.emit('moveMade', {
       move: 'raise',
       bet: parseInt($('#raiseRangeSlider').val()),
@@ -1269,12 +1275,12 @@ socket.on('displayPossibleMoves', function (data) {
   if(data.timmer === 'yes'){
     // socket.on('timmer',(data)=>{
       let time=15
-      var downloadTimer = setInterval(function()
+      downloadTimer = setInterval(function()
       {
         if(time <= 0){ 
         clearInterval(downloadTimer); 
              document.getElementById("countdown").innerHTML = "Finished";
-            //  socket.emit('moveMade', { move: 'fold', bet: 'Fold' }) 
+             socket.emit('moveMade', { move: 'fold', bet: 'Fold' }) 
        } else { 
             document.getElementById("countdown").innerHTML = time + " seconds remaining"; 
        } 

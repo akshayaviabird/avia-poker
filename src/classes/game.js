@@ -114,15 +114,15 @@ const Game = function (name, host) {
     if (this.autoBuyIns) {
       for (player of this.players) {
         if (player.getMoney() == 0) {
-          // player.money = 1000;
-          // player.buyIns = player.buyIns + 1;
+          player.money = 1000;
+          player.buyIns = player.buyIns + 1;
           // console.log('auto this.playes',player);    
           // player.status='Fold'
           // this.assignBlind()
           // console.log('s',)
           // this.rerender()
-          this.disconnectPlayer(player)
-          this.startNewRound()
+          // this.disconnectPlayer(player)
+          // this.startNewRound()
         }
       }
     } 
