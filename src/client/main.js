@@ -45,6 +45,7 @@ function updateblinds() {
 socket.on('sendcardsdata',(data) => {
   console.log("New round started");
   console.log(data);
+  $('#abcd').html('dfdf'+data.hand)
 })
 
 socket.on('playerDisconnected', function (data) {
