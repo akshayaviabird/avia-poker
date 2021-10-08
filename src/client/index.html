@@ -13,6 +13,8 @@
 	<meta name="msapplication-TileColor" content="#da532c">
 	<meta name="theme-color" content="#ffffff">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<title>Texas Hold 'Em - Distributed</title>
 </head>
 
@@ -51,9 +53,16 @@
 		</div>
 	</header>
 	<div id="gameDiv">
-		<h4 class="white-text">Avia Poker Game</h4>
-		<button id="playsound" onClick="playbgmusic()"></button>
-		<button id="stopsound" onClick="stopbgusic()"></button>
+		<div style="display: flex; justify-content: space-between; padding-top: 10px;">
+			<h4 class="white-text">Avia Poker Game</h4>
+			<div>
+				<button id="playsound" onClick="playbgmusic()" class="callBtnss" ><i class="fa fa-play"></i></button>
+			<button id="stopsound" onClick="stopbgusic()" class="callBtnss"><i class="fa fa-stop"></i></button>
+			</div>
+		</div>
+		
+		
+		
 		<div style="display: flex;">
 			<div style="display: flex; justify-content: start; flex-direction: column;">
 				<div>
@@ -62,6 +71,7 @@
 							<span class="card-title" id="usernamesCards"></span>
 							<div id="mycards"></div>
 						</div>
+						<button id="abcd" class="suggestion-view"></button>
 					</div>
 				</div>
 				<div>
@@ -220,9 +230,6 @@
 			<a href="#!" class="modal-close waves-effect waves-light btn-flat">CLOSE</a>
 		</div>
 	</div>
-
-	<button id="abcd"></button>
-
 	<div id="raiseModal" class="modal">
 		<div class="modal-content">
 			<h4>Raise</h4>

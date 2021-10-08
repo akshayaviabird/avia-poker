@@ -18,8 +18,8 @@ var url_string = location.href
 var url = new URL(url_string);
 codeValue = url.searchParams.get("token");
 
-document.getElementById('playsound').innerHTML = "playsound"
-document.getElementById('stopsound').innerHTML = "stopsound"
+// document.getElementById('playsound').innerHTML = "playsound"
+// document.getElementById('stopsound').innerHTML = "stopsound"
 
 
 
@@ -42,10 +42,10 @@ function updateblinds() {
   socket.emit('updateblinds', data)
 }
 
-socket.on('sendcardsdata',(data) => {
+socket.on('sendcardsdata', (data) => {
   console.log("New round started");
   console.log(data);
-  $('#abcd').html('dfdf'+data.hand)
+  $('#abcd').html(data.hand)
 })
 
 socket.on('playerDisconnected', function (data) {
@@ -290,7 +290,7 @@ socket.on('gameBegin', function (data) {
     alert('Error - invalid game.');
   } else {
     $('#gameDiv').show();
-    
+
     playbgmusic();
   }
 });
