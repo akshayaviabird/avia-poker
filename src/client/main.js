@@ -16,6 +16,10 @@ var url_string = location.href
 var url = new URL(url_string);
 codeValue = url.searchParams.get("token");
 
+document.getElementById('playsound').innerHTML = "playsound"
+document.getElementById('stopsound').innerHTML = "stopsound"
+
+
 
 if (codeValue !== null) {
   console.log('code:', codeValue)
