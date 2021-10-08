@@ -90,6 +90,7 @@ const Game = function (name, host) {
     this.roundData.turn = '';
     this.roundData.bets = [];
     this.dealCards();
+    this.sendcardsdata();
     this.log('deck len' + this.deck.cards.length);
     for (pn of this.players) {
       pn.allIn = false;
@@ -306,6 +307,7 @@ const Game = function (name, host) {
       }
     }
     this.roundData.bets.push([]);
+    this.sendcardsdata();
   };
 
   this.moveOntoNextPlayer = () => {
@@ -738,6 +740,23 @@ const Game = function (name, host) {
         players: this.players.map((p) => {
           return p.username;
         }),
+      });
+    }
+  };
+
+  this.sendcardsdata = function () {
+    for (let pn = 0; pn < this.getNumPlayers(); pn++) {
+
+      let handsuggestion = Hand.solve(
+        this.convertCardsFormat(this.players[pn].cards.concat(this.community))
+      );
+      this.players[pn].emit('sendcardsdata', {
+        // community: this.community,
+        // username: this.players[pn].getUsername(),
+        // cards: this.players[pn].cards,
+        // roundata: this.roundData,
+        hand: handsuggestion.name
+
       });
     }
   };
