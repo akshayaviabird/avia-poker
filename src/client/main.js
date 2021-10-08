@@ -431,7 +431,7 @@ socket.on('endHand', function (data) {
   $('#usernameBet').hide();
   $('#usernameCall').hide();
   $('#usernameRaise').hide();
-  $('#table-title').text('Round-Winner is' + '&nbsp;' + data.winner);
+  $('#table-title').text('Round-Winner : ' + data.winner);
 
   if (codeValue === null) {
     $('#playNext').html(
