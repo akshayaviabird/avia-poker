@@ -32,8 +32,8 @@ const Game = function (name, host) {
   this.disconnectedPlayers = [];
   this.autoBuyIns = true;
   this.debug = false;
-  this.smallBlind = 1;
-  this.bigBlind = 2;
+  this.smallBlind = 10;
+  this.bigBlind = 20;
 
   const constructor = (function () {})(this); 
   this.updateblind = (data) => {
