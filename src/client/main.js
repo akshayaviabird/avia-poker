@@ -18,6 +18,10 @@ var url_string = location.href
 var url = new URL(url_string);
 codeValue = url.searchParams.get("token");
 
+document.getElementById('playsound').innerHTML = "playsound"
+document.getElementById('stopsound').innerHTML = "stopsound"
+
+
 
 if (codeValue !== null) {
   console.log('code:', codeValue)
@@ -41,6 +45,7 @@ function updateblinds() {
 socket.on('sendcardsdata',(data) => {
   console.log("New round started");
   console.log(data);
+  $('#abcd').html('dfdf'+data.hand)
 })
 
 socket.on('playerDisconnected', function (data) {
