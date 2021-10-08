@@ -338,7 +338,8 @@ socket.on('reveal', function (data) {
   }
   $('#table-title').text('Hand Winner(s): ' + data.winners);
 
-  if (codeValue === null) {
+  console.log(data.host+data.username);
+  if (data.host === data.username) {
     $('#playNext').html(
       '<button onClick=playNext() id="playNextButton" class="callBtns menuButtons">Start Next Game</button>'
     );
@@ -433,9 +434,9 @@ socket.on('endHand', function (data) {
   $('#usernameRaise').hide();
   $('#table-title').text('Round-Winner is' + '&nbsp;' + data.winner);
 
-  if (codeValue === null) {
+  if (data.host==data.username) {
     $('#playNext').html(
-      '<button onClick=playNext() id="playNextButton" class="btn white black-text menuButtons">Start Next Game</button>'
+      '<button onClick=playNext() id="playNextButton" class="callBtns menuButtons">Start Next Game</button>'
     );
     // $('#stopGame').html(
     //   // '<button onClick=stopGame() id="playNextButton" class="btn white black-text menuButtons">Stop Game</button>'
@@ -1587,7 +1588,7 @@ var url = new URL(url_string);
 // var codeValue = url.searchParams.get("token"); 
 if (codeValue == null) {
   let dialog = document.getElementById("money")
-  document.getElementById('custom').innerHTML = "Blind Levels"
+  //document.getElementById('custom').innerHTML = "Blind Levels"
   document.getElementById('custom').addEventListener('click', () => {
     let dia = document.getElementById("money")
     dia.showModal();
@@ -1606,7 +1607,7 @@ if (codeValue == null) {
     dialog.appendChild(btn);
   })
 } else {
-  document.getElementById('custom').style.display = "none"
+ // document.getElementById('custom').style.display = "none"
 }
 
 

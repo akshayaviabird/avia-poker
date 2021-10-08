@@ -598,6 +598,7 @@ const Game = function (name, host) {
         winner: username,
         folded: this.players[pn].getUsername() != username ? 'Fold' : '',
         username: this.players[pn].getUsername(),
+        host: this.host,
         pot: this.getCurrentPot(),
         money: this.players[pn].getMoney(),
         cards: cardData,
@@ -627,6 +628,7 @@ const Game = function (name, host) {
       .toString();
     for (let pn = 0; pn < this.getNumPlayers(); pn++) {
       this.players[pn].emit('reveal', {
+        host: this.host,
         username: this.players[pn].getUsername(),
         money: this.players[pn].getMoney(),
         cards: cardData,
