@@ -11,6 +11,8 @@ var gameInfo = null;
 let codeValue
 
 let user;
+let bgmusic;
+bgmusic = document.getElementById("bgmusic");
 
 var url_string = location.href
 var url = new URL(url_string);
@@ -22,7 +24,12 @@ if (codeValue !== null) {
   document.getElementById("hostButton").style.display = "none";
   document.getElementById("joinButton").style.display = "inherit";
 }
-
+function stopbgusic() {
+  bgmusic.pause();
+}
+function playbgmusic() {
+  bgmusic.play();
+}
 function updateblinds() {
   const data = {
     "smallBlind": 20,
@@ -30,6 +37,12 @@ function updateblinds() {
   }
   socket.emit('updateblinds', data)
 }
+
+socket.on('sendcardsdata',(data) => {
+  console.log("New round started");
+  console.log(data);
+})
+
 socket.on('playerDisconnected', function (data) {
   Materialize.toast(data.player + ' disconnected.', 4000);
 });
@@ -272,8 +285,8 @@ socket.on('gameBegin', function (data) {
     alert('Error - invalid game.');
   } else {
     $('#gameDiv').show();
-    var x = document.getElementById("bgmusic");
-    x.play();
+    
+    playbgmusic();
   }
 });
 
