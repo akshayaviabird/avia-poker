@@ -72,8 +72,7 @@ io.on('connection', (socket) => {
       game == undefined ||
       game.getPlayersArray().some((p) => p == data.username) ||
       data.username == undefined ||
-      data.username.length > 12||
-      game.getPlayersArray().length>2
+      data.username.length > 12
     ) {
       socket.emit('joinRoom', undefined);
     } else {
@@ -158,12 +157,13 @@ io.on('connection', (socket) => {
   // })
   // precondition: user must be able to make the move in the first place.
   socket.on('moveMade', (data) => {
-    console.log('moveMAde print');
+  
     
     // worst case complexity O(num_rooms * num_players_in_room)
     const game = rooms.find(
       (r) => r.findPlayer(socket.id).socket.id === socket.id
     );
+    console.log('moveMAde print');
 
     if (game != undefined) {
 

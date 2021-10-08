@@ -40,6 +40,12 @@ const Game = function (name, host) {
   };
 
   this.assignBlind = () => {
+       
+    // for (let i = 0; i < this.players.length; i++) {
+    //     if(this.players[i].money==0){
+    //       this.roundData.smallBlind=
+    //     }
+    // }
     this.roundData.smallBlind =
       this.roundData.dealer + 1 < this.players.length
         ? this.roundData.dealer + 1
@@ -51,8 +57,15 @@ const Game = function (name, host) {
 
     this.log('smallBlind: ' + this.roundData.smallBlind);
     this.log('bigBlind: ' + this.roundData.bigBlind);
-
+       
+       console.log('deler', this.roundData.dealer);
+       console.log('sb',this.roundData.smallBlind);
+       console.log('bb',this.roundData.bigBlind);
+       
+       
     for (let i = 0; i < this.players.length; i++) {
+      console.log('dfgh',this.players[i].money);
+      
       this.players[i].setDealer(i === this.roundData.dealer);
       if (i === this.roundData.bigBlind ) {
         this.players[i].setBlind('Big Blind');
@@ -101,10 +114,15 @@ const Game = function (name, host) {
     if (this.autoBuyIns) {
       for (player of this.players) {
         if (player.getMoney() == 0) {
-          player.money = 1000;
-          player.buyIns = player.buyIns + 1;
-          // console.log('auto this.playes',this.players);    
-          // this.disconnectPlayer(player)
+          // player.money = 1000;
+          // player.buyIns = player.buyIns + 1;
+          // console.log('auto this.playes',player);    
+          // player.status='Fold'
+          // this.assignBlind()
+          // console.log('s',)
+          // this.rerender()
+          this.disconnectPlayer(player)
+          this.startNewRound()
         }
       }
     } 
@@ -753,8 +771,10 @@ const Game = function (name, host) {
     }
     return { socket: { id: 0 } };
   };
+  // console.log('lenght',this.disconnectedPlayers.length)
 
   this.disconnectPlayer = (player) => {
+    console.log('maity',player.username)
     this.disconnectedPlayers.push(player);
     if (player.getStatus() == 'Their Turn') {
       this.moveOntoNextPlayer();
