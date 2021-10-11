@@ -426,3 +426,25 @@ width: 400px;
     font-size: 1.2em;
     font-family: sans-serif;
 }
+.countdown-timer{
+  display: block;
+    font-size: 22px;
+    color: crimson;
+    margin-right: 44px;
+    font-weight: bolder;
+}
+.timerstartbtn{
+  border-radius: 12px;
+    font-size: 19px;
+    background-color: darkcyan;
+    height: 68px;
+    width: 133px;
+    margin-left: 998px;
+}
+.timerstopbtn{
+  background-color: crimson;
+    border-radius: 12px;
+    font-size: 19px; 
+    height: 66px;
+    width: 133px;;
+}

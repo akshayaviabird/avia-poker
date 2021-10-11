@@ -20,14 +20,48 @@ codeValue = url.searchParams.get("token");
 
 // document.getElementById('playsound').innerHTML = "playsound"
 // document.getElementById('stopsound').innerHTML = "stopsound"
-
-
+let downloadTimer;
+let globaltimmer;
+let timmer; 
+// var   startButton = document.getElementById("startButton");
+// var   pauseButton = document.getElementById("pauseButton");
+// startButton.addEventListener('click', timerstart);
+// pauseButton.addEventListener('click', timerpause);
 
 if (codeValue !== null) {
   console.log('code:', codeValue)
   document.getElementById("hostButton").style.display = "none";
   document.getElementById("joinButton").style.display = "inherit";
 }
+
+// if(codeValue == null){ 
+//      startButton.innerHTML="Start timer"
+//      pauseButton.innerHTML="Pasue Timer"
+// }else{
+//   startButton.style.display="none"
+//   pauseButton.style.display="none"
+// }
+ 
+// function timerstart(){
+// // downloadTimer;
+// console.log('timmer',timmer)
+// downloadTimer= setInterval(function()
+// {
+//   if(timmer <= 0){ 
+//   clearInterval(downloadTimer); 
+//       //  document.getElementById("countdown").innerHTML = "Finished";
+//        socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
+//  } else { 
+//       document.getElementById("countdown").innerHTML = timmer + " seconds remaining"; 
+//  }  
+//   timmer -= 1; 
+//   }, 1000); 
+// }
+// function timerpause(){ 
+//   console.log('sdfgn',timmer);
+//  clearInterval(downloadTimer)
+// }
+
 function stopbgusic() {
   bgmusic.pause();
 }
@@ -43,8 +77,8 @@ function updateblinds() {
 }
 
 socket.on('sendcardsdata', (data) => {
-  console.log("New round started");
-  console.log(data);
+  // console.log("New round started");
+  // console.log(data);
   $('#abcd').html(data.hand)
 })
 
@@ -180,8 +214,7 @@ socket.on('joinRoom', function (data) {
       4000
     );
   }
-  else {
-    console.log(data);
+  else { 
     $('#joinModalContent').html(
       '<h5>' +
       data.host +
@@ -207,7 +240,7 @@ socket.on('dealt', function (data) {
 
 socket.on('rerender', function (data) {
   socket.emit('timer_turn', data.players);
-  console.log(data.players);
+  // console.log(data.players);
   if (data.myBet == 0) {
     $('#usernamesCards').text('My Cards');
   } else {
@@ -279,6 +312,7 @@ socket.on('rerender', function (data) {
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide();
+    $('#countdown').hide();
   }
 });
 
@@ -329,6 +363,7 @@ socket.on('reveal', function (data) {
   $('#usernameBet').hide();
   $('#usernameCall').hide();
   $('#usernameRaise').hide();
+  $('#countdown').hide()
 
   for (var i = 0; i < data.winners.length; i++) {
     if (data.winners[i] == data.username) {
@@ -432,6 +467,7 @@ socket.on('endHand', function (data) {
   $('#usernameBet').hide();
   $('#usernameCall').hide();
   $('#usernameRaise').hide();
+  $('#countdown').hide()
   $('#table-title').text('Round-Winner : ' + data.winner);
 
   if (data.host==data.username) {
@@ -460,6 +496,8 @@ socket.on('endHand', function (data) {
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide();
+    $('#countdown').hide()
+
   }
   $('#usernamesMoney').text('$' + data.money);
   $('#opponentCards').html(
@@ -566,6 +604,7 @@ var result = function () {
 var fold = function () {
   var x = document.getElementById("fold");
   x.play();
+  clearInterval(downloadTimer);
   socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
 };
 
@@ -575,6 +614,7 @@ var bet = function () {
   } else if (parseInt($('#betRangeSlider').val()) < 2) {
     Materialize.toast('The minimum bet is $2.', 4000);
   } else {
+    clearInterval(downloadTimer);
     socket.emit('moveMade', {
       move: 'bet',
       bet: parseInt($('#betRangeSlider').val()),
@@ -586,12 +626,15 @@ var bet = function () {
 function call() {
   var x = document.getElementById("call");
   x.play();
+  clearInterval(downloadTimer);
   socket.emit('moveMade', { move: 'call', bet: 'Call', code: codeValue });
 }
 
 var check = function () {
   var x = document.getElementById("check");
-  x.play();
+  x.play(); 
+  
+  clearInterval(downloadTimer);
   socket.emit('moveMade', { move: 'check', bet: 'Check', code: codeValue });
 };
 
@@ -606,6 +649,7 @@ var raise = function () {
   } else {
     var x = document.getElementById("raise");
     x.play();
+    clearInterval(downloadTimer);
     socket.emit('moveMade', {
       move: 'raise',
       bet: parseInt($('#raiseRangeSlider').val()),
@@ -1447,6 +1491,31 @@ socket.on('displayPossibleMoves', function (data) {
   } else $('#usernameCall').hide();
   if (data.raise == 'yes') $('#usernameRaise').show();
   else $('#usernameRaise').hide();
+
+  if(data.timmer === 'yes'){
+    // socket.on('timmer',(data)=>{
+     var  time=15
+     
+      downloadTimer = setInterval(function()
+      {
+        if(time <= 0){ 
+        clearInterval(downloadTimer); 
+            //  document.getElementById("countdown").innerHTML = "Finished";
+             socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
+       } else { 
+            document.getElementById("countdown").innerHTML = time + " seconds remaining"; 
+       }  
+       timmer=time
+        time -= 1; 
+        }, 1000);  
+        
+// })
+    $('#countdown').show()
+  }  else {
+
+    clearInterval(downloadTimer)
+     $('#countdown').hide()
+  }
 });
 
 function renderSelf(data) {
@@ -1476,6 +1545,7 @@ function renderSelf(data) {
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide();
+    $('#countdown').hide()
   } else {
     $('#status').text('');
     $('#usernamesCards').removeClass('black-text');
@@ -1490,6 +1560,7 @@ function renderSelf(data) {
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide();
+    $('#countdown').hide()
   }
   $('#blindStatus').text(data.blind);
 }
@@ -1521,6 +1592,7 @@ function renderSelfScoreboard(data) {
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide();
+    $('#countdown').hide()
   } else {
     $('#status').text('');
     $('#usernamesCards').removeClass('black-text');
@@ -1536,6 +1608,7 @@ function renderSelfScoreboard(data) {
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide();
+    $('#countdown').hide()
   }
   $('#blindStatus').text(data.blind);
 }

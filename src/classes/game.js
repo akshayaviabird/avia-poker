@@ -1030,6 +1030,7 @@ const Game = function (name, host) {
       bet: 'yes',
       call: topBet,
       raise: 'yes',
+      timmer:'yes'
     };
     if (player.getStatus() == 'Fold') {
       this.log('Error: Folded players should not be able to move.');

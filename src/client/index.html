@@ -55,7 +55,10 @@
 	<div id="gameDiv">
 		<div style="display: flex; justify-content: space-between; padding-top: 10px;">
 			<h4 class="white-text">Avia Poker Game</h4>
-			<div>
+			<!-- <button id="startButton" class="timerstartbtn"></button>
+            <button id="pauseButton" class="timerstopbtn"></button> -->
+			 
+			<div> 
 				<button id="playsound" onClick="playbgmusic()" class="callBtnss" ><i class="fa fa-play"></i></button>
 			<button id="stopsound" onClick="stopbgusic()" class="callBtnss"><i class="fa fa-stop"></i></button>
 			</div>
@@ -124,6 +127,7 @@
 				</form>
 		</div>
 		<div style="display: flex; position: fixed; bottom: 20px; right: 0; padding: 10px;">
+			<div id='countdown' class="countdown-timer"></div>
 							<button onClick=fold() id="usernameFold" class="callBtns  menuButtons">Fold</button>
 							<button onClick=check() id="usernameCheck" class="callBtns menuButtons">Check</button>
 							<button href="#betModal" onClick=updateBetModal() id="usernameBet"
