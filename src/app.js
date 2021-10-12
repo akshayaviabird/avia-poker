@@ -6,10 +6,11 @@ const Game = require('./classes/game.js');
 const path = require('path');
 const app = express();
 var XMLHttpRequest = require('xhr2');
-const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer'); 
 app.get(`/playgame`, (req, res) => {
   res.sendFile(path.join(__dirname + '/client/index.html'));
 });
+
 const server = http.createServer(app);
 const io = socketio(server);
 
@@ -256,11 +257,14 @@ io.on('connection', (socket) => {
     console.log(game.smallBlind + game.bigBlind);
   })
   socket.on('disconnect', () => {
+   
+    
     const game = rooms.find(
       (r) => r.findPlayer(socket.id).socket.id === socket.id
     );
     if (game != undefined) {
       const player = game.findPlayer(socket.id);
+      game.finddisconnect='yes'
       game.disconnectPlayer(player);
       if (game.players.length == 0) {
         if (this.rooms != undefined && this.rooms.length !== 0) {
@@ -288,4 +292,3 @@ io.on('connection', (socket) => {
 })
 server.listen(PORT, () => console.log(`hosting on port ${PORT}`));
 
-// module.exports= aa
