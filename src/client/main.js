@@ -21,14 +21,9 @@ codeValue = url.searchParams.get("token");
 // document.getElementById('playsound').innerHTML = "playsound"
 // document.getElementById('stopsound').innerHTML = "stopsound"
 let downloadTimer;
-<<<<<<< HEAD
 
 // let globaltimmer;
 // let timmer; 
-=======
-let globaltimmer;
-let timmer;
->>>>>>> main
 // var   startButton = document.getElementById("startButton");
 // var   pauseButton = document.getElementById("pauseButton");
 // startButton.addEventListener('click', timerstart);
