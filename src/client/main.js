@@ -1531,7 +1531,7 @@ socket.on('displayPossibleMoves', function (data) {
       if(time <= 0){ 
       clearInterval(downloadTimer);  
            socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
-      time=15
+        time=15
      } else { 
           document.getElementById("countdown").innerHTML = time + " seconds remaining"; 
      }  
