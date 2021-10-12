@@ -22,7 +22,7 @@ codeValue = url.searchParams.get("token");
 // document.getElementById('stopsound').innerHTML = "stopsound"
 let downloadTimer;
 let globaltimmer;
-let timmer; 
+let timmer;
 // var   startButton = document.getElementById("startButton");
 // var   pauseButton = document.getElementById("pauseButton");
 // startButton.addEventListener('click', timerstart);
@@ -41,7 +41,7 @@ if (codeValue !== null) {
 //   startButton.style.display="none"
 //   pauseButton.style.display="none"
 // }
- 
+
 // function timerstart(){
 // // downloadTimer;
 // console.log('timmer',timmer)
@@ -214,7 +214,7 @@ socket.on('joinRoom', function (data) {
       4000
     );
   }
-  else { 
+  else {
     $('#joinModalContent').html(
       '<h5>' +
       data.host +
@@ -373,7 +373,7 @@ socket.on('reveal', function (data) {
   }
   $('#table-title').text('Hand Winner(s): ' + data.winners);
 
-  console.log(data.host+data.username);
+  console.log(data.host + data.username);
   if (data.host === data.username) {
     $('#playNext').html(
       '<button onClick=playNext() id="playNextButton" class="callBtns menuButtons">Start Next Game</button>'
@@ -470,7 +470,7 @@ socket.on('endHand', function (data) {
   $('#countdown').hide()
   $('#table-title').text('Round-Winner : ' + data.winner);
 
-  if (data.host==data.username) {
+  if (data.host == data.username) {
     $('#playNext').html(
       '<button onClick=playNext() id="playNextButton" class="callBtns menuButtons">Start Next Game</button>'
     );
@@ -632,8 +632,8 @@ function call() {
 
 var check = function () {
   var x = document.getElementById("check");
-  x.play(); 
-  
+  x.play();
+
   clearInterval(downloadTimer);
   socket.emit('moveMade', { move: 'check', bet: 'Check', code: codeValue });
 };
@@ -1492,29 +1492,28 @@ socket.on('displayPossibleMoves', function (data) {
   if (data.raise == 'yes') $('#usernameRaise').show();
   else $('#usernameRaise').hide();
 
-  if(data.timmer === 'yes'){
+  if (data.timmer === 'yes') {
     // socket.on('timmer',(data)=>{
-     var  time=15
-     
-      downloadTimer = setInterval(function()
-      {
-        if(time <= 0){ 
-        clearInterval(downloadTimer); 
-            //  document.getElementById("countdown").innerHTML = "Finished";
-             socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
-       } else { 
-            document.getElementById("countdown").innerHTML = time + " seconds remaining"; 
-       }  
-       timmer=time
-        time -= 1; 
-        }, 1000);  
-        
-// })
+    var time = 15
+
+    downloadTimer = setInterval(function () {
+      if (time <= 0) {
+        clearInterval(downloadTimer);
+        //  document.getElementById("countdown").innerHTML = "Finished";
+        socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
+      } else {
+        document.getElementById("countdown").innerHTML = time + " seconds remaining";
+      }
+      timmer = time
+      time -= 1;
+    }, 1000);
+
+    // })
     $('#countdown').show()
-  }  else {
+  } else {
 
     clearInterval(downloadTimer)
-     $('#countdown').hide()
+    $('#countdown').hide()
   }
 });
 
@@ -1641,7 +1640,7 @@ socket.on('chat message', function (data) {
   item.style.borderRadius = '5px';
   item.style.paddingLeft = '5px';
   item.style.margin = '7px';
-  item.innerHTML = "<p class='messagename'>" + username + "</p>" + '<p>' + data.message + '</p>';
+  item.innerHTML = "<p class='messagename'>" + username + "</p>" + '<p class="messagechat">' + data.message + '</p>';
   messages.appendChild(item);
   messages.scrollTop = messages.scrollHeight;
 })
@@ -1680,7 +1679,7 @@ if (codeValue == null) {
     dialog.appendChild(btn);
   })
 } else {
- // document.getElementById('custom').style.display = "none"
+  // document.getElementById('custom').style.display = "none"
 }
 
 

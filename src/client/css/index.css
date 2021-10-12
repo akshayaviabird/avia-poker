@@ -341,6 +341,7 @@ width: 400px;
     overflow-wrap: break-word;
     background: black;
     opacity: 0.6;
+    margin-bottom: 2px;
 }
 
 .formSpace{
@@ -351,7 +352,7 @@ width: 400px;
     padding: 5px;
     height: 40px;
     padding-left: 15px;
-    opacity: 0.6;
+    opacity: 0.9;
 }
 
 .chatdata{
@@ -447,4 +448,20 @@ width: 400px;
     font-size: 19px; 
     height: 66px;
     width: 133px;;
+}
+.messagechat{
+  margin-top: -15px;
+}
+.chatTitle{
+  color: white;
+  display: flex;
+  justify-content: center;
+  margin-bottom: -17px;
+  margin-top: -14px;
+  font-size: 2em;
+  font-family: monospace;
+  background-color: #26a69a;
+    border-radius: 10px;
+    opacity: 0.8;
+    font-weight: 900;
 }
