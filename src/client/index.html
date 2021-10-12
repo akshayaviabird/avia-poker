@@ -120,10 +120,10 @@
 		</div>
 			
 		<div  class="chatdesign"> 
-				<span id="person"></span>
+				<span id="person" class="chatTitle">Chat-box</span>
 				<ul id="messages" class="messageList"></ul>
 				<form id="form" class="formSpace" action="">
-				<input id="input" autocomplete="off" /><button style="border: none; background:white ;"><i style="font-size:30px; color:blue" class="fa fa-send-o"></i></button>
+				<input id="input" placeholder="Type your message" style="padding-top: 19px;" autocomplete="off" /><button style="border: none; background:white ;"><i style="font-size:27px; color:#26a69a" class="fa fa-send-o"></i></button>
 				</form>
 		</div>
 		<div style="display: flex; position: fixed; bottom: 20px; right: 0; padding: 10px;">
@@ -213,7 +213,7 @@
 		</div>
 	</div>
 
-	<div id="betModal" class="modal">
+	<div id="betModal" class="modal" style="border-radius: 20px;">
 		<div class="modal-content">
 			<h4>Bet</h4>
 			<form action="#">
@@ -234,7 +234,7 @@
 			<a href="#!" class="modal-close waves-effect waves-light btn-flat">CLOSE</a>
 		</div>
 	</div>
-	<div id="raiseModal" class="modal">
+	<div id="raiseModal" class="modal" style="border-radius: 20px;">
 		<div class="modal-content">
 			<h4>Raise</h4>
 			<form action="#">
@@ -242,7 +242,7 @@
 					<h4>Drag the slider to raise the current top bet!</h4>
 				</div>
 				<p class="range-field">
-					<input type="range" id="raiseRangeSlider" min="0" max="100" value="0" onchange=updateRaiseDisplay() />
+					<input type="range" id="raiseRangeSlider" min="0" max="100" value="0" oninput="updateRaiseDisplay()"  onchange=updateRaiseDisplay() />
 				</p>
 			</form>
 			<br />
