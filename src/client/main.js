@@ -21,9 +21,14 @@ codeValue = url.searchParams.get("token");
 // document.getElementById('playsound').innerHTML = "playsound"
 // document.getElementById('stopsound').innerHTML = "stopsound"
 let downloadTimer;
+<<<<<<< HEAD
 
 // let globaltimmer;
 // let timmer; 
+=======
+let globaltimmer;
+let timmer;
+>>>>>>> main
 // var   startButton = document.getElementById("startButton");
 // var   pauseButton = document.getElementById("pauseButton");
 // startButton.addEventListener('click', timerstart);
@@ -42,7 +47,7 @@ if (codeValue !== null) {
 //   startButton.style.display="none"
 //   pauseButton.style.display="none"
 // }
- 
+
 // function timerstart(){
 // // downloadTimer;
 // console.log('timmer',timmer)
@@ -215,7 +220,7 @@ socket.on('joinRoom', function (data) {
       4000
     );
   }
-  else { 
+  else {
     $('#joinModalContent').html(
       '<h5>' +
       data.host +
@@ -374,7 +379,7 @@ socket.on('reveal', function (data) {
   }
   $('#table-title').text('Hand Winner(s): ' + data.winners);
 
-  console.log(data.host+data.username);
+  console.log(data.host + data.username);
   if (data.host === data.username) {
     $('#playNext').html(
       '<button onClick=playNext() id="playNextButton" class="callBtns menuButtons">Start Next Game</button>'
@@ -471,7 +476,7 @@ socket.on('endHand', function (data) {
   $('#countdown').hide()
   $('#table-title').text('Round-Winner : ' + data.winner);
 
-  if (data.host==data.username) {
+  if (data.host == data.username) {
     $('#playNext').html(
       '<button onClick=playNext() id="playNextButton" class="callBtns menuButtons">Start Next Game</button>'
     );
@@ -636,8 +641,8 @@ function call() {
 
 var check = function () {
   var x = document.getElementById("check");
-  x.play(); 
-  
+  x.play();
+
   clearInterval(downloadTimer);
   time=15
   socket.emit('moveMade', { move: 'check', bet: 'Check', code: codeValue });
@@ -1665,7 +1670,7 @@ socket.on('chat message', function (data) {
   item.style.borderRadius = '5px';
   item.style.paddingLeft = '5px';
   item.style.margin = '7px';
-  item.innerHTML = "<p class='messagename'>" + username + "</p>" + '<p>' + data.message + '</p>';
+  item.innerHTML = "<p class='messagename'>" + username + "</p>" + '<p class="messagechat">' + data.message + '</p>';
   messages.appendChild(item);
   messages.scrollTop = messages.scrollHeight;
 })
@@ -1704,5 +1709,7 @@ if (codeValue == null) {
     dialog.appendChild(btn);
   })
 } else {
- // document.getElementById('custom').style.display = "none"
+  // document.getElementById('custom').style.display = "none"
 }
+
+
