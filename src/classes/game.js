@@ -167,6 +167,7 @@ const Game = function (name, host) {
         status: this.players[pn].getStatus(),
         blind: this.players[pn].getBlind(),
         money: this.players[pn].getMoney(),
+        winningStreak: this.players[pn].winningStreak,
         buyIns: this.players[pn].buyIns,
         isChecked: this.playerIsChecked(this.players[pn]),
       });
@@ -339,6 +340,7 @@ const Game = function (name, host) {
         // everyone folded, start new round, give pot to player
         this.log('everyone folded except one');
         nonFolderPlayer.money = this.getCurrentPot() + nonFolderPlayer.money;
+        nonFolderPlayer.winningStreak=nonFolderPlayer.winningStreak+1;
         this.endHandAllFold(nonFolderPlayer.getUsername());
         handOver = true;
       } else {
@@ -373,6 +375,7 @@ const Game = function (name, host) {
         // everyone folded, start new round, give pot to player
         this.log('everyone folded except one');
         nonFolderPlayer.money = this.getCurrentPot() + nonFolderPlayer.money;
+        nonFolderPlayer.winningStreak=nonFolderPlayer.winningStreak+1;
         this.endHandAllFold(nonFolderPlayer.getUsername());
         handOver = true;
       } else {
@@ -535,6 +538,7 @@ const Game = function (name, host) {
           if (
             this.arraysEqual(playerHand.hand.cards.sort(), winnerArray.sort())
           ) {
+            playerHand.player.winningStreak=playerHand.player.winningStreak+1
             winnerData.push({
               player: playerHand.player,
               rank: playerHand.hand.rank,
@@ -634,6 +638,7 @@ const Game = function (name, host) {
         cards: cardData,
         bets: this.roundData.bets,
         winners: winnersUsernames,
+        winningStreak: this.players[pn].winningStreak,
         hand: this.players[pn].getStatus(),
       });
     }
