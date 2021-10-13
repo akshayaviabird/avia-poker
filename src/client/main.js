@@ -727,7 +727,7 @@ function renderOpponent(name, data) {
       if (data.text == 'Their Turn') {
         if (data.isChecked)
           return (
-            '<div class="circle opponentCard"><div class="card yellow darken-3"><div class="card-content black-text"><span class="card-title final-style">' +
+            '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight"><div class="card-content black-text"><span class="card-title final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             '<br />Check' +
             '<div class="card-action" style="font-size: 20px;">$' +
@@ -754,7 +754,7 @@ function renderOpponent(name, data) {
           );
         else if (bet == 0) {
           return (
-            '<div class="circle opponentCard"><div class="card yellow darken-3"><div class="card-content black-text"><span class="card-title final-style">' +
+            '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight"><div class="card-content black-text"><span class="card-title final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             +
             '<div class="card-action" style="font-size: 20px;">$' +
@@ -782,7 +782,7 @@ function renderOpponent(name, data) {
           );
         } else {
           return (
-            '<div class="circle opponentCard"><div class="card yellow darken-3"><div class="card-content black-text"><span class="card-title final-style">' +
+            '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight"><div class="card-content black-text"><span class="card-title final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             '<br />Bet: $' +
             bet +
@@ -925,7 +925,7 @@ function renderOpponent(name, data) {
       if (data.text == 'Their Turn') {
         if (data.isChecked)
           return (
-            '<div class="circle opponentCard"><div class="card yellow darken-3"><div class="card-content black-text"><span class="card-title black-text final-style">' +
+            '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight "><div class="card-content black-text"><span class="card-title black-text final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             '<br />Check' +
             '<div class="card-action" style="font-size: 20px;">$' +
@@ -948,7 +948,7 @@ function renderOpponent(name, data) {
           );
         else if (bet == 0) {
           return (
-            '<div class="circle opponentCard"><div class="card yellow darken-3"><div class="card-content black-text"><span class="card-title black-text final-style">' +
+            '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight"><div class="card-content black-text"><span class="card-title black-text final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             '<div class="card-action" style="font-size: 20px;">$' +
             data.money +
@@ -969,7 +969,7 @@ function renderOpponent(name, data) {
           );
         } else {
           return (
-            '<div class="circle opponentCard"><div class="card yellow darken-3"><div class="card-content black-text"><span class="card-title black-text final-style">' +
+            '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight"><div class="card-content black-text"><span class="card-title black-text final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             '<br />Bet: $' +
             bet +
