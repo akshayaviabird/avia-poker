@@ -240,7 +240,7 @@ socket.on('dealt', function (data) {
 
 socket.on('rerender', function (data) {
   socket.emit('timer_turn', data.players);
-  // console.log(data.players);
+  console.log(data.players);
   if (data.myBet == 0) {
     $('#usernamesCards').text('My Cards');
   } else {
@@ -365,6 +365,8 @@ socket.on('reveal', function (data) {
   $('#usernameRaise').hide();
   $('#countdown').hide()
 
+  console.log(`Winning streak of every user ${data.winningStreak}`)
+  $('#abcd').html(`Your Winning Streak is ${data.winningStreak}`)
   for (var i = 0; i < data.winners.length; i++) {
     if (data.winners[i] == data.username) {
       Materialize.toast('You won the hand!', 4000);

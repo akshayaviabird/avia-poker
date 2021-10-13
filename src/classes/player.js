@@ -1,6 +1,7 @@
 const Player = function (playerName, socket, playerEmail, debug) {
   this.username = playerName;
   this.email = playerEmail;
+  this.winningStreak = 0;
   this.cards = [];
   this.socket = socket;
   this.currentCard = null;
