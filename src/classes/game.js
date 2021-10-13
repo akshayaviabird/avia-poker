@@ -340,6 +340,7 @@ const Game = function (name, host) {
         // everyone folded, start new round, give pot to player
         this.log('everyone folded except one');
         nonFolderPlayer.money = this.getCurrentPot() + nonFolderPlayer.money;
+        nonFolderPlayer.winningStreak=nonFolderPlayer.winningStreak+1;
         this.endHandAllFold(nonFolderPlayer.getUsername());
         handOver = true;
       } else {
@@ -374,6 +375,7 @@ const Game = function (name, host) {
         // everyone folded, start new round, give pot to player
         this.log('everyone folded except one');
         nonFolderPlayer.money = this.getCurrentPot() + nonFolderPlayer.money;
+        nonFolderPlayer.winningStreak=nonFolderPlayer.winningStreak+1;
         this.endHandAllFold(nonFolderPlayer.getUsername());
         handOver = true;
       } else {
