@@ -35,9 +35,9 @@ const Game = function (name, host) {
   this.smallBlind = 10;
   this.bigBlind = 20;
 
-  const constructor = (function () {})(this); 
+  const constructor = (function () { })(this);
   this.updateblind = (data) => {
-    
+
     this.smallBlind = data.smallBlind;
     this.bigBlind = data.bigBlind;
   }
@@ -340,7 +340,7 @@ const Game = function (name, host) {
         // everyone folded, start new round, give pot to player
         this.log('everyone folded except one');
         nonFolderPlayer.money = this.getCurrentPot() + nonFolderPlayer.money;
-        nonFolderPlayer.winningStreak=nonFolderPlayer.winningStreak+1;
+        nonFolderPlayer.winningStreak = nonFolderPlayer.winningStreak + 1;
         this.endHandAllFold(nonFolderPlayer.getUsername());
         handOver = true;
       } else {
@@ -375,7 +375,7 @@ const Game = function (name, host) {
         // everyone folded, start new round, give pot to player
         this.log('everyone folded except one');
         nonFolderPlayer.money = this.getCurrentPot() + nonFolderPlayer.money;
-        nonFolderPlayer.winningStreak=nonFolderPlayer.winningStreak+1;
+        nonFolderPlayer.winningStreak = nonFolderPlayer.winningStreak + 1;
         this.endHandAllFold(nonFolderPlayer.getUsername());
         handOver = true;
       } else {
@@ -395,10 +395,10 @@ const Game = function (name, host) {
         let count = 0;
         do {
           currTurnIndex = currTurnIndex - 1 < 0 ? this.players.length - 1 : currTurnIndex - 1;
-          count ++;
+          count++;
         } while (
           (this.players[currTurnIndex].getStatus() == 'Fold'
-          || this.players[currTurnIndex].allIn)
+            || this.players[currTurnIndex].allIn)
           && count < Object.keys(this.players).length * 2 // Avoid infinite loop, allow search twice on all players
         );
         this.players[currTurnIndex].setStatus('Their Turn');
@@ -538,7 +538,7 @@ const Game = function (name, host) {
           if (
             this.arraysEqual(playerHand.hand.cards.sort(), winnerArray.sort())
           ) {
-            playerHand.player.winningStreak=playerHand.player.winningStreak+1
+            playerHand.player.winningStreak = playerHand.player.winningStreak + 1
             winnerData.push({
               player: playerHand.player,
               rank: playerHand.hand.rank,
@@ -600,6 +600,7 @@ const Game = function (name, host) {
     for (let pn = 0; pn < this.getNumPlayers(); pn++) {
       this.players[pn].emit('endHand', {
         winner: username,
+        winningStreak: this.players[pn].winningStreak,
         folded: this.players[pn].getUsername() != username ? 'Fold' : '',
         username: this.players[pn].getUsername(),
         host: this.host,
@@ -619,6 +620,7 @@ const Game = function (name, host) {
       const winData = winners.find((w) => w.player === this.players[i]);
       cardData.push({
         username: this.players[i].getUsername(),
+        winningStreak: this.players[i].winningStreak,
         cards: this.players[i].cards,
         hand: this.players[i].getStatus(),
         folded: this.players[i].getStatus() == 'Fold',
@@ -910,9 +912,9 @@ const Game = function (name, host) {
             this.getCurrentRoundBets().map((a) =>
               a.player == player.username
                 ? {
-                    player: player.getUsername(),
-                    bet: player.getMoney() + currBet,
-                  }
+                  player: player.getUsername(),
+                  bet: player.getMoney() + currBet,
+                }
                 : a
             )
           );
@@ -1035,7 +1037,7 @@ const Game = function (name, host) {
       bet: 'yes',
       call: topBet,
       raise: 'yes',
-      timmer:'yes'
+      timmer: 'yes'
     };
     if (player.getStatus() == 'Fold') {
       this.log('Error: Folded players should not be able to move.');
