@@ -268,13 +268,14 @@ socket.on('rerender', function (data) {
   );
   $('#opponentCards').html(
     data.players.map(function (p) {
-      return renderOpponent(p.username, {
+      return renderOpponent(p.username, p.winningStreak, {
         text: p.status,
         money: p.money,
         blind: p.blind,
         bets: data.bets,
         buyIns: p.buyIns,
         isChecked: p.isChecked,
+        winningStreak: p.winningStreak,
       });
     })
   );
@@ -366,7 +367,7 @@ socket.on('reveal', function (data) {
   $('#countdown').hide()
 
   console.log(`Winning streak of every user ${data.winningStreak}`)
-  $('#abcd').html(`Your Winning Streak is ${data.winningStreak}`)
+  // $('#abcd').html(`Your Winning Streak is ${data.winningStreak}`)
   for (var i = 0; i < data.winners.length; i++) {
     if (data.winners[i] == data.username) {
       Materialize.toast('You won the hand!', 4000);
@@ -401,6 +402,7 @@ socket.on('reveal', function (data) {
         money: p.money,
         endHand: p.hand,
         buyIns: p.buyIns,
+        winningStreak: p.winningStreak,
       });
     })
   );
@@ -504,7 +506,7 @@ socket.on('endHand', function (data) {
   $('#usernamesMoney').text('$' + data.money);
   $('#opponentCards').html(
     data.cards.map(function (p) {
-      return renderOpponent(p.username, {
+      return renderOpponent(p.username, p.winningStreak, {
         text: p.text,
         money: p.money,
         blind: '',
@@ -693,7 +695,7 @@ function renderCard(card) {
     );
 }
 
-function renderOpponent(name, data) {
+function renderOpponent(name, streak, data) {
   var bet = 0;
   if (data.bets != undefined) {
     var arr = data.bets[data.bets.length - 1];
@@ -708,7 +710,7 @@ function renderOpponent(name, data) {
       return (
         '<div class="circle opponentCard">' +
         '<div class="card grey">' +
-        '<div class="card-content">' +
+        '<div class="card-content arrangeStreak">' +
         '<span class="card-title final-style">' +
         '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />'
         + '<div class="opponent-cards-arran">' + name + '<br/>' +
@@ -717,6 +719,7 @@ function renderOpponent(name, data) {
         data.money +
         '</div></div>' +
         '</span>' +
+        '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
         // '<p><div class="center-align"></div><br />' +
         // data.blind +
         // '<div class="card-action green darken-3 white-text center-align" style="font-size: 20px;">$' +
@@ -729,13 +732,14 @@ function renderOpponent(name, data) {
       if (data.text == 'Their Turn') {
         if (data.isChecked)
           return (
-            '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight"><div class="card-content black-text"><span class="card-title final-style">' +
+            '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight"><div class="card-content black-text arrangeStreak"><span class="card-title final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             '<br />Check' +
             '<div class="card-action" style="font-size: 20px;">$' +
             data.money +
             '</div></div>' +
             '</span>' +
+            '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
             // <p><div class="center-align"></div><br />' +
             // data.blind +
             // '<div class="card-action green darken-3 white-text center-align" style="font-size: 20px;">$' +
@@ -756,13 +760,14 @@ function renderOpponent(name, data) {
           );
         else if (bet == 0) {
           return (
-            '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight"><div class="card-content black-text"><span class="card-title final-style">' +
+            '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight"><div class="card-content black-text arrangeStreak"><span class="card-title final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             +
             '<div class="card-action" style="font-size: 20px;">$' +
             data.money +
             '</div></div>' +
             '</span>' +
+            '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
             // <p><div class="center-align"></div><br />' +
             // data.blind +
             // '<div class="card-action green darken-3 white-text center-align" style="font-size: 20px;">$' +
@@ -784,7 +789,7 @@ function renderOpponent(name, data) {
           );
         } else {
           return (
-            '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight"><div class="card-content black-text"><span class="card-title final-style">' +
+            '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight"><div class="card-content black-text arrangeStreak"><span class="card-title final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             '<br />Bet: $' +
             bet +
@@ -793,6 +798,7 @@ function renderOpponent(name, data) {
             data.money +
             '</div></div>' +
             '</span>' +
+            '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
             // <p><div class="center-align"></div><br /><br /><br /><br /><br />' +
             // data.blind +
             // '<div class="card-action green darken-3 white-text center-align" style="font-size: 20px;">$' +
@@ -815,13 +821,14 @@ function renderOpponent(name, data) {
       } else {
         if (data.isChecked)
           return (
-            '<div class="circle opponentCard"><div class="card highlight highborder" ><div class="card-content"><span class="card-title final-style">' +
+            '<div class="circle opponentCard"><div class="card highlight highborder" ><div class="card-content arrangeStreak"><span class="card-title final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             '<br />Check' +
             '<div class="card-action" style="font-size: 20px;">$' +
             data.money +
             '</div></div>' +
             '</span>' +
+            '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
             // <p><div class="center-align"></div><br /><br /><br /><br /><br />' +
             // data.blind +
             // '<div class="card-action green darken-3 white-text center-align" style="font-size: 20px;">$' +
@@ -842,13 +849,14 @@ function renderOpponent(name, data) {
           );
         else if (bet == 0) {
           return (
-            '<div class="circle opponentCard"><div class="card highlight highborder" ><div class="card-content"><span class="card-title final-style">' +
+            '<div class="circle opponentCard"><div class="card highlight highborder" ><div class="card-content arrangeStreak"><span class="card-title final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
 
             '<div class="card-action" style="font-size: 20px;">$' +
             data.money +
             '</div></div>' +
             '</span>' +
+            '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
             // <p><div class="center-align"></div><br /><br /><br /><br /><br />' +
             // data.blind +
             // '<div class="card-action green darken-3 white-text center-align" style="font-size: 20px;">$' +
@@ -869,7 +877,7 @@ function renderOpponent(name, data) {
           );
         } else {
           return (
-            '<div class="circle opponentCard"><div class="card highlight highborder" ><div class="card-content"><span class="card-title">' +
+            '<div class="circle opponentCard"><div class="card highlight highborder" ><div class="card-content arrangeStreak"><span class="card-title">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             '<br />Bet: $' +
             bet +
@@ -877,6 +885,7 @@ function renderOpponent(name, data) {
             data.money +
             '</div></div>' +
             '</span>' +
+            '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
             // <p><div class="center-align"></div><br /><br /><br /><br /><br />' +
             // data.blind +
             // '<div class="card-action green darken-3 white-text center-align" style="font-size: 20px;">$' +
@@ -903,13 +912,14 @@ function renderOpponent(name, data) {
   else {
     if (data.text == 'Fold') {
       return (
-        '<div class="circle opponentCard"><div class="card grey"><div class="card-content"><span class="card-title final-style">' +
+        '<div class="circle opponentCard"><div class="card grey"><div class="card-content arrangeStreak"><span class="card-title final-style">' +
         '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name + '<br/>' +
         ' (Fold)' +
         '<div class="card-action" style="font-size: 20px;">$' +
         data.money +
         '</div></div>' +
         '</span>' +
+        '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
         // <p><div class="center-align"></div><br />' +
         // data.blind +
         // '<div class="card-action green darken-3 white-text center-align" style="font-size: 20px;">$' +
@@ -927,13 +937,14 @@ function renderOpponent(name, data) {
       if (data.text == 'Their Turn') {
         if (data.isChecked)
           return (
-            '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight "><div class="card-content black-text"><span class="card-title black-text final-style">' +
+            '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight "><div class="card-content black-text arrangeStreak"><span class="card-title black-text final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             '<br />Check' +
             '<div class="card-action" style="font-size: 20px;">$' +
             data.money +
             '</div></div>' +
             '</span>' +
+            '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
             // <p><div class="center-align"></div><br />' +
             // data.blind +
             // '<div class="card-action green darken-3 white-text center-align" style="font-size: 20px;">$' +
@@ -950,12 +961,13 @@ function renderOpponent(name, data) {
           );
         else if (bet == 0) {
           return (
-            '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight"><div class="card-content black-text"><span class="card-title black-text final-style">' +
+            '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight"><div class="card-content black-text arrangeStreak"><span class="card-title black-text final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             '<div class="card-action" style="font-size: 20px;">$' +
             data.money +
             '</div></div>' +
             '</span>' +
+            '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
             // <p><div class="center-align"></div><br />' +
             // data.blind +
             // '<div class="card-action green darken-3 white-text center-align" style="font-size: 20px;">$' +
@@ -971,7 +983,7 @@ function renderOpponent(name, data) {
           );
         } else {
           return (
-            '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight"><div class="card-content black-text"><span class="card-title black-text final-style">' +
+            '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight"><div class="card-content black-text arrangeStreak"><span class="card-title black-text final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             '<br />Bet: $' +
             bet +
@@ -979,6 +991,7 @@ function renderOpponent(name, data) {
             data.money +
             '</div></div>' +
             '</span>' +
+            '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
             // <p><div class="center-align"></div><br />' +
             // data.blind +
             // '<div class="card-action green darken-3 white-text center-align" style="font-size: 20px;">$' +
@@ -996,13 +1009,14 @@ function renderOpponent(name, data) {
       } else {
         if (data.isChecked)
           return (
-            '<div class="circle opponentCard"><div class="card highlight highborder" ><div class="card-content"><span class="card-title final-style">' +
+            '<div class="circle opponentCard"><div class="card highlight highborder" ><div class="card-content arrangeStreak"><span class="card-title final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             '<br />Check' +
             '<div class="card-action" style="font-size: 20px;">$' +
             data.money +
             '</div></div>' +
             '</span>' +
+            '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
             // <p><div class="center-align"></div><br /><br /><br /><br /><br />' +
             // data.blind +
             // '<div class="card-action green darken-3 white-text center-align" style="font-size: 20px;">$' +
@@ -1018,12 +1032,13 @@ function renderOpponent(name, data) {
           );
         else if (bet == 0) {
           return (
-            '<div class="circle opponentCard"><div class="card highlight highborder" ><div class="card-content"><span class="card-title final-style">' +
+            '<div class="circle opponentCard"><div class="card highlight highborder" ><div class="card-content arrangeStreak"><span class="card-title final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             '<div class="card-action" style="font-size: 20px;">$' +
             data.money +
             '</div></div>' +
             '</span>' +
+            '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
             // <p><div class="center-align"></div><br /><br /><br /><br /><br />' +
             // data.blind +
             // '<div class="card-action green darken-3 white-text center-align" style="font-size: 20px;">$' +
@@ -1039,7 +1054,7 @@ function renderOpponent(name, data) {
           );
         } else {
           return (
-            '<div class="circle opponentCard"><div class="card highlight highborder" ><div class="card-content"><span class="card-title final-style">' +
+            '<div class="circle opponentCard"><div class="card highlight highborder" ><div class="card-content arrangeStreak"><span class="card-title final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             '<br />Bet: $' +
             bet +
@@ -1047,6 +1062,7 @@ function renderOpponent(name, data) {
             data.money +
             '</div></div>' +
             '</span>' +
+            '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
             // <p><div class="center-align"></div><br /><br /><br /><br /><br />' +
             // data.blind +
             // '<div class="card-action green darken-3 white-text center-align" style="font-size: 20px;">$' +
