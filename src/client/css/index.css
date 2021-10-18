@@ -32,6 +32,13 @@ body,
   background-repeat: repeat; */
 }
 
+.login-box{
+  background: url(card-game.jpg);
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+}
+
 .card {
   margin-right: auto !important;
   margin-left: auto !important;
@@ -238,20 +245,20 @@ width: 400px;
 }
 
 .circle:nth-child(4) {
-  transform: rotate(194deg) translateX(414px);
+  transform: rotate(194deg) translateX(422px);
 }
 .circle:nth-child(4) > div {
   transform: rotate(-194deg);
 }
 
 .circle:nth-child(5) {
-  transform: rotate(218deg) translateX(429px);
+  transform: rotate(218deg) translateX(445px);
 }
 .circle:nth-child(5) > div {
   transform: rotate(-218deg);
 }
 .circle:nth-child(6) {
-  transform: rotate(272deg) translateX(357px);
+  transform: rotate(272deg) translateX(362px);
 }
 .circle:nth-child(6) > div {
   transform: rotate(-272deg);
@@ -270,7 +277,7 @@ width: 400px;
 }
 
 .highlight {
-  filter: grayscale(1)
+  filter: brightness(0.4);
 }
 
 .highborder{
@@ -324,6 +331,7 @@ width: 400px;
   position: fixed;
   bottom: 0;
   left: 0;
+  padding-bottom: 0;
 }
 
 .messageList{
@@ -460,8 +468,35 @@ width: 400px;
   margin-top: -14px;
   font-size: 2em;
   font-family: monospace;
-  background-color: #26a69a;
+  background-color: darkslategray;
     border-radius: 10px;
     opacity: 0.8;
     font-weight: 900;
+}
+
+.borderhighlight{
+  box-shadow: 0px 0px 6px 10px white;
+}
+
+.streakDisplay{
+  background: red;
+  height: 23px;
+  padding: 0px 5px 0px 3px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  position: absolute;
+    right: 1px;
+    bottom: 2px;
+}
+
+.arrangeStreak{
+  display: flex;
+    flex-direction: column;
+}
+
+.trophysymb{
+  padding-right: 3px;
 }
