@@ -9,7 +9,7 @@ $(document).ready(function () {
 var socket = io();
 var gameInfo = null;
 let codeValue
-
+let   time;
 let user;
 let bgmusic;
 bgmusic = document.getElementById("bgmusic");
@@ -21,8 +21,9 @@ codeValue = url.searchParams.get("token");
 // document.getElementById('playsound').innerHTML = "playsound"
 // document.getElementById('stopsound').innerHTML = "stopsound"
 let downloadTimer;
-let globaltimmer;
-let timmer;
+
+// let globaltimmer;
+// let timmer; 
 // var   startButton = document.getElementById("startButton");
 // var   pauseButton = document.getElementById("pauseButton");
 // startButton.addEventListener('click', timerstart);
@@ -44,21 +45,21 @@ if (codeValue !== null) {
 
 // function timerstart(){
 // // downloadTimer;
-// console.log('timmer',timmer)
+// console.log('timmer',time)
 // downloadTimer= setInterval(function()
 // {
-//   if(timmer <= 0){ 
+//   if(time <= 0){ 
 //   clearInterval(downloadTimer); 
 //       //  document.getElementById("countdown").innerHTML = "Finished";
 //        socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
 //  } else { 
-//       document.getElementById("countdown").innerHTML = timmer + " seconds remaining"; 
+//       document.getElementById("countdown").innerHTML = time + " seconds remaining"; 
 //  }  
-//   timmer -= 1; 
+//   time -= 1; 
 //   }, 1000); 
 // }
 // function timerpause(){ 
-//   console.log('sdfgn',timmer);
+//   console.log('sdfgn',time);
 //  clearInterval(downloadTimer)
 // }
 
@@ -609,6 +610,7 @@ var fold = function () {
   var x = document.getElementById("fold");
   x.play();
   clearInterval(downloadTimer);
+  time=15
   socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
 };
 
@@ -619,6 +621,7 @@ var bet = function () {
     Materialize.toast('The minimum bet is $2.', 4000);
   } else {
     clearInterval(downloadTimer);
+    time=15
     socket.emit('moveMade', {
       move: 'bet',
       bet: parseInt($('#betRangeSlider').val()),
@@ -631,6 +634,7 @@ function call() {
   var x = document.getElementById("call");
   x.play();
   clearInterval(downloadTimer);
+  time=15
   socket.emit('moveMade', { move: 'call', bet: 'Call', code: codeValue });
 }
 
@@ -639,6 +643,7 @@ var check = function () {
   x.play();
 
   clearInterval(downloadTimer);
+  time=15
   socket.emit('moveMade', { move: 'check', bet: 'Check', code: codeValue });
 };
 
@@ -654,6 +659,7 @@ var raise = function () {
     var x = document.getElementById("raise");
     x.play();
     clearInterval(downloadTimer);
+    time=15
     socket.emit('moveMade', {
       move: 'raise',
       bet: parseInt($('#raiseRangeSlider').val()),
@@ -1496,6 +1502,10 @@ function updateRaiseModal() {
 }
 
 socket.on('displayPossibleMoves', function (data) {
+  console.log('possiblemoves',data)
+  console.log('globaltimer',time)
+  let findDisconnect=data.findDisconnectPlayer
+ 
   if (data.fold == 'yes') $('#usernameFold').show();
   else $('#usernameHide').hide();
   if (data.check == 'yes') $('#usernameCheck').show();
@@ -1509,29 +1519,59 @@ socket.on('displayPossibleMoves', function (data) {
   } else $('#usernameCall').hide();
   if (data.raise == 'yes') $('#usernameRaise').show();
   else $('#usernameRaise').hide();
+  if(data.timmer === 'yes' && findDisconnect==='no'){
 
-  if (data.timmer === 'yes') {
-    // socket.on('timmer',(data)=>{
-    var time = 15
+    // if(data.timmer === 'yes'){
+      console.log('if part');
+      
+      time=15;
+      downloadTimer = setInterval(function()
+      {
+        if(time <= 0){ 
+        clearInterval(downloadTimer); 
+            //  document.getElementById("countdown").innerHTML = "Finished";
+             socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
+            //  time=15
+            // time=0;
+       } else { 
+            document.getElementById("countdown").innerHTML = time + " seconds remaining"; 
+       }  
+      //  timmer=time
+        time -= 1; 
+        }, 1000);  
 
-    downloadTimer = setInterval(function () {
-      if (time <= 0) {
-        clearInterval(downloadTimer);
-        //  document.getElementById("countdown").innerHTML = "Finished";
-        socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
-      } else {
-        document.getElementById("countdown").innerHTML = time + " seconds remaining";
-      }
-      timmer = time
-      time -= 1;
-    }, 1000);
+    $('#countdown').show() 
+  }  
 
-    // })
-    $('#countdown').show()
-  } else {
-
-    clearInterval(downloadTimer)
-    $('#countdown').hide()
+  if(findDisconnect==='yes'){
+    if(time===undefined){
+      time=15
+      downloadTimer = setInterval(function()
+      {
+        if(time <= 0){ 
+        clearInterval(downloadTimer);  
+             socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
+          time=15
+       } else { 
+            document.getElementById("countdown").innerHTML = time + " seconds remaining"; 
+       }  
+        time -= 1; 
+        }, 1000);  
+    }else{
+    clearInterval(downloadTimer); 
+    downloadTimer = setInterval(function()
+    {
+      if(time <= 0){ 
+      clearInterval(downloadTimer);  
+           socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
+        time=15
+     } else { 
+          document.getElementById("countdown").innerHTML = time + " seconds remaining"; 
+     }  
+      time -= 1; 
+      }, 1000);  
+    }
+  $('#countdown').show()
   }
 });
 

@@ -9,6 +9,7 @@ const Hand = require('pokersolver').Hand;
 // import ss from '../client/main'
 const Game = function (name, host) {
   this.deck = new Deck();
+  this.finddisconnect='no'
   this.host = host;
   this.players = [];
   this.status = 0;
@@ -1037,7 +1038,8 @@ const Game = function (name, host) {
       bet: 'yes',
       call: topBet,
       raise: 'yes',
-      timmer: 'yes'
+      timmer:'yes',
+      findDisconnectPlayer:this.finddisconnect
     };
     if (player.getStatus() == 'Fold') {
       this.log('Error: Folded players should not be able to move.');
