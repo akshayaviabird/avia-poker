@@ -45,21 +45,21 @@ if (codeValue !== null) {
 
 // function timerstart(){
 // // downloadTimer;
-// console.log('timmer',timmer)
+// console.log('timmer',time)
 // downloadTimer= setInterval(function()
 // {
-//   if(timmer <= 0){ 
+//   if(time <= 0){ 
 //   clearInterval(downloadTimer); 
 //       //  document.getElementById("countdown").innerHTML = "Finished";
 //        socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
 //  } else { 
-//       document.getElementById("countdown").innerHTML = timmer + " seconds remaining"; 
+//       document.getElementById("countdown").innerHTML = time + " seconds remaining"; 
 //  }  
-//   timmer -= 1; 
+//   time -= 1; 
 //   }, 1000); 
 // }
 // function timerpause(){ 
-//   console.log('sdfgn',timmer);
+//   console.log('sdfgn',time);
 //  clearInterval(downloadTimer)
 // }
 
@@ -1519,8 +1519,9 @@ socket.on('displayPossibleMoves', function (data) {
   } else $('#usernameCall').hide();
   if (data.raise == 'yes') $('#usernameRaise').show();
   else $('#usernameRaise').hide();
- 
-    if(data.timmer === 'yes' && findDisconnect==='no'){
+  if(data.timmer === 'yes' && findDisconnect==='no'){
+
+    // if(data.timmer === 'yes'){
       console.log('if part');
       
       time=15;
@@ -1543,6 +1544,20 @@ socket.on('displayPossibleMoves', function (data) {
   }  
 
   if(findDisconnect==='yes'){
+    if(time===undefined){
+      time=15
+      downloadTimer = setInterval(function()
+      {
+        if(time <= 0){ 
+        clearInterval(downloadTimer);  
+             socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
+          time=15
+       } else { 
+            document.getElementById("countdown").innerHTML = time + " seconds remaining"; 
+       }  
+        time -= 1; 
+        }, 1000);  
+    }else{
     clearInterval(downloadTimer); 
     downloadTimer = setInterval(function()
     {
@@ -1555,7 +1570,7 @@ socket.on('displayPossibleMoves', function (data) {
      }  
       time -= 1; 
       }, 1000);  
- 
+    }
   $('#countdown').show()
   }
 });

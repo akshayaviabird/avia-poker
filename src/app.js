@@ -257,8 +257,6 @@ io.on('connection', (socket) => {
     console.log(game.smallBlind + game.bigBlind);
   })
   socket.on('disconnect', () => {
-   
-    
     const game = rooms.find(
       (r) => r.findPlayer(socket.id).socket.id === socket.id
     );
