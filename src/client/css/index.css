@@ -311,6 +311,7 @@ width: 400px;
 .opponent-cards-arran{
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
 }
 
 .folded-end{

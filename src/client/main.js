@@ -9,7 +9,7 @@ $(document).ready(function () {
 var socket = io();
 var gameInfo = null;
 let codeValue
-let   time;
+let time;
 let user;
 let bgmusic;
 bgmusic = document.getElementById("bgmusic");
@@ -610,7 +610,7 @@ var fold = function () {
   var x = document.getElementById("fold");
   x.play();
   clearInterval(downloadTimer);
-  time=15
+  time = 15
   socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
 };
 
@@ -621,7 +621,7 @@ var bet = function () {
     Materialize.toast('The minimum bet is $2.', 4000);
   } else {
     clearInterval(downloadTimer);
-    time=15
+    time = 15
     socket.emit('moveMade', {
       move: 'bet',
       bet: parseInt($('#betRangeSlider').val()),
@@ -634,7 +634,7 @@ function call() {
   var x = document.getElementById("call");
   x.play();
   clearInterval(downloadTimer);
-  time=15
+  time = 15
   socket.emit('moveMade', { move: 'call', bet: 'Call', code: codeValue });
 }
 
@@ -643,7 +643,7 @@ var check = function () {
   x.play();
 
   clearInterval(downloadTimer);
-  time=15
+  time = 15
   socket.emit('moveMade', { move: 'check', bet: 'Check', code: codeValue });
 };
 
@@ -659,7 +659,7 @@ var raise = function () {
     var x = document.getElementById("raise");
     x.play();
     clearInterval(downloadTimer);
-    time=15
+    time = 15
     socket.emit('moveMade', {
       move: 'raise',
       bet: parseInt($('#raiseRangeSlider').val()),
@@ -702,6 +702,7 @@ function renderCard(card) {
 }
 
 function renderOpponent(name, streak, data) {
+  console.log("++++++++++", streak)
   var bet = 0;
   if (data.bets != undefined) {
     var arr = data.bets[data.bets.length - 1];
@@ -709,8 +710,8 @@ function renderOpponent(name, streak, data) {
       if (arr[pn].player == name) bet = arr[pn].bet;
     }
   }
-  var buyInsText =
-    data.buyIns > 0 ? (data.buyIns > 1 ? 'buy-ins' : 'buy-in') : '';
+  // var buyInsText =
+  //   data.buyIns > 0 ? (data.buyIns > 1 ? 'buy-ins' : 'buy-in') : '';
   if (data.buyIns > 0) {
     if (data.text == 'Fold') {
       return (
@@ -1502,10 +1503,10 @@ function updateRaiseModal() {
 }
 
 socket.on('displayPossibleMoves', function (data) {
-  console.log('possiblemoves',data)
-  console.log('globaltimer',time)
-  let findDisconnect=data.findDisconnectPlayer
- 
+  console.log('possiblemoves', data)
+  console.log('globaltimer', time)
+  let findDisconnect = data.findDisconnectPlayer
+
   if (data.fold == 'yes') $('#usernameFold').show();
   else $('#usernameHide').hide();
   if (data.check == 'yes') $('#usernameCheck').show();
@@ -1519,59 +1520,56 @@ socket.on('displayPossibleMoves', function (data) {
   } else $('#usernameCall').hide();
   if (data.raise == 'yes') $('#usernameRaise').show();
   else $('#usernameRaise').hide();
-  if(data.timmer === 'yes' && findDisconnect==='no'){
+  if (data.timmer === 'yes' && findDisconnect === 'no') {
 
     // if(data.timmer === 'yes'){
-      console.log('if part');
-      
-      time=15;
-      downloadTimer = setInterval(function()
-      {
-        if(time <= 0){ 
-        clearInterval(downloadTimer); 
-            //  document.getElementById("countdown").innerHTML = "Finished";
-             socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
-            //  time=15
-            // time=0;
-       } else { 
-            document.getElementById("countdown").innerHTML = time + " seconds remaining"; 
-       }  
+    console.log('if part');
+
+    time = 15;
+    downloadTimer = setInterval(function () {
+      if (time <= 0) {
+        clearInterval(downloadTimer);
+        //  document.getElementById("countdown").innerHTML = "Finished";
+        socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
+        //  time=15
+        // time=0;
+      } else {
+        document.getElementById("countdown").innerHTML = time + " seconds remaining";
+      }
       //  timmer=time
-        time -= 1; 
-        }, 1000);  
+      time -= 1;
+    }, 1000);
 
-    $('#countdown').show() 
-  }  
+    $('#countdown').show()
+  }
 
-  if(findDisconnect==='yes'){
-    if(time===undefined){
-      time=15
-      downloadTimer = setInterval(function()
-      {
-        if(time <= 0){ 
-        clearInterval(downloadTimer);  
-             socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
-          time=15
-       } else { 
-            document.getElementById("countdown").innerHTML = time + " seconds remaining"; 
-       }  
-        time -= 1; 
-        }, 1000);  
-    }else{
-    clearInterval(downloadTimer); 
-    downloadTimer = setInterval(function()
-    {
-      if(time <= 0){ 
-      clearInterval(downloadTimer);  
-           socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
-        time=15
-     } else { 
-          document.getElementById("countdown").innerHTML = time + " seconds remaining"; 
-     }  
-      time -= 1; 
-      }, 1000);  
+  if (findDisconnect === 'yes') {
+    if (time === undefined) {
+      time = 15
+      downloadTimer = setInterval(function () {
+        if (time <= 0) {
+          clearInterval(downloadTimer);
+          socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
+          time = 15
+        } else {
+          document.getElementById("countdown").innerHTML = time + " seconds remaining";
+        }
+        time -= 1;
+      }, 1000);
+    } else {
+      clearInterval(downloadTimer);
+      downloadTimer = setInterval(function () {
+        if (time <= 0) {
+          clearInterval(downloadTimer);
+          socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
+          time = 15
+        } else {
+          document.getElementById("countdown").innerHTML = time + " seconds remaining";
+        }
+        time -= 1;
+      }, 1000);
     }
-  $('#countdown').show()
+    $('#countdown').show()
   }
 });
 
