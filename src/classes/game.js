@@ -22,7 +22,7 @@ const Game = function (name, host) {
     dealer: 0,
     bigBlind: '',
     smallBlind: '',
-    turn: '',
+    turn: '', 
     bets: [],
   };
   this.community = [];
@@ -108,13 +108,84 @@ const Game = function (name, host) {
     }
     // Init blind and first player
     this.assignBlind();
-
+  // let count=0,newArr=[];
     if (this.autoBuyIns) {
       for (player of this.players) {
         if (player.getMoney() == 0) {
-          player.money = 1000;
-          player.buyIns = player.buyIns + 1;
+          // count++;
+          // console.log(player)
+          // player.money = 100;
+          // player.buyIns = player.buyIns + 1;
+          // console.log('smallBlind: ' + this.roundData.smallBlind);
+          // console.log('bigBlind: ' + this.roundData.bigBlind);
+          // console.log('Index',this.players.indexOf(player));
+          // console.log('name',player.username);
+          // console.log('plays',this.players)
+          // for(i in this.players){
+          //   console.log(i.getUsername)
+          // }
+          // console.log('disconnrct index',this.players.indexOf(player.username));
+          
+            // let index;
+            // for (let pn = 0; pn < this.getNumPlayers(); pn++) {
+            //   if (this.players[pn].getMoney() == 0) {
+            //     index = this.players.indexOf(this.players[pn]);
+
+            //     // this.players.splice(index,1)
+            //     this.roundData.dealer = index;
+            //   }
+            //   // console.log(this.players[pn].getMoney())
+            // }
+
+            // console.log('indexa',index);
+
+
+        
+         this.disconnectPlayer(player)
+            console.log('this.roundData.dealer',this.roundData.dealer);
+            console.log('this.roundData.bb',this.roundData.bigBlind);
+            console.log('this.roundData.dealer',this.roundData.smallBlind);
+
+        //  if (this.roundNum == 0) {
+        //   this.roundData.dealer = 0;
+        // } else {
+        //   this.roundData.dealer =
+        //     this.roundData.dealer + 1 < this.players.length
+        //       ? this.roundData.dealer + 1
+        //       : 0;
+        // }
+        //  game.startNewRound();
+        //  this.startNewRound
+
+        //  this.getCurrentRoundBets().push({
+        //     player: player.getUsername(),
+        //     bet: this.getCurrentTopBet(),
+        //   });
+
+          // let count=0;
+          // let index
+          // // console.log('before length',this.players.length)
+          // for (let pn = 0; pn < this.getNumPlayers(); pn++){
+          //   if(this.players[pn].getMoney()==0){ 
+          //      index=this.players.indexOf(this.players[pn])
+      
+          //     this.players.splice(index,1)
+          //   }
+          //   // console.log(this.players[pn].getMoney())
+          // }
+         
+          // this.assignBlind();
+          // this.rerender();
+           
         }
+
+        // if(player.getMoney()>0){
+        //   console.log('akshay maity')
+        //   newArr.push(player)
+        // }
+        // console.log('count',count);
+        // console.log('orginal  player',newArr.length)
+        
       }
     }
 
