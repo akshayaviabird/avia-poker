@@ -149,7 +149,7 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('result', () => {
+  socket.on('result', (data) => {
     let playersData = [];
     const game = rooms.find(
       (r) => r.findPlayer(socket.id).socket.id === socket.id
@@ -163,7 +163,8 @@ io.on('connection', (socket) => {
       });
     }
     //console.log(playersData);
-    socket.emit('getresult', playersData);
+    // socket.emit('getresult', playersData);
+    io.to(data.code.toString()).emit('getresult', playersData);
 
     var url = 'https://immense-dusk-54293.herokuapp.com/api/v1/leaderbaord';
 

@@ -169,35 +169,7 @@ socket.on('joinRoomUpdate', function (data) {
 });
 
 socket.on('getresult', function (data) {
-  let dia = document.getElementById("myDialogother")
-  dia.showModal();
-  // points.sort(function(a, b){return b - a});
-  var listItems = data.sort((a, b) => (a.money > b.money ? -1 : (b.money > a.money) ? 1 : 0)).map(function (item, index) {
-    console.log(item)
-    return '<div style ="font-size:1.5em">' + (parseInt(index) + 1) + "&nbsp" + item.username + "&nbsp" + "=>" + "&nbsp" + item.money + "." + '</div>'
-  })
-
-  dia.innerHTML = listItems
-
-  var btn = document.createElement('button');
-  btn.textContent = 'Close';
-  btn.style.marginTop = '20px'
-  btn.style.backgroundColor = 'black'
-  btn.style.color = 'white'
-  btn.style.height = '40px'
-  btn.style.borderRadius = '10px'
-  btn.style.width = '100%'
-  btn.addEventListener("click", function () {
-    if (codeValue === null) {
-      location.reload()
-    }
-    if (codeValue !== null) {
-      dia.close()
-      location.reload()
-    }
-  });
-  dia.appendChild(btn);
-  console.log(data);
+  stopGame(data)
 })
 
 socket.on('joinRoom', function (data) {
@@ -420,32 +392,36 @@ socket.on('reveal', function (data) {
   );
 });
 
-function stopGame() {
+function stopGame(data) {
   let dia = document.getElementById("myDialogother")
   dia.showModal();
+  // points.sort(function(a, b){return b - a});
+  var listItems = data.sort((a, b) => (a.money > b.money ? -1 : (b.money > a.money) ? 1 : 0)).map(function (item, index) {
+    console.log(item)
+    return '<div style ="font-size:1.5em">' + (parseInt(index) + 1) + "&nbsp" + item.username + "&nbsp" + "=>" + "&nbsp" + item.money + "." + '</div>'
+  })
 
-  var html = "";
-  html += "Scoreboard" + "<br/>";
-  html += "winner 1=" + "akshay" + "<br/>";
-  html += "winner 2=" + "maity" + "<br/>";
-  html += "winner 3=" + "sita" + "<br/>";
-  html += "winner 4=" + "sdf" + "<br/>";
-
-  dia.innerHTML = html;
+  dia.innerHTML = listItems
 
   var btn = document.createElement('button');
   btn.textContent = 'Close';
-  btn.style.marginLeft = "338px"
-  btn.style.marginTop = "246px"
+  btn.style.marginTop = '20px'
+  btn.style.backgroundColor = 'black'
+  btn.style.color = 'white'
+  btn.style.height = '40px'
+  btn.style.borderRadius = '10px'
+  btn.style.width = '100%'
   btn.addEventListener("click", function () {
     if (codeValue === null) {
       location.reload()
     }
     if (codeValue !== null) {
       dia.close()
+      location.reload()
     }
   });
   dia.appendChild(btn);
+  console.log(data);
   //  var ii= document.getElementById("gameover").showModal(); 
   //   $("#gameover").modal('show')
   //   console.log('sedrfg')
@@ -603,7 +579,7 @@ var startGame = function (gameCode) {
 };
 
 var result = function () {
-  socket.emit('result', {});
+  socket.emit('result', {code:codeValue});
 }
 
 var fold = function () {
