@@ -702,7 +702,7 @@ function renderCard(card) {
 }
 
 function renderOpponent(name, streak, data) {
-  console.log("++++++++++", streak)
+  console.log("++++++++++", data.money)
   var bet = 0;
   if (data.bets != undefined) {
     var arr = data.bets[data.bets.length - 1];
@@ -710,8 +710,8 @@ function renderOpponent(name, streak, data) {
       if (arr[pn].player == name) bet = arr[pn].bet;
     }
   }
-  // var buyInsText =
-  //   data.buyIns > 0 ? (data.buyIns > 1 ? 'buy-ins' : 'buy-in') : '';
+  var buyInsText =
+    data.buyIns > 0 ? (data.buyIns > 1 ? 'buy-ins' : 'buy-in') : '';
   if (data.buyIns > 0) {
     if (data.text == 'Fold') {
       return (
@@ -737,13 +737,14 @@ function renderOpponent(name, streak, data) {
       );
     } else {
       if (data.text == 'Their Turn') {
+        console.log("checked", data.isChecked)
         if (data.isChecked)
           return (
             '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight"><div class="card-content black-text arrangeStreak"><span class="card-title final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
-            '<br />Check' +
+            '<br/>Check' +
             '<div class="card-action" style="font-size: 20px;">$' +
-            data.money +
+            data.money + '<span class="loan-design"><i class="fas fa-hand-holding-usd trophysymb"></i>' + data.buyIns + '</span>' +
             '</div></div>' +
             '</span>' +
             '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
@@ -769,9 +770,8 @@ function renderOpponent(name, streak, data) {
           return (
             '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight"><div class="card-content black-text arrangeStreak"><span class="card-title final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
-            +
             '<div class="card-action" style="font-size: 20px;">$' +
-            data.money +
+            data.money + '<span class="loan-design"><i class="fas fa-hand-holding-usd trophysymb"></i>' + data.buyIns + '</span>' +
             '</div></div>' +
             '</span>' +
             '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
@@ -802,7 +802,7 @@ function renderOpponent(name, streak, data) {
             bet +
 
             '<div class="card-action" style="font-size: 20px;">$' +
-            data.money +
+            data.money + '<span class="loan-design"><i class="fas fa-hand-holding-usd trophysymb"></i>' + data.buyIns + '</span>' +
             '</div></div>' +
             '</span>' +
             '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
@@ -830,9 +830,9 @@ function renderOpponent(name, streak, data) {
           return (
             '<div class="circle opponentCard"><div class="card highlight highborder" ><div class="card-content arrangeStreak"><span class="card-title final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
-            '<br />Check' +
+            '<br/>Check' +
             '<div class="card-action" style="font-size: 20px;">$' +
-            data.money +
+            data.money + '<span class="loan-design"><i class="fas fa-hand-holding-usd trophysymb"></i>' + data.buyIns + '</span>' +
             '</div></div>' +
             '</span>' +
             '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
@@ -860,7 +860,7 @@ function renderOpponent(name, streak, data) {
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
 
             '<div class="card-action" style="font-size: 20px;">$' +
-            data.money +
+            data.money + '<span class="loan-design"><i class="fas fa-hand-holding-usd trophysymb"></i>' + data.buyIns + '</span>' +
             '</div></div>' +
             '</span>' +
             '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
@@ -889,7 +889,7 @@ function renderOpponent(name, streak, data) {
             '<br />Bet: $' +
             bet +
             '<div class="card-action" style="font-size: 20px;">$' +
-            data.money +
+            data.money + '<span class="loan-design"><i class="fas fa-hand-holding-usd trophysymb"></i>' + data.buyIns + '</span>' +
             '</div></div>' +
             '</span>' +
             '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
@@ -946,7 +946,7 @@ function renderOpponent(name, streak, data) {
           return (
             '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight "><div class="card-content black-text arrangeStreak"><span class="card-title black-text final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
-            '<br />Check' +
+            '<br/>Check' +
             '<div class="card-action" style="font-size: 20px;">$' +
             data.money +
             '</div></div>' +
