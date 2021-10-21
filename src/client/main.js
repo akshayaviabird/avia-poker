@@ -207,10 +207,10 @@ socket.on('joinRoom', function (data) {
       4000
     );
     $('#hostButton').removeClass('disabled');
-  } else if (data == "no") {
+  } else if (data=="wait") {
     $('#joinModal').closeModal();
     Materialize.toast(
-      "You can't join, when game is in progress!",
+      "Wait is what you can do",
       4000
     );
   }

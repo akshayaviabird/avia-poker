@@ -2,11 +2,7 @@
 const Deck = require('./deck.js');
 const Player = require('./player.js');
 const Hand = require('pokersolver').Hand;
-// const {updateblindfuncation} =require('../client/main')
-// const aa=require('../app')
 
-// console.log('my bnada',aa)
-// import ss from '../client/main'
 const Game = function (name, host) {
   this.deck = new Deck();
   this.host = host;
@@ -34,6 +30,7 @@ const Game = function (name, host) {
   this.debug = false;
   this.smallBlind = 10;
   this.bigBlind = 20;
+  this.waitingPlayers = [];
 
   const constructor = (function () {})(this); 
   this.updateblind = (data) => {
@@ -82,6 +79,7 @@ const Game = function (name, host) {
   };
 
   this.startNewRound = () => {
+    console.log(this.players);
     this.lastMoveParsed = { move: '', player: '' };
     this.roundInProgress = true;
     this.foldPot = 0;
@@ -182,6 +180,7 @@ const Game = function (name, host) {
         stage: this.getStageName(),
         pot: this.getCurrentPot(),
         players: playersData,
+        waitingPlayers: this.waitingPlayers,
         myMoney: this.players[pn].getMoney(),
         myBet: this.getPlayerBetInStage(this.players[pn]),
         myStatus: this.players[pn].getStatus(),
@@ -708,6 +707,12 @@ const Game = function (name, host) {
     return player;
   };
 
+  this.addInLobby = (data) => {
+    const player = new Player(data.username, data.playersocket, data.email, this.debug);
+    this.waitingPlayers.push(player);
+    return player;
+  };
+
   this.getNumPlayers = () => {
     return this.players.length;
   };
@@ -762,7 +767,8 @@ const Game = function (name, host) {
         // username: this.players[pn].getUsername(),
         // cards: this.players[pn].cards,
         // roundata: this.roundData,
-        hand: handsuggestion.name
+        hand: handsuggestion.name,
+        waitingPlayers: this.waitingPlayers
 
       });
     }

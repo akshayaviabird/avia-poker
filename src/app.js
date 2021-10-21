@@ -18,6 +18,7 @@ const PORT = process.env.PORT || 3000;
 app.use('/', express.static(__dirname + '/client'));
 
 let rooms = [];
+let waitingPlayersArray = [];
 
 io.on('connection', (socket) => {
   console.log('new connection ', socket.id);
@@ -57,6 +58,7 @@ io.on('connection', (socket) => {
     ) {
       socket.emit('joinRoom', undefined);
     } else if (game.roundNum > 0) {
+      waitingPlayersArray.push({"name":data.username,"email":data.email})
       var data = 'no';
       socket.emit('joinRoom', data);
     } else {
@@ -65,7 +67,7 @@ io.on('connection', (socket) => {
       game.emitPlayers('joinRoom', {
         host: game.getHostName(),
         players: game.getPlayersArray(),
-        progress: game.roundInProgress,
+        roundNum: game.roundNum,
       });
       game.emitPlayers('hostRoom', {
         code: data.code,
@@ -112,6 +114,12 @@ io.on('connection', (socket) => {
     const game = rooms.find(
       (r) => r.findPlayer(socket.id).socket.id === socket.id
     );
+    for (let pn = 0; pn < waitingPlayersArray.length; pn++){
+      var username = waitingPlayersArray[pn].name;
+      var email = waitingPlayersArray[pn].email
+      game.addPlayer(username,email,socket)
+    }
+    waitingPlayersArray=[];
     if (game != undefined) {
       if (game.roundInProgress === false) {
         game.startNewRound();
