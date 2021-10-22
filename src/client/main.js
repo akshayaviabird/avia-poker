@@ -580,7 +580,7 @@ var startGame = function (gameCode) {
 };
 
 var result = function () {
-  socket.emit('result', {code:codeValue});
+  socket.emit('result', { code: codeValue });
 }
 
 var fold = function () {
@@ -720,7 +720,7 @@ function renderOpponent(name, streak, data) {
             '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight"><div class="card-content black-text arrangeStreak"><span class="card-title final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             '<br/>Check' +
-            '<div class="card-action" style="font-size: 20px;">$' +
+            '<div class="card-action" style="font-size: 20px; display:flex;">$' +
             data.money + '<span class="loan-design"><img src="hand-holding-usd-solid.svg" class="hands"></i>' + data.buyIns + '</span>' +
             '</div></div>' +
             '</span>' +
@@ -747,7 +747,7 @@ function renderOpponent(name, streak, data) {
           return (
             '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight"><div class="card-content black-text arrangeStreak"><span class="card-title final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
-            '<div class="card-action" style="font-size: 20px;">$' +
+            '<div class="card-action" style="font-size: 20px; display:flex;">$' +
             data.money + '<span class="loan-design"><img src="hand-holding-usd-solid.svg" class="hands"></i>' + data.buyIns + '</span>' +
             '</div></div>' +
             '</span>' +
@@ -778,7 +778,7 @@ function renderOpponent(name, streak, data) {
             '<br />Bet: $' +
             bet +
 
-            '<div class="card-action" style="font-size: 20px;">$' +
+            '<div class="card-action" style="font-size: 20px; display:flex;">$' +
             data.money + '<span class="loan-design"><img src="hand-holding-usd-solid.svg" class="hands"></i>' + data.buyIns + '</span>' +
             '</div></div>' +
             '</span>' +
@@ -808,7 +808,7 @@ function renderOpponent(name, streak, data) {
             '<div class="circle opponentCard"><div class="card highlight highborder" ><div class="card-content arrangeStreak"><span class="card-title final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             '<br/>Check' +
-            '<div class="card-action" style="font-size: 20px;">$' +
+            '<div class="card-action" style="font-size: 20px; display:flex;">$' +
             data.money + '<span class="loan-design"><img src="hand-holding-usd-solid.svg" class="hands"></i>' + data.buyIns + '</span>' +
             '</div></div>' +
             '</span>' +
@@ -836,7 +836,7 @@ function renderOpponent(name, streak, data) {
             '<div class="circle opponentCard"><div class="card highlight highborder" ><div class="card-content arrangeStreak"><span class="card-title final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
 
-            '<div class="card-action" style="font-size: 20px;">$' +
+            '<div class="card-action" style="font-size: 20px; display:flex;">$' +
             data.money + '<span class="loan-design"><img src="hand-holding-usd-solid.svg" class="hands"></i>' + data.buyIns + '</span>' +
             '</div></div>' +
             '</span>' +
@@ -865,7 +865,7 @@ function renderOpponent(name, streak, data) {
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             '<br />Bet: $' +
             bet +
-            '<div class="card-action" style="font-size: 20px;">$' +
+            '<div class="card-action" style="font-size: 20px; display:flex;">$' +
             data.money + '<span class="loan-design"><img src="hand-holding-usd-solid.svg" class="hands"></i>' + data.buyIns + '</span>' +
             '</div></div>' +
             '</span>' +
