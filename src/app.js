@@ -1,4 +1,3 @@
-// server-side socket.io backend event handling
 const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
@@ -18,7 +17,6 @@ const PORT = process.env.PORT || 3000;
 app.use('/', express.static(__dirname + '/client'));
 
 let rooms = [];
-let waitingPlayersArray = [];
 
 io.on('connection', (socket) => {
   console.log('new connection ', socket.id);
@@ -57,10 +55,6 @@ io.on('connection', (socket) => {
       game.getPlayersArray().length>7
     ) {
       socket.emit('joinRoom', undefined);
-    } else if (game.roundNum > 0) {
-      waitingPlayersArray.push({"name":data.username,"email":data.email})
-      var data = 'no';
-      socket.emit('joinRoom', data);
     } else {
       game.addPlayer(data.username, data.email, socket);
       rooms = rooms.map((r) => (r.getCode() === data.code ? game : r));
@@ -114,12 +108,6 @@ io.on('connection', (socket) => {
     const game = rooms.find(
       (r) => r.findPlayer(socket.id).socket.id === socket.id
     );
-    for (let pn = 0; pn < waitingPlayersArray.length; pn++){
-      var username = waitingPlayersArray[pn].name;
-      var email = waitingPlayersArray[pn].email
-      game.addPlayer(username,email,socket)
-    }
-    waitingPlayersArray=[];
     if (game != undefined) {
       if (game.roundInProgress === false) {
         game.startNewRound();

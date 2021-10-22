@@ -703,7 +703,11 @@ const Game = function (name, host) {
 
   this.addPlayer = (playerName, playerEmail, socket) => {
     const player = new Player(playerName, socket, playerEmail, this.debug);
-    this.players.push(player);
+    if(this.roundNum>0){
+      this.waitingPlayers.push(player)
+    }else{
+      this.players.push(player);
+    }
     return player;
   };
 
