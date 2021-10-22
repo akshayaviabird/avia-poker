@@ -501,10 +501,18 @@ width: 400px;
 .trophysymb{
   padding-right: 3px;
 }
+
+.hands{
+  position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 32px;
+    top: 1px;
+}
 .loan-design{
   background: black;
     color: white;
-    margin-left: 6px;
+    margin-left: 46px;
     padding: 2px;
     border-radius: 5px;
     font-size: 20px;

@@ -6,6 +6,7 @@ $(document).ready(function () {
 
 });
 
+
 var socket = io();
 var gameInfo = null;
 let codeValue
@@ -720,7 +721,7 @@ function renderOpponent(name, streak, data) {
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             '<br/>Check' +
             '<div class="card-action" style="font-size: 20px;">$' +
-            data.money + '<span class="loan-design"><i class="fas fa-hand-holding-usd trophysymb"></i>' + data.buyIns + '</span>' +
+            data.money + '<span class="loan-design"><img src="hand-holding-usd-solid.svg" class="hands"></i>' + data.buyIns + '</span>' +
             '</div></div>' +
             '</span>' +
             '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
@@ -747,7 +748,7 @@ function renderOpponent(name, streak, data) {
             '<div class="circle opponentCard"><div class="card yellow darken-3 borderhighlight"><div class="card-content black-text arrangeStreak"><span class="card-title final-style">' +
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             '<div class="card-action" style="font-size: 20px;">$' +
-            data.money + '<span class="loan-design"><i class="fas fa-hand-holding-usd trophysymb"></i>' + data.buyIns + '</span>' +
+            data.money + '<span class="loan-design"><img src="hand-holding-usd-solid.svg" class="hands"></i>' + data.buyIns + '</span>' +
             '</div></div>' +
             '</span>' +
             '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
@@ -778,7 +779,7 @@ function renderOpponent(name, streak, data) {
             bet +
 
             '<div class="card-action" style="font-size: 20px;">$' +
-            data.money + '<span class="loan-design"><i class="fas fa-hand-holding-usd trophysymb"></i>' + data.buyIns + '</span>' +
+            data.money + '<span class="loan-design"><img src="hand-holding-usd-solid.svg" class="hands"></i>' + data.buyIns + '</span>' +
             '</div></div>' +
             '</span>' +
             '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
@@ -808,7 +809,7 @@ function renderOpponent(name, streak, data) {
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
             '<br/>Check' +
             '<div class="card-action" style="font-size: 20px;">$' +
-            data.money + '<span class="loan-design"><i class="fas fa-hand-holding-usd trophysymb"></i>' + data.buyIns + '</span>' +
+            data.money + '<span class="loan-design"><img src="hand-holding-usd-solid.svg" class="hands"></i>' + data.buyIns + '</span>' +
             '</div></div>' +
             '</span>' +
             '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
@@ -836,7 +837,7 @@ function renderOpponent(name, streak, data) {
             '<div class="blankCard" id="opponent-card" /><div class="blankCard" id="opponent-card" />' + '<div class="opponent-cards-arran">' + name +
 
             '<div class="card-action" style="font-size: 20px;">$' +
-            data.money + '<span class="loan-design"><i class="fas fa-hand-holding-usd trophysymb"></i>' + data.buyIns + '</span>' +
+            data.money + '<span class="loan-design"><img src="hand-holding-usd-solid.svg" class="hands"></i>' + data.buyIns + '</span>' +
             '</div></div>' +
             '</span>' +
             '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
@@ -865,7 +866,7 @@ function renderOpponent(name, streak, data) {
             '<br />Bet: $' +
             bet +
             '<div class="card-action" style="font-size: 20px;">$' +
-            data.money + '<span class="loan-design"><i class="fas fa-hand-holding-usd trophysymb"></i>' + data.buyIns + '</span>' +
+            data.money + '<span class="loan-design"><img src="hand-holding-usd-solid.svg" class="hands"></i>' + data.buyIns + '</span>' +
             '</div></div>' +
             '</span>' +
             '<div class="streakDisplay" > <i class="fa fa-trophy trophysymb"></i>' + streak + '</div>' +
