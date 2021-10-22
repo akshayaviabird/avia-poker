@@ -527,3 +527,19 @@ width: 400px;
     /* margin-left: 55px; */
     margin-left: 26px;
 }
+
+.Result-Title{
+  font-size: 2em;
+    /* margin: auto; */
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+}
+.result-image{
+  width: 100px;
+  height: 70px;
+}
+.result_img_div{
+  display: flex;
+  justify-content: center;
+}
