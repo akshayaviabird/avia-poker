@@ -393,15 +393,16 @@ socket.on('reveal', function (data) {
 });
 
 function stopGame(data) {
+  $('#gameDiv').hide();
   let dia = document.getElementById("myDialogother")
   dia.showModal();
   // points.sort(function(a, b){return b - a});
   var listItems = data.sort((a, b) => (a.money > b.money ? -1 : (b.money > a.money) ? 1 : 0)).map(function (item, index) {
-    console.log(item)
-    return '<div style ="font-size:1.5em">' + (parseInt(index) + 1) + "&nbsp" + item.username + "&nbsp" + "=>" + "&nbsp" + item.money + "." + '</div>'
+    console.log(item.money - item.buyIns * 1000)
+    return '<div style ="font-size:1.5em">' + (parseInt(index) + 1) + "&nbsp" + item.username + "&nbsp" + "=>" + "&nbsp" + (item.money - item.buyIns * 1000) + "." + '</div>'
   })
 
-  dia.innerHTML = listItems
+  dia.innerHTML = '<div class="result_img_div"><img class="result-image" src="/css/ABRD.png"/></div>' + '<div class="Result-Title"><u>Aviabird Poker Results</u></div>' + listItems
 
   var btn = document.createElement('button');
   btn.textContent = 'Close';
@@ -579,7 +580,7 @@ var startGame = function (gameCode) {
 };
 
 var result = function () {
-  socket.emit('result', {code:codeValue});
+  socket.emit('result', { code: codeValue });
 }
 
 var fold = function () {
