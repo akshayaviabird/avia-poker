@@ -398,9 +398,20 @@ function stopGame(data) {
   let dia = document.getElementById("myDialogother")
   dia.showModal();
   // points.sort(function(a, b){return b - a});
-  var listItems = data.sort((a, b) => (a.money > b.money ? -1 : (b.money > a.money) ? 1 : 0)).map(function (item, index) {
-    console.log(item.money - item.buyIns * 1000)
-    return '<div style ="font-size:1.5em">' + (parseInt(index) + 1) + "&nbsp" + item.username + "&nbsp" + "=>" + "&nbsp" + (item.money - item.buyIns * 1000) + "." + '</div>'
+  var listItems = data.sort((a, b) => ((a.money - a.buyIns * 1000) > (b.money - b.buyIns * 1000) ? -1 : ((b.money - b.buyIns * 1000) > (a.money - a.buyIns * 1000)) ? 1 : 0)).map(function (item, index) {
+    // if (index == 0) {
+    //   $('#rohit').addClass('em em-first_place_medal')
+    // }
+    // else if (index == 1) {
+    //   $('#rohit').addClass('em em-second_place_medal')
+    // }
+    return '<div style ="font-size:1.5em">' + (parseInt(index) + 1) + '<i id="rohit" class="rahul" aria-role="presentation" aria-label="BIRD"></i>' + "&nbsp" + item.username + "&nbsp" + "=>" + "&nbsp" + (item.money - item.buyIns * 1000) + "." + '</div>'
+    // if (index == 0) {
+    //   $('#rohit').addClass('em em-first_place_medal')
+    // }
+    // else if (index == 1) {
+    //   $('#rohit').addClass('em em-second_place_medal')
+    // }
   })
 
   dia.innerHTML = '<div class="result_img_div"><img class="result-image" src="/css/ABRD.png"/></div>' + '<div class="Result-Title"><u>Aviabird Poker Results</u></div>' + listItems
