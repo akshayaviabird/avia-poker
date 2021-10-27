@@ -10,7 +10,7 @@ $(document).ready(function () {
 var socket = io();
 var gameInfo = null;
 let codeValue
-let time;
+// let time;
 let user;
 let bgmusic;
 bgmusic = document.getElementById("bgmusic");
@@ -287,7 +287,7 @@ socket.on('rerender', function (data) {
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide();
-    $('#countdown').hide();
+    // $('#countdown').hide();
   }
 });
 
@@ -338,7 +338,7 @@ socket.on('reveal', function (data) {
   $('#usernameBet').hide();
   $('#usernameCall').hide();
   $('#usernameRaise').hide();
-  $('#countdown').hide()
+  // $('#countdown').hide()
 
   console.log(`Winning streak of every user ${data.winningStreak}`)
   // $('#abcd').html(`Your Winning Streak is ${data.winningStreak}`)
@@ -398,9 +398,20 @@ function stopGame(data) {
   let dia = document.getElementById("myDialogother")
   dia.showModal();
   // points.sort(function(a, b){return b - a});
-  var listItems = data.sort((a, b) => (a.money > b.money ? -1 : (b.money > a.money) ? 1 : 0)).map(function (item, index) {
-    console.log(item.money - item.buyIns * 1000)
-    return '<div style ="font-size:1.5em">' + (parseInt(index) + 1) + "&nbsp" + item.username + "&nbsp" + "=>" + "&nbsp" + (item.money - item.buyIns * 1000) + "." + '</div>'
+  var listItems = data.sort((a, b) => ((a.money - a.buyIns * 1000) > (b.money - b.buyIns * 1000) ? -1 : ((b.money - b.buyIns * 1000) > (a.money - a.buyIns * 1000)) ? 1 : 0)).map(function (item, index) {
+    // if (index == 0) {
+    //   $('#rohit').addClass('em em-first_place_medal')
+    // }
+    // else if (index == 1) {
+    //   $('#rohit').addClass('em em-second_place_medal')
+    // }
+    return '<div style ="font-size:1.5em">' + (parseInt(index) + 1) + '<i id="rohit" class="rahul" aria-role="presentation" aria-label="BIRD"></i>' + "&nbsp" + item.username + "&nbsp" + "=>" + "&nbsp" + (item.money - item.buyIns * 1000) + "." + '</div>'
+    // if (index == 0) {
+    //   $('#rohit').addClass('em em-first_place_medal')
+    // }
+    // else if (index == 1) {
+    //   $('#rohit').addClass('em em-second_place_medal')
+    // }
   })
 
   dia.innerHTML = '<div class="result_img_div"><img class="result-image" src="/css/ABRD.png"/></div>' + '<div class="Result-Title"><u>Aviabird Poker Results</u></div>' + listItems
@@ -450,7 +461,7 @@ socket.on('endHand', function (data) {
   $('#usernameBet').hide();
   $('#usernameCall').hide();
   $('#usernameRaise').hide();
-  $('#countdown').hide()
+  // $('#countdown').hide()
   $('#table-title').text('Round-Winner : ' + data.winner);
 
   if (data.host == data.username) {
@@ -479,7 +490,7 @@ socket.on('endHand', function (data) {
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide();
-    $('#countdown').hide()
+    // $('#countdown').hide()
 
   }
   $('#usernamesMoney').text('$' + data.money);
@@ -587,8 +598,8 @@ var result = function () {
 var fold = function () {
   var x = document.getElementById("fold");
   x.play();
-  clearInterval(downloadTimer);
-  time = 15
+  // clearInterval(downloadTimer);
+  // time = 15
   socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
 };
 
@@ -598,8 +609,8 @@ var bet = function () {
   } else if (parseInt($('#betRangeSlider').val()) < 2) {
     Materialize.toast('The minimum bet is $2.', 4000);
   } else {
-    clearInterval(downloadTimer);
-    time = 15
+    // clearInterval(downloadTimer);
+    // time = 15
     socket.emit('moveMade', {
       move: 'bet',
       bet: parseInt($('#betRangeSlider').val()),
@@ -611,8 +622,8 @@ var bet = function () {
 function call() {
   var x = document.getElementById("call");
   x.play();
-  clearInterval(downloadTimer);
-  time = 15
+  // clearInterval(downloadTimer);
+  // time = 15
   socket.emit('moveMade', { move: 'call', bet: 'Call', code: codeValue });
 }
 
@@ -620,8 +631,8 @@ var check = function () {
   var x = document.getElementById("check");
   x.play();
 
-  clearInterval(downloadTimer);
-  time = 15
+  // clearInterval(downloadTimer);
+  // time = 15
   socket.emit('moveMade', { move: 'check', bet: 'Check', code: codeValue });
 };
 
@@ -636,8 +647,8 @@ var raise = function () {
   } else {
     var x = document.getElementById("raise");
     x.play();
-    clearInterval(downloadTimer);
-    time = 15
+    // clearInterval(downloadTimer);
+    // time = 15
     socket.emit('moveMade', {
       move: 'raise',
       bet: parseInt($('#raiseRangeSlider').val()),
@@ -1481,8 +1492,8 @@ function updateRaiseModal() {
 }
 
 socket.on('displayPossibleMoves', function (data) {
-  console.log('possiblemoves', data)
-  console.log('globaltimer', time)
+  // console.log('possiblemoves', data)
+  // console.log('globaltimer', time)
   let findDisconnect = data.findDisconnectPlayer
 
   if (data.fold == 'yes') $('#usernameFold').show();
@@ -1498,57 +1509,57 @@ socket.on('displayPossibleMoves', function (data) {
   } else $('#usernameCall').hide();
   if (data.raise == 'yes') $('#usernameRaise').show();
   else $('#usernameRaise').hide();
-  if (data.timmer === 'yes' && findDisconnect === 'no') {
+  // if (data.timmer === 'yes' && findDisconnect === 'no') {
 
-    // if(data.timmer === 'yes'){
-    console.log('if part');
+  //   // if(data.timmer === 'yes'){
+  //   console.log('if part');
 
-    time = 15;
-    downloadTimer = setInterval(function () {
-      if (time <= 0) {
-        clearInterval(downloadTimer);
-        //  document.getElementById("countdown").innerHTML = "Finished";
-        socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
-        //  time=15
-        // time=0;
-      } else {
-        document.getElementById("countdown").innerHTML = time + " seconds remaining";
-      }
-      //  timmer=time
-      time -= 1;
-    }, 1000);
+  //   time = 15;
+  //   downloadTimer = setInterval(function () {
+  //     if (time <= 0) {
+  //       clearInterval(downloadTimer);
+  //       //  document.getElementById("countdown").innerHTML = "Finished";
+  //       socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
+  //       //  time=15
+  //       // time=0;
+  //     } else {
+  //       document.getElementById("countdown").innerHTML = time + " seconds remaining";
+  //     }
+  //     //  timmer=time
+  //     time -= 1;
+  //   }, 1000);
 
-    $('#countdown').show()
-  }
+  //   $('#countdown').show()
+  // }
 
-  if (findDisconnect === 'yes') {
-    if (time === undefined) {
-      time = 15
-      downloadTimer = setInterval(function () {
-        if (time <= 0) {
-          clearInterval(downloadTimer);
-          socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
-          time = 15
-        } else {
-          document.getElementById("countdown").innerHTML = time + " seconds remaining";
-        }
-        time -= 1;
-      }, 1000);
-    } else {
-      clearInterval(downloadTimer);
-      downloadTimer = setInterval(function () {
-        if (time <= 0) {
-          clearInterval(downloadTimer);
-          socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
-          time = 15
-        } else {
-          document.getElementById("countdown").innerHTML = time + " seconds remaining";
-        }
-        time -= 1;
-      }, 1000);
-    }
-    $('#countdown').show()
-  }
+  // if (findDisconnect === 'yes') {
+  //   if (time === undefined) {
+  //     time = 15
+  //     downloadTimer = setInterval(function () {
+  //       if (time <= 0) {
+  //         clearInterval(downloadTimer);
+  //         socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
+  //         time = 15
+  //       } else {
+  //         document.getElementById("countdown").innerHTML = time + " seconds remaining";
+  //       }
+  //       time -= 1;
+  //     }, 1000);
+  //   } else {
+  //     clearInterval(downloadTimer);
+  //     downloadTimer = setInterval(function () {
+  //       if (time <= 0) {
+  //         clearInterval(downloadTimer);
+  //         socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
+  //         time = 15
+  //       } else {
+  //         document.getElementById("countdown").innerHTML = time + " seconds remaining";
+  //       }
+  //       time -= 1;
+  //     }, 1000);
+  //   }
+  //   $('#countdown').show()
+  // }
 });
 
 function renderSelf(data) {
@@ -1578,7 +1589,7 @@ function renderSelf(data) {
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide();
-    $('#countdown').hide()
+    // $('#countdown').hide()
   } else {
     $('#status').text('');
     $('#usernamesCards').removeClass('black-text');
@@ -1593,7 +1604,7 @@ function renderSelf(data) {
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide();
-    $('#countdown').hide()
+    // $('#countdown').hide()
   }
   $('#blindStatus').text(data.blind);
 }
@@ -1625,7 +1636,7 @@ function renderSelfScoreboard(data) {
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide();
-    $('#countdown').hide()
+    // $('#countdown').hide()
   } else {
     $('#status').text('');
     $('#usernamesCards').removeClass('black-text');
@@ -1641,7 +1652,7 @@ function renderSelfScoreboard(data) {
     $('#usernameBet').hide();
     $('#usernameCall').hide();
     $('#usernameRaise').hide();
-    $('#countdown').hide()
+    // $('#countdown').hide()
   }
   $('#blindStatus').text(data.blind);
 }
