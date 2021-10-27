@@ -793,7 +793,7 @@ const Game = function (name, host) {
       this.moveOntoNextPlayer();
     }
     this.players = this.players.filter((a) => a !== player);
-    if (player == this.host) {
+    if (player.username == this.host) {
       if (this.players.length > 0) {
         this.host = this.players[0].getUsername();
       }

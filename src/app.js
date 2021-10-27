@@ -19,6 +19,7 @@ const PORT = process.env.PORT || 3000;
 app.use('/', express.static(__dirname + '/client'));
 
 let rooms = [];
+let codeValue;
 
 io.on('connection', (socket) => {
   console.log('new connection ', socket.id);
@@ -43,6 +44,35 @@ io.on('connection', (socket) => {
         players: game.getPlayersArray(),
       });
       socket.join(code.toString());
+
+      codeValue = code;
+      var url = 'https://immense-dusk-54293.herokuapp.com/api/v1/livegame';
+
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', url);
+
+      xhr.setRequestHeader('Accept', 'application/json');
+      xhr.setRequestHeader('Content-Type', 'application/json');
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          console.log(xhr.status);
+          console.log(xhr.responseText);
+        }
+      };
+
+      var url = `https://aviapoker.herokuapp.com/playgame?token=${code}`
+      var data = {
+        _id: code,
+        name: (data.username+`'s Room`).toString(),
+        live: true,
+        hostname: data.username,
+        url: url
+      };
+
+      console.log(JSON.stringify(data));
+      xhr.send(JSON.stringify(data));
+
     }
   });
 
@@ -164,6 +194,9 @@ io.on('connection', (socket) => {
     }
     //console.log(playersData);
     // socket.emit('getresult', playersData);
+    
+    nonLiveGame(data.code);
+
     io.to(data.code.toString()).emit('getresult', playersData);
 
     var url = 'https://immense-dusk-54293.herokuapp.com/api/v1/leaderbaord';
@@ -264,6 +297,9 @@ io.on('connection', (socket) => {
     if (game != undefined) {
       const player = game.findPlayer(socket.id);
       game.finddisconnect='yes'
+      if(player.username==game.host){
+        nonLiveGame(codeValue);
+      }
       game.disconnectPlayer(player);
       if (game.players.length == 0) {
         if (this.rooms != undefined && this.rooms.length !== 0) {
@@ -281,7 +317,25 @@ io.on('connection', (socket) => {
 // const  aa=(data)=>{ 
 //   return data
 // }
+function nonLiveGame(code) {
+  var updateurl = `https://immense-dusk-54293.herokuapp.com/api/v1/livegame/${code}`;
+  var xhr = new XMLHttpRequest();
+  xhr.open('PUT', updateurl);
+  xhr.setRequestHeader('Accept', 'application/json');
+  xhr.setRequestHeader('Content-Type', 'application/json');
 
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      console.log(xhr.status);
+      console.log(xhr.responseText);
+    }
+  };
+  data = {
+    live: false
+  }
+  xhr.send(JSON.stringify(data));
+
+};
 
 io.on('connection', (socket) => {
   socket.on('chat message', (data) => {
