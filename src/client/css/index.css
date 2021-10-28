@@ -543,3 +543,7 @@ width: 400px;
   display: flex;
   justify-content: center;
 }
+
+.menuButtons:hover{
+  transform: scale(1.1);
+}
