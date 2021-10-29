@@ -6,7 +6,7 @@ const Game = require('./classes/game.js');
 const path = require('path');
 const app = express();
 var XMLHttpRequest = require('xhr2');
-const nodemailer = require('nodemailer'); 
+const nodemailer = require('nodemailer');
 app.get(`/playgame`, (req, res) => {
   res.sendFile(path.join(__dirname + '/client/index.html'));
 });
@@ -64,7 +64,7 @@ io.on('connection', (socket) => {
       var url = `https://aviapoker.herokuapp.com/playgame?token=${code}`
       var data = {
         _id: code,
-        name: (data.username+`'s Room`).toString(),
+        name: (data.username + `'s Room`).toString(),
         live: true,
         hostname: data.username,
         url: url
@@ -83,8 +83,8 @@ io.on('connection', (socket) => {
       game == undefined ||
       game.getPlayersArray().some((p) => p == data.username) ||
       data.username == undefined ||
-      data.username.length > 12  ||
-      game.getPlayersArray().length>7
+      data.username.length > 12 ||
+      game.getPlayersArray().length > 7
     ) {
       socket.emit('joinRoom', undefined);
     } else if (game.roundNum > 0) {
@@ -154,7 +154,7 @@ io.on('connection', (socket) => {
     //console.log('timer' + data);
   });
   // precondition: user must be able to make the move in the first place.
-  socket.on('moveMade', (data) => { 
+  socket.on('moveMade', (data) => {
     // worst case complexity O(num_rooms * num_players_in_room)
     const game = rooms.find(
       (r) => r.findPlayer(socket.id).socket.id === socket.id
@@ -194,7 +194,7 @@ io.on('connection', (socket) => {
     }
     //console.log(playersData);
     // socket.emit('getresult', playersData);
-    
+
     nonLiveGame(data.code);
 
     io.to(data.code.toString()).emit('getresult', playersData);
@@ -219,7 +219,7 @@ io.on('connection', (socket) => {
       score.push({
         username: item.username.toString(),
         email: item.email.toString(),
-        points: item.money.toString(),
+        points: (item.money - item.buyIns * 1000).toString(),
       });
     });
 
@@ -296,8 +296,8 @@ io.on('connection', (socket) => {
     );
     if (game != undefined) {
       const player = game.findPlayer(socket.id);
-      game.finddisconnect='yes'
-      if(player.username==game.host){
+      game.finddisconnect = 'yes'
+      if (player.username == game.host) {
         nonLiveGame(codeValue);
       }
       game.disconnectPlayer(player);
