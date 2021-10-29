@@ -75,6 +75,7 @@
 						<div class="card-content white-text">
 							<span style="padding-left:7px" class="card-title" id="usernamesCards"></span>
 							<div id="mycards"></div>
+							<progress value="0" max="15"   id='countdown' class="countdown-timer" style="width: 166px;margin: auto; clear: both;"></progress>
 						</div>
 						<button id="abcd" class="suggestion-view"></button>
 					</div>
@@ -120,7 +121,7 @@
 							<div id="scoreboard" style="display: flex;flex-direction: column;"></div>
 						</div> -->		
 		</div>
-			
+		<!-- <progress value="0" max="15"   id='countdown' class="countdown-timer"></progress> -->
 		<div  class="chatdesign"> 
 				<span id="person" class="chatTitle">Chatbox</span>
 				<ul id="messages" class="messageList"></ul>
@@ -128,8 +129,11 @@
 				<input id="input" placeholder="Type your message" style="padding-top: 19px;" autocomplete="off" /><button style="border: none; background:white ;"><i style="font-size:27px; color:#26a69a" class="fa fa-send-o"></i></button>
 				</form>
 		</div>
+		<!-- <progress value="0" max="15"   id='countdown' class="countdown-timer"></progress> -->
+
 		<div style="display: flex; position: fixed; bottom: 20px; right: 0; padding: 10px;">
 			<!-- <div id='countdown' class="countdown-timer"></div> -->
+			<!-- <progress value="0" max="15"   id='countdown' class="countdown-timer"></progress> -->
 							<button onClick=fold() id="usernameFold" class="callBtns  menuButtons">Fold</button>
 							<button onClick=check() id="usernameCheck" class="callBtns menuButtons">Check</button>
 							<button href="#betModal" onClick=updateBetModal() id="usernameBet"
