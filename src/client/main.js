@@ -399,19 +399,20 @@ function stopGame(data) {
   dia.showModal();
   // points.sort(function(a, b){return b - a});
   var listItems = data.sort((a, b) => ((a.money - a.buyIns * 1000) > (b.money - b.buyIns * 1000) ? -1 : ((b.money - b.buyIns * 1000) > (a.money - a.buyIns * 1000)) ? 1 : 0)).map(function (item, index) {
-    // if (index == 0) {
-    //   $('#rohit').addClass('em em-first_place_medal')
-    // }
-    // else if (index == 1) {
-    //   $('#rohit').addClass('em em-second_place_medal')
-    // }
-    return '<div style ="font-size:1.5em">' + (parseInt(index) + 1) + '<i id="rohit" class="rahul" aria-role="presentation" aria-label="BIRD"></i>' + "&nbsp" + item.username + "&nbsp" + "=>" + "&nbsp" + (item.money - item.buyIns * 1000) + "." + '</div>'
-    // if (index == 0) {
-    //   $('#rohit').addClass('em em-first_place_medal')
-    // }
-    // else if (index == 1) {
-    //   $('#rohit').addClass('em em-second_place_medal')
-    // }
+    let medals
+    if (index == 0) {
+      medals = '<i class="em em-first_place_medal" aria-role="presentation" aria-label="BIRD"></i>'
+    }
+    else if (index == 1) {
+      medals = '<i class="em em-second_place_medal" aria-role="presentation" aria-label="BIRD"></i>'
+    }
+    else if (index == 2) {
+      medals = '<i class="em em-third_place_medal" aria-role="presentation" aria-label="BIRD"></i>'
+    }
+    else {
+      medals = '<i class="em em-candy" aria-role="presentation" aria-label="BIRD"></i>'
+    }
+    return '<div style ="font-size:1.5em">' + medals + "&nbsp" + item.username + "&nbsp" + "=>" + "&nbsp" + (item.money - item.buyIns * 1000) + "." + '</div>'
   })
 
   dia.innerHTML = '<div class="result_img_div"><img class="result-image" src="/css/ABRD.png"/></div>' + '<div class="Result-Title"><u>Aviabird Poker Results</u></div>' + listItems
