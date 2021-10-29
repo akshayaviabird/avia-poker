@@ -1522,8 +1522,9 @@ socket.on('displayPossibleMoves', function (data) {
         socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
         //  time=15
         // time=0;
+
       } else {
-        document.getElementById("countdown").innerHTML = time + " seconds remaining";
+        document.getElementById("countdown").value = time ;
       }
       //  timmer=time
       time -= 1;
@@ -1541,7 +1542,7 @@ socket.on('displayPossibleMoves', function (data) {
           socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
           time = 15
         } else {
-          document.getElementById("countdown").innerHTML = time + " seconds remaining";
+          document.getElementById("countdown").value = time;
         }
         time -= 1;
       }, 1000);
@@ -1553,7 +1554,7 @@ socket.on('displayPossibleMoves', function (data) {
           socket.emit('moveMade', { move: 'fold', bet: 'Fold', code: codeValue });
           time = 15
         } else {
-          document.getElementById("countdown").innerHTML = time + " seconds remaining";
+          document.getElementById("countdown").value = time;
         }
         time -= 1;
       }, 1000);
