@@ -102,6 +102,7 @@ io.on('connection', (socket) => {
         code: data.code,
         players: game.getPlayersArray(),
       });
+      noOfPlayers(data.code);
     }
   });
 
@@ -317,6 +318,26 @@ io.on('connection', (socket) => {
 // const  aa=(data)=>{ 
 //   return data
 // }
+function noOfPlayers(code) {
+  var updateurl = `https://immense-dusk-54293.herokuapp.com/api/v1/livegame/${code}`;
+  var xhr = new XMLHttpRequest();
+  xhr.open('PUT', updateurl);
+  xhr.setRequestHeader('Accept', 'application/json');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      console.log(xhr.status);
+      console.log(xhr.responseText);
+    }
+  };
+  data = {
+    noOfPlayers: 1
+  }
+  xhr.send(JSON.stringify(data));
+
+};
+
 function nonLiveGame(code) {
   var updateurl = `https://immense-dusk-54293.herokuapp.com/api/v1/livegame/${code}`;
   var xhr = new XMLHttpRequest();
