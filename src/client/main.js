@@ -13,11 +13,16 @@ let codeValue
 let time;
 let user;
 let bgmusic;
+let username;
+let emailid
 bgmusic = document.getElementById("bgmusic");
 
 var url_string = location.href
 var url = new URL(url_string);
 codeValue = url.searchParams.get("token");
+username = url.searchParams.get("username");
+emailid = url.searchParams.get("email");
+
 
 // document.getElementById('playsound').innerHTML = "playsound"
 // document.getElementById('stopsound').innerHTML = "stopsound"
@@ -29,6 +34,8 @@ let downloadTimer;
 // var   pauseButton = document.getElementById("pauseButton");
 // startButton.addEventListener('click', timerstart);
 // pauseButton.addEventListener('click', timerpause);
+
+console.log('code:', codeValue)
 
 if (codeValue !== null) {
   console.log('code:', codeValue)
@@ -105,7 +112,7 @@ socket.on('hostRoom', function (data) {
     } else if (data.players.length > 1) {
       $('#hostModalContent').html(
         '<h5>Code:</h5><code>' +
-        window.location.href + 'playgame?token=' + data.code +
+        window.location.href + 'playgame&token=' + data.code +
         '</code><br /><h5>Players Currently in My Room</h5>'
       );
       $('#playersNames').html(
@@ -121,7 +128,7 @@ socket.on('hostRoom', function (data) {
     } else {
       $('#hostModalContent').html(
         '<h5>Code:</h5><code>' +
-        window.location.href + 'playgame?token=' + data.code +
+        window.location.href + 'playgame&token=' + data.code +
         '</code><br /><h5>Players Currently in My Room</h5>'
       );
       $('#playersNames').html(
@@ -520,28 +527,28 @@ socket.on('endHand', function (data) {
 
 
 var beginHost = function () {
-  if ($('#hostName-field').val() == '') {
-    $('.toast').hide();
-    $('#hostModal').closeModal();
-    Materialize.toast(
-      'Enter a valid name! (max length of name is 12 characters)',
-      4000
-    );
-    $('#joinButton').removeClass('disabled');
-  } else if ($('#hostEmail-field').val() == '' || $('#hostEmail-field').val().includes('@') == false) {
-    $('.toast').hide();
-    $('#hostModal').closeModal();
-    Materialize.toast(
-      'Please enter a valid email',
-      4000
-    );
-    $('#joinButton').removeClass('disabled');
-  } else {
-    user = $('#hostName-field').val()
-    socket.emit('host', { username: $('#hostName-field').val(), email: $('#hostEmail-field').val() });
+  // if ($('#hostName-field').val() == '') {
+  //   $('.toast').hide();
+  //   $('#hostModal').closeModal();
+  //   Materialize.toast(
+  //     'Enter a valid name! (max length of name is 12 characters)',
+  //     4000
+  //   );
+  //   $('#joinButton').removeClass('disabled');
+  // } else if ($('#hostEmail-field').val() == '' || $('#hostEmail-field').val().includes('@') == false) {
+  //   $('.toast').hide();
+  //   $('#hostModal').closeModal();
+  //   Materialize.toast(
+  //     'Please enter a valid email',
+  //     4000
+  //   );
+  //   $('#joinButton').removeClass('disabled');
+  // } else {
+    // user = $('#hostName-field').val()
+    socket.emit('host', { username:username, email: emailid });
     $('#joinButton').addClass('disabled');
     $('#joinButton').off('click');
-  }
+  // }
 };
 var url_string = window.location.href;
 var url = new URL(url_string);
@@ -550,38 +557,39 @@ var url = new URL(url_string);
 var joinRoom = function () {
 
   // yes, i know this is client-side.
-  if (
-    $('#joinName-field').val() == '' ||
-    $('#email-field').val() == '' ||
-    $('#joinName-field').val().length > 12
-  ) {
-    $('.toast').hide();
-    Materialize.toast(
-      'Enter a your name/Email (max length of name is 12 characters.)',
-      4000
-    );
-    $('#joinModal').closeModal();
-    $('#hostButton').removeClass('disabled');
-    $('#hostButton').on('click');
-  } else if ($('#email-field').val() == '' && $('#email-field').val().includes('@') == false) {
-    $('.toast').hide();
-    Materialize.toast(
-      'Enter a your valid Email! ',
-      4000
-    );
-    $('#joinModal').closeModal();
-    $('#hostButton').removeClass('disabled');
-    $('#hostButton').on('click');
-  } else {
-    user = $('#joinName-field').val();
+  // if (
+  //   $('#joinName-field').val() == '' ||
+  //   $('#email-field').val() == '' ||
+  //   $('#joinName-field').val().length > 12
+  // ) {
+  //   $('.toast').hide();
+  //   Materialize.toast(
+  //     'Enter a your name/Email (max length of name is 12 characters.)',
+  //     4000
+  //   );
+  //   $('#joinModal').closeModal();
+  //   $('#hostButton').removeClass('disabled');
+  //   $('#hostButton').on('click');
+  // } else if ($('#email-field').val() == '' && $('#email-field').val().includes('@') == false) {
+  //   $('.toast').hide();
+  //   Materialize.toast(
+  //     'Enter a your valid Email! ',
+  //     4000
+  //   );
+  //   $('#joinModal').closeModal();
+  //   $('#hostButton').removeClass('disabled');
+  //   $('#hostButton').on('click');
+  // } else {
+  //   user = $('#joinName-field').val();
+  
     socket.emit('join', {
       code: codeValue,
-      username: $('#joinName-field').val(),
-      email: $('#email-field').val(),
+      username:username,
+      email: emailid,
     });
     $('#hostButton').addClass('disabled');
     $('#hostButton').off('click');
-  }
+  // }
 };
 
 // var startGame = function (gameCode) {

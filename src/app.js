@@ -14,7 +14,7 @@ app.get(`/playgame`, (req, res) => {
 const server = http.createServer(app);
 const io = socketio(server);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 app.use('/', express.static(__dirname + '/client'));
 
@@ -77,6 +77,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('join', (data) => {
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',data)
     socket.join(data.code.toString())
     const game = rooms.find((r) => r.getCode() === data.code);
     if (
