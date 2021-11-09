@@ -13,11 +13,15 @@ let codeValue
 let time;
 let user;
 let bgmusic;
+let email;
+let userName;
 bgmusic = document.getElementById("bgmusic");
 
 var url_string = location.href
 var url = new URL(url_string);
 codeValue = url.searchParams.get("token");
+userName= url.searchParams.get("username");
+email= url.searchParams.get("email");
 
 // document.getElementById('playsound').innerHTML = "playsound"
 // document.getElementById('stopsound').innerHTML = "stopsound"
@@ -520,7 +524,7 @@ socket.on('endHand', function (data) {
 
 
 var beginHost = function () {
-  if ($('#hostName-field').val() == '') {
+  if (userName == '') {
     $('.toast').hide();
     $('#hostModal').closeModal();
     Materialize.toast(
@@ -528,7 +532,7 @@ var beginHost = function () {
       4000
     );
     $('#joinButton').removeClass('disabled');
-  } else if ($('#hostEmail-field').val() == '' || $('#hostEmail-field').val().includes('@') == false) {
+  } else if (userName == '' || email.includes('@') == false) {
     $('.toast').hide();
     $('#hostModal').closeModal();
     Materialize.toast(
@@ -537,8 +541,8 @@ var beginHost = function () {
     );
     $('#joinButton').removeClass('disabled');
   } else {
-    user = $('#hostName-field').val()
-    socket.emit('host', { username: $('#hostName-field').val(), email: $('#hostEmail-field').val() });
+    user = userName
+    socket.emit('host', { username: userName, email: email });
     $('#joinButton').addClass('disabled');
     $('#joinButton').off('click');
   }
@@ -551,9 +555,9 @@ var joinRoom = function () {
 
   // yes, i know this is client-side.
   if (
-    $('#joinName-field').val() == '' ||
-    $('#email-field').val() == '' ||
-    $('#joinName-field').val().length > 12
+    userName == '' ||
+    email == '' ||
+    userName.length > 12
   ) {
     $('.toast').hide();
     Materialize.toast(
@@ -563,7 +567,7 @@ var joinRoom = function () {
     $('#joinModal').closeModal();
     $('#hostButton').removeClass('disabled');
     $('#hostButton').on('click');
-  } else if ($('#email-field').val() == '' && $('#email-field').val().includes('@') == false) {
+  } else if (email == '' && email.includes('@') == false) {
     $('.toast').hide();
     Materialize.toast(
       'Enter a your valid Email! ',
@@ -573,11 +577,11 @@ var joinRoom = function () {
     $('#hostButton').removeClass('disabled');
     $('#hostButton').on('click');
   } else {
-    user = $('#joinName-field').val();
+    user = userName;
     socket.emit('join', {
       code: codeValue,
-      username: $('#joinName-field').val(),
-      email: $('#email-field').val(),
+      username: userName,
+      email: email,
     });
     $('#hostButton').addClass('disabled');
     $('#hostButton').off('click');
