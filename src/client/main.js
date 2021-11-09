@@ -181,6 +181,7 @@ socket.on('getresult', function (data) {
 })
 
 socket.on('joinRoom', function (data) {
+  console.log('my data socket',data)
   if (data == undefined) {
     $('#joinModal').closeModal();
     Materialize.toast(
@@ -544,7 +545,7 @@ var beginHost = function () {
   //   );
   //   $('#joinButton').removeClass('disabled');
   // } else {
-    // user = $('#hostName-field').val()
+    user = username
     socket.emit('host', { username:username, email: emailid });
     $('#joinButton').addClass('disabled');
     $('#joinButton').off('click');
@@ -555,6 +556,7 @@ var url = new URL(url_string);
 // var codeValue = url.searchParams.get("token");
 
 var joinRoom = function () {
+console.log('join rooom function');
 
   // yes, i know this is client-side.
   // if (
@@ -581,7 +583,8 @@ var joinRoom = function () {
   //   $('#hostButton').on('click');
   // } else {
   //   user = $('#joinName-field').val();
-  
+     console.log(codeValue,username,emailid)
+
     socket.emit('join', {
       code: codeValue,
       username:username,

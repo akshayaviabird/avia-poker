@@ -77,9 +77,9 @@ io.on('connection', (socket) => {
   });
 
   socket.on('join', (data) => {
-    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',data)
     socket.join(data.code.toString())
     const game = rooms.find((r) => r.getCode() === data.code);
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',data,game)
     if (
       game == undefined ||
       game.getPlayersArray().some((p) => p == data.username) ||
