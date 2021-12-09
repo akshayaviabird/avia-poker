@@ -255,11 +255,15 @@ io.on('connection', (socket) => {
       playersData.map((item) => {
         email.push(item.email);
       });
-      let user = [];
-      playersData.map((item) => {
-        user.push(item.username);
-        user.push(item.money);
-      });
+      // let user = [];
+      // playersData.map((item, index) => {
+      //   '<li>' + (parseInt(index) + 1) + "&nbsp" + user.push(item.username) + "&nbsp" + 'has $' + user.push(item.money) + '</li><br/>'
+      //   // user.push(item.username);
+      //   // user.push(item.money);
+      // });
+      const output = playersData.map((i, index) => {
+        return `${i.username} <b> has coins : </b>${i.money}.`
+      })
 
       console.log(email);
 
@@ -269,8 +273,8 @@ io.on('connection', (socket) => {
           from: 'games@aviabird.com', // sender address
           to: to, // list of receivers
           subject: "Result of today's game", // Subject line
-          text: user.toString(), // plain text body
-          html: user.toString(), // html body
+          // text: user.toString(), // plain text body
+          html: output, // html body
         });
         console.log('Message sent: %s', info.messageId);
         // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
